@@ -1,13 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync as fsExists } from 'node:fs';
 import { Game, generateBoard, segmentHit } from '../src/engine.js';
 import { createStore } from '../src/storage.js';
 import { CONFIG, sceneSize } from '../src/config.js';
 const ids=JSON.parse(readFileSync(new URL('../data/scholars.json',import.meta.url))).scholars.map(s=>s.id);
 function playing(options={}) {const g=new Game({scholars:ids,...options});g.update(3);return g;}
 function seedRandom(seed){return()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};}
-test('PRD imports eight unique people with full editorial data',()=>{const {scholars}=JSON.parse(readFileSync(new URL('../data/scholars.json',import.meta.url)));assert.equal(scholars.length,8);assert.equal(new Set(ids).size,8);for(const s of scholars){for(const key of ['nameZh','nameEn','lifeYearsLabel','field','intro','lensSummary','reflectionQuestion'])assert.ok(s[key]);assert.ok(s.sources.every(x=>new URL(x.url).protocol==='https:'));assert.equal(s.portrait,null);assert.equal(s.personaLensKey,null);}});
+test('PRD imports eight unique people with full editorial data',()=>{const {scholars}=JSON.parse(readFileSync(new URL('../data/scholars.json',import.meta.url)));assert.equal(scholars.length,8);assert.equal(new Set(ids).size,8);for(const s of scholars){for(const key of ['nameZh','nameEn','lifeYearsLabel','field','intro','lensSummary','reflectionQuestion'])assert.ok(s[key]);assert.ok(s.sources.every(x=>new URL(x.url).protocol==='https:'));assert.ok(fsExists(s.portrait.src));assert.ok(s.portrait.crop.x+s.portrait.crop.size<=s.portrait.sheetWidth);assert.ok(s.portrait.crop.y+s.portrait.crop.size<=s.portrait.sheetHeight);assert.equal(s.personaLensKey,null);}});
 test('countdown blocks input and does not consume play time',()=>{const g=new Game({scholars:ids});assert.equal(g.fire(),false);g.update(2);assert.equal(g.remaining,60);g.update(1);assert.equal(g.phase,'playing');assert.equal(g.remaining,60);assert.equal(g.fire(),true);assert.equal(g.fire(),false);});
 test('swept collision catches nearest item even at low frame rate',()=>{const g=playing();g.items=[{id:2,type:'gem',x:480,y:370,radius:14,score:100,weight:1},{id:1,type:'smallGold',x:480,y:250,radius:19,score:20,weight:1.2}];g.fire();g.update(.6);assert.equal(g.hook.caught.id,1);assert.equal(g.score,0);assert.equal(g.fire(),false);g.update(1);assert.equal(g.score,20);g.update(.2);assert.equal(g.score,20);});
 test('expiration occurs before delivery; no score, unlock, or collection callback',()=>{let collects=0,finishes=0;const g=playing({onCollect:()=>collects++,onFinish:()=>finishes++});g.hook={state:'returning',length:31,angle:0,caught:{type:'book',score:50,weight:1.8,scholarId:ids[0]}};g.remaining=.01;g.update(.02);g.update(1);assert.equal(g.score,0);assert.deepEqual(g.discoveries,[]);assert.equal(collects,0);assert.equal(finishes,1);});

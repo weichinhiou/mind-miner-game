@@ -25,7 +25,15 @@ function sound(type) {
 }
 function stopLoop() { if(raf!==null)cancelAnimationFrame(raf);raf=null;lastTime=null;stopSounds(); }
 function view(html, name) {stopLoop();screen=name;app.innerHTML=html;app.setAttribute('aria-busy','false');warning();window.scrollTo(0,0);}
-function miniCards() {return scholars.map(s=>`<div class="mini-card ${store.data.collection[s.id]?'unlocked':''}"><span class="book-shape">${store.data.collection[s.id]?escapeHtml(s.nameZh.slice(0,1)):'▤'}</span>${store.data.collection[s.id]?escapeHtml(s.nameZh):'尚未發現'}</div>`).join('');}
+function portrait(s, mini=false) {
+  const p=s.portrait;
+  const initial=escapeHtml(s.nameZh.slice(0,1));
+  if(!p?.src||!p.crop) return '<div class="portrait'+(mini?' mini-portrait':'')+'" aria-label="'+escapeHtml(s.nameZh)+'姓名卡">'+initial+'</div>';
+  const {x,y,size}=p.crop;
+  const style='width:'+(p.sheetWidth/size*100)+'%;left:'+(-x/size*100)+'%;top:'+(-y/size*100)+'%;';
+  return '<div class="portrait with-image'+(mini?' mini-portrait':'')+'" role="img" aria-label="'+escapeHtml(s.portraitAlt)+'"><span aria-hidden="true">'+initial+'</span><img src="'+escapeHtml(p.src)+'" alt="" style="'+style+'" decoding="async"></div>';
+}
+function miniCards() {return scholars.map(s=>`<div class="mini-card ${store.data.collection[s.id]?'unlocked':''}">${store.data.collection[s.id]?portrait(s,true):'<span class="book-shape">▤</span>'}${store.data.collection[s.id]?escapeHtml(s.nameZh):'尚未發現'}</div>`).join('');}
 function home() {
   game=null;
   view(`<section class="home-top"><div><span class="eyebrow">A LITTLE MINE. A WORLD OF IDEAS.</span><h1>思想淘金記</h1><p class="subtitle">挖出寶藏，也遇見一種新的眼光。</p></div><div class="best"><span>本機最高分</span><strong>${store.data.bestScore.toLocaleString()}</strong></div></section>
@@ -40,13 +48,13 @@ function card(s, result=false) {
   const found=store.data.collection[s.id];
   if(!found)return `<div class="scholar-card locked"><div class="portrait" aria-hidden="true">▤</div><h2>尚未發現</h2><p>一本藏書，等待你帶回地面。</p><small>在礦坑中尋找藍紫色藏書</small></div>`;
   const earned=lastResult?.finds.find(f=>f.id===s.id);
-  return `<button class="scholar-card" data-scholar="${escapeHtml(s.id)}">${result&&earned?.isNew?'<span class="badge">NEW</span>':''}<div class="portrait" aria-label="姓名卡，尚未匯入頭像">${escapeHtml(s.nameZh.slice(0,1))}</div><h2>${escapeHtml(s.nameZh)}</h2><p>${escapeHtml(s.field)}</p><small>${result?`本局發現 ${earned?.count||0} 次`:`已發現 ${found.count} 次`} · 查看介紹 ↗</small></button>`;
+  return `<button class="scholar-card" data-scholar="${escapeHtml(s.id)}">${result&&earned?.isNew?'<span class="badge">NEW</span>':''}${portrait(s)}<h2>${escapeHtml(s.nameZh)}</h2><p>${escapeHtml(s.field)}</p><small>${result?`本局發現 ${earned?.count||0} 次`:`已發現 ${found.count} 次`} · 查看介紹 ↗</small></button>`;
 }
 function collection() {game=null;view(`<section class="page-heading"><div><span class="eyebrow">A SHELF OF NEW PERSPECTIVES</span><h1>思想收藏冊</h1><p>已收藏 ${unlockedCount()} / ${scholars.length} 位人物 · 收藏保存在此瀏覽器</p></div><button data-action="home">← 回首頁</button></section><div class="collection-grid">${scholars.map(s=>card(s)).join('')}</div>`, 'collection');}
 function details(id) {
   const s=scholarById(id);if(!s||!store.data.collection[id])return;
   const dialog=document.createElement('dialog');
-  dialog.innerHTML=`<button class="close" aria-label="關閉人物介紹">✕</button><span class="eyebrow">COLLECTED PERSPECTIVE</span><div class="portrait">${escapeHtml(s.nameZh.slice(0,1))}</div><h2>${escapeHtml(s.nameZh)}</h2><div class="english">${escapeHtml(s.nameEn)} · ${escapeHtml(s.lifeYearsLabel)}</div><p>${escapeHtml(s.field)}</p><p>${escapeHtml(s.intro)}</p><h3>視角摘要 · 編寫的方法轉譯</h3><p>${escapeHtml(s.lensSummary)}</p><div class="tags">${s.coreMethods.map(t=>`<span>${escapeHtml(t)}</span>`).join('')}</div><h3>帶走一個問題</h3><p>${escapeHtml(s.reflectionQuestion)}</p><p class="note">${escapeHtml(s.contentNote)}</p><h3>資料來源</h3><ul class="source-list">${s.sources.map(source=>`<li>${link(source.url,escapeHtml(source.title))}</li>`).join('')}</ul><p class="note">PRD 資料查核日期：${escapeHtml(s.sourceCheckedAt)} · 方法摘要與問題為編寫內容。</p>${link(CONFIG.personaLensUrl,'開啟 Persona Lens ↗')}`;
+  dialog.innerHTML=`<button class="close" aria-label="關閉人物介紹">✕</button><span class="eyebrow">COLLECTED PERSPECTIVE</span>${portrait(s)}<h2>${escapeHtml(s.nameZh)}</h2><div class="english">${escapeHtml(s.nameEn)} · ${escapeHtml(s.lifeYearsLabel)}</div><p>${escapeHtml(s.field)}</p><p>${escapeHtml(s.intro)}</p><h3>視角摘要 · 編寫的方法轉譯</h3><p>${escapeHtml(s.lensSummary)}</p><div class="tags">${s.coreMethods.map(t=>`<span>${escapeHtml(t)}</span>`).join('')}</div><h3>帶走一個問題</h3><p>${escapeHtml(s.reflectionQuestion)}</p><p class="note">${escapeHtml(s.contentNote)}</p><h3>資料來源</h3><ul class="source-list">${s.sources.map(source=>`<li>${link(source.url,escapeHtml(source.title))}</li>`).join('')}</ul><p class="note">PRD 資料查核日期：${escapeHtml(s.sourceCheckedAt)} · 方法摘要與問題為編寫內容。</p>${link(CONFIG.personaLensUrl,'開啟 Persona Lens ↗')}`;
   document.body.append(dialog);dialog.querySelector('.close').onclick=()=>dialog.close();dialog.addEventListener('close',()=>dialog.remove());dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});dialog.showModal();
 }
 function start() {
@@ -97,4 +105,5 @@ async function load(){
   try{const response=await fetch('./data/scholars.json');if(!response.ok)throw Error('Content unavailable');const data=await response.json();scholars=data.scholars.filter(s=>s.enabled);if(scholars.length<2)throw Error('Need two scholars');home();}
   catch{view('<div class="loading"><p>思想藏書載入失敗，請確認本機伺服器仍在運作。</p><button data-action="retry">重新載入</button></div>','error');}
 }
+document.addEventListener('error',event=>{const image=event.target;if(image instanceof HTMLImageElement&&image.closest('.portrait')){image.parentElement.setAttribute('aria-label',image.parentElement.getAttribute('aria-label')+'，圖片載入失敗，顯示姓名卡');image.remove();}},true);
 load();

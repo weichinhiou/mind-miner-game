@@ -29,7 +29,16 @@
         }
       ],
       "lifeYearsLabel": "1918～1988年",
-      "portrait": null,
+      "portrait": {
+        "src": "assets/portraits/scholar-portraits-sheet.png",
+        "sheetWidth": 1672,
+        "sheetHeight": 941,
+        "crop": {
+          "x": 78,
+          "y": 303,
+          "size": 164
+        }
+      },
       "portraitAlt": "費曼人物頭像",
       "personaLensKey": null,
       "tags": [
@@ -70,7 +79,16 @@
         }
       ],
       "lifeYearsLabel": "1900～1993年",
-      "portrait": null,
+      "portrait": {
+        "src": "assets/portraits/scholar-portraits-sheet.png",
+        "sheetWidth": 1672,
+        "sheetHeight": 941,
+        "crop": {
+          "x": 462,
+          "y": 303,
+          "size": 164
+        }
+      },
       "portraitAlt": "戴明人物頭像",
       "personaLensKey": null,
       "tags": [
@@ -107,7 +125,16 @@
         }
       ],
       "lifeYearsLabel": "1902～1994年",
-      "portrait": null,
+      "portrait": {
+        "src": "assets/portraits/scholar-portraits-sheet.png",
+        "sheetWidth": 1672,
+        "sheetHeight": 941,
+        "crop": {
+          "x": 845,
+          "y": 303,
+          "size": 164
+        }
+      },
       "portraitAlt": "波普爾人物頭像",
       "personaLensKey": null,
       "tags": [
@@ -144,7 +171,16 @@
         }
       ],
       "lifeYearsLabel": "1924～2023年",
-      "portrait": null,
+      "portrait": {
+        "src": "assets/portraits/scholar-portraits-sheet.png",
+        "sheetWidth": 1672,
+        "sheetHeight": 941,
+        "crop": {
+          "x": 1227,
+          "y": 303,
+          "size": 164
+        }
+      },
       "portraitAlt": "蒙格人物頭像",
       "personaLensKey": null,
       "tags": [
@@ -181,7 +217,16 @@
           "url": "https://plato.stanford.edu/entries/confucius/"
         }
       ],
-      "portrait": null,
+      "portrait": {
+        "src": "assets/portraits/scholar-portraits-sheet.png",
+        "sheetWidth": 1672,
+        "sheetHeight": 941,
+        "crop": {
+          "x": 78,
+          "y": 476,
+          "size": 164
+        }
+      },
       "portraitAlt": "孔子人物頭像",
       "personaLensKey": null,
       "tags": [
@@ -218,7 +263,16 @@
         }
       ],
       "lifeYearsLabel": "1849～1919年",
-      "portrait": null,
+      "portrait": {
+        "src": "assets/portraits/scholar-portraits-sheet.png",
+        "sheetWidth": 1672,
+        "sheetHeight": 941,
+        "crop": {
+          "x": 462,
+          "y": 476,
+          "size": 164
+        }
+      },
       "portraitAlt": "奧斯勒人物頭像",
       "personaLensKey": null,
       "tags": [
@@ -259,7 +313,16 @@
         }
       ],
       "lifeYearsLabel": "1820～1910年",
-      "portrait": null,
+      "portrait": {
+        "src": "assets/portraits/scholar-portraits-sheet.png",
+        "sheetWidth": 1672,
+        "sheetHeight": 941,
+        "crop": {
+          "x": 845,
+          "y": 476,
+          "size": 164
+        }
+      },
       "portraitAlt": "南丁格爾人物頭像",
       "personaLensKey": null,
       "tags": [
@@ -296,7 +359,16 @@
         }
       ],
       "lifeYearsLabel": "1909～2005年",
-      "portrait": null,
+      "portrait": {
+        "src": "assets/portraits/scholar-portraits-sheet.png",
+        "sheetWidth": 1672,
+        "sheetHeight": 941,
+        "crop": {
+          "x": 1227,
+          "y": 476,
+          "size": 164
+        }
+      },
       "portraitAlt": "杜拉克人物頭像",
       "personaLensKey": null,
       "tags": [
