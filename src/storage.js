@@ -10,6 +10,8 @@ export function createStore(storage) {
       if (parsed.schemaVersion !== CONFIG.schemaVersion || !Number.isFinite(parsed.bestScore) || parsed.bestScore < 0 || typeof parsed.mute !== 'boolean' || !parsed.collection || typeof parsed.collection !== 'object' || Array.isArray(parsed.collection)) throw Error('Unsupported save');
       for (const item of Object.values(parsed.collection)) {
         if (!item || !Number.isInteger(item.count) || item.count < 1 || typeof item.firstUnlockedAt !== 'string') throw Error('Invalid collection');
+        item.quoteIds = [...new Set(Array.isArray(item.quoteIds) ? item.quoteIds.filter(id => typeof id === 'string') : [])];
+        if (typeof item.lastQuoteId !== 'string') delete item.lastQuoteId;
       }
       data = parsed;
     }
@@ -21,10 +23,13 @@ export function createStore(storage) {
   }
   return {
     get data() { return data; }, get available() { return available; },
-    discover(id) {
+    discover(id, quoteId = null) {
       const isNew = !Object.hasOwn(data.collection, id);
       if (isNew) Object.defineProperty(data.collection, id, { value: { firstUnlockedAt: new Date().toISOString(), count: 1 }, enumerable: true, writable: true, configurable: true });
       else data.collection[id].count++;
+      const entry = data.collection[id];
+      entry.quoteIds ??= [];
+      if (quoteId) { if (!entry.quoteIds.includes(quoteId)) entry.quoteIds.push(quoteId); entry.lastQuoteId = quoteId; }
       save(); return isNew;
     },
     finish(score) { const record = score > data.bestScore; data.bestScore = Math.max(score, data.bestScore); save(); return record; },

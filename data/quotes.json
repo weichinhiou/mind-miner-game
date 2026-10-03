@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "quotes": [
+    {
+      "id": "feynman-01",
+      "scholarId": "feynman",
+      "text": "所有知識的考驗都是實驗。",
+      "original": "The test of all knowledge is experiment.",
+      "kind": "translation",
+      "sourceTitle": "The Feynman Lectures on Physics, Vol. I, Ch. 1",
+      "sourceUrl": "https://www.feynmanlectures.caltech.edu/I_01.html",
+      "context": "第 1-1 節：科學知識須接受實驗檢驗。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "feynman-02",
+      "scholarId": "feynman",
+      "text": "實驗是科學「真理」的唯一裁判。",
+      "original": "Experiment is the sole judge of scientific “truth.”",
+      "kind": "translation",
+      "sourceTitle": "The Feynman Lectures on Physics, Vol. I, Ch. 1",
+      "sourceUrl": "https://www.feynmanlectures.caltech.edu/I_01.html",
+      "context": "第 1-1 節；緊接上一句，提醒不要以權威取代實驗。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "feynman-03",
+      "scholarId": "feynman",
+      "text": "我無法創造的事物，我就不理解。",
+      "original": "What I cannot create I do not understand.",
+      "kind": "translation",
+      "sourceTitle": "Richard Feynman 官方網站：Quotes",
+      "sourceUrl": "https://feynman.com/fun/quotes/",
+      "context": "官網標明為逝世時留在黑板上的文字；不是演講逐字稿。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "deming-01",
+      "scholarId": "deming",
+      "text": "消除恐懼。",
+      "original": "Drive out fear.",
+      "kind": "translation",
+      "sourceTitle": "The W. Edwards Deming Institute：Where There is Fear You Do Not Get Honest Figures",
+      "sourceUrl": "https://deming.org/where-there-is-fear-you-do-not-get-honest-figures/",
+      "context": "管理十四點第 8 點標題；完整說明涉及讓每個人能有效工作。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "deming-02",
+      "scholarId": "deming",
+      "text": "沒有理論，經驗什麼也教不了。",
+      "original": "Experience without theory teaches nothing.",
+      "kind": "translation",
+      "sourceTitle": "The W. Edwards Deming Institute：Are You Learning or Just Staying Busy?",
+      "sourceUrl": "https://podcast.deming.org/are-you-learning-or-just-staying-busy",
+      "context": "研究所節目引述戴明；需有可檢驗的解釋，經驗才形成學習。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "deming-03",
+      "scholarId": "deming",
+      "text": "壞制度每次都會擊敗好人才。",
+      "original": "A bad system will beat a good person every time.",
+      "kind": "translation",
+      "sourceTitle": "The W. Edwards Deming Institute：A bad system will beat a good person every time",
+      "sourceUrl": "https://deming.org/quotes/a-bad-system-will-beat-a-good-person-every-time-3/",
+      "context": "1993 年 2 月 Phoenix 四日研討會，Mike Stoecklein 的當時筆記，由 Deming Institute 查核收錄；提醒改善制度而非只責怪個人。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "popper-01",
+      "scholarId": "popper",
+      "text": "我們都可能犯錯。",
+      "original": "We are all fallible",
+      "kind": "translation",
+      "sourceTitle": "Karl Popper：The Importance of Critical Discussion，Free Inquiry, Winter 1981/82",
+      "sourceUrl": "https://centerforinquiry.s3.amazonaws.com/wp-content/uploads/sites/26/1981/01/22161304/p07.pdf",
+      "context": "本文討論從錯誤學習的段落，從句子摘錄；此處是波普爾自己的論述，非前段引述伏爾泰。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "popper-02",
+      "scholarId": "popper",
+      "text": "讓我們的理論代替我們死去。",
+      "original": "let our theories die in our stead.",
+      "kind": "translation",
+      "sourceTitle": "Karl Popper：The Importance of Critical Discussion，Free Inquiry, Winter 1981/82",
+      "sourceUrl": "https://centerforinquiry.s3.amazonaws.com/wp-content/uploads/sites/26/1981/01/22161304/p07.pdf",
+      "context": "文章結尾句內摘錄，主張以批判討論淘汰理論，避免淘汰提出理論的人。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "popper-03",
+      "scholarId": "popper",
+      "text": "所有生命都在解決問題。",
+      "original": "All Life is Problem Solving",
+      "kind": "translation",
+      "sourceTitle": "Karl Popper：All Life is Problem Solving，Routledge 出版社",
+      "sourceUrl": "https://www.routledge.com/All-Life-is-Problem-Solving/Popper/p/book/9780203431900",
+      "context": "著作書名與第 9 篇篇名；以書名短句呈現，並非另稱演講原句。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "munger-01",
+      "scholarId": "munger",
+      "text": "獲取智慧是一種道德責任。",
+      "original": "Wisdom acquisition is a moral duty",
+      "kind": "translation",
+      "sourceTitle": "USC Gould School of Law：300 graduate from USC Law",
+      "sourceUrl": "https://gould.usc.edu/news/300-graduate-from-usc-law/",
+      "context": "2007 年 USC 法學院畢業致詞，校方當時報導的直接引述。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "munger-02",
+      "scholarId": "munger",
+      "text": "每晚就寢時，都要比早上更有智慧一點。",
+      "original": "go to bed every night a little wiser",
+      "kind": "translation",
+      "sourceTitle": "USC Gould School of Law：300 graduate from USC Law",
+      "sourceUrl": "https://gould.usc.edu/news/300-graduate-from-usc-law/",
+      "context": "校方報導中的句內摘錄，完整上下文是比早上起床時更有智慧，鼓勵持續學習。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "munger-03",
+      "scholarId": "munger",
+      "text": "不練習，就會失去。",
+      "original": "you don’t practice, you lose it.",
+      "kind": "translation",
+      "sourceTitle": "USC Gould School of Law：300 graduate from USC Law",
+      "sourceUrl": "https://gould.usc.edu/news/300-graduate-from-usc-law/",
+      "context": "校方直接引述的條件句核心；上下文談練習跨領域思考。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "confucius-01",
+      "scholarId": "confucius",
+      "text": "學而時習之，不亦說乎？",
+      "original": "學而時習之，不亦說乎？",
+      "kind": "original",
+      "sourceTitle": "《論語·學而》1.1，中國哲學書電子化計劃",
+      "sourceUrl": "https://ctext.org/analects/xue-er",
+      "context": "孔子言行由弟子及後學傳承；說讀作悅，指學習後反覆實踐的喜悅。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "confucius-02",
+      "scholarId": "confucius",
+      "text": "有朋自遠方來，不亦樂乎？",
+      "original": "有朋自遠方來，不亦樂乎？",
+      "kind": "original",
+      "sourceTitle": "《論語·學而》1.1，中國哲學書電子化計劃",
+      "sourceUrl": "https://ctext.org/analects/xue-er",
+      "context": "《學而》首章，與朋友交流學習。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "confucius-03",
+      "scholarId": "confucius",
+      "text": "人不知而不慍，不亦君子乎？",
+      "original": "人不知而不慍，不亦君子乎？",
+      "kind": "original",
+      "sourceTitle": "《論語·學而》1.1，中國哲學書電子化計劃",
+      "sourceUrl": "https://ctext.org/analects/xue-er",
+      "context": "《學而》首章，不因他人不了解自己而怨怒。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "osler-01",
+      "scholarId": "osler",
+      "text": "一次又一次的嘗試、一次又一次的失敗，給了他力量。",
+      "original": "One trial after another, one failure after another, has given him power.",
+      "kind": "translation",
+      "sourceTitle": "William Osler：A Way of Life，1913 原著",
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/73116/pg73116-images.html",
+      "context": "第 I 節，以幼兒學走路說明反覆練習形成能力。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "osler-02",
+      "scholarId": "osler",
+      "text": "別灰心——和其他習慣一樣，養成它需要時間。",
+      "original": "Do not be discouraged,—like every other habit, the acquisition takes time",
+      "kind": "translation",
+      "sourceTitle": "William Osler：A Way of Life，1913 原著",
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/73116/pg73116-images.html",
+      "context": "第 III 節句內摘錄，談專注當日生活的習慣。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "osler-03",
+      "scholarId": "osler",
+      "text": "專注是一門需要慢慢養成的藝術。",
+      "original": "Concentration is an art of slow acquisition",
+      "kind": "translation",
+      "sourceTitle": "William Osler：A Way of Life，1913 原著",
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/73116/pg73116-images.html",
+      "context": "第 IV 節句內摘錄，談耐心培養學習與工作的專注。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "nightingale-01",
+      "scholarId": "nightingale",
+      "text": "緩慢不等於溫柔，雖然人們常把兩者混淆。",
+      "original": "Slowness is not gentleness, though it is often mistaken for such",
+      "kind": "translation",
+      "sourceTitle": "Florence Nightingale：Notes on Nursing，原著",
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/12439/pg12439-images.html",
+      "context": "IV. Noise，句內摘錄；上下文談兼顧俐落與溫柔的照護動作。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "nightingale-02",
+      "scholarId": "nightingale",
+      "text": "快速、輕巧與溫柔，可以同時存在。",
+      "original": "quickness, lightness, and gentleness are quite compatible.",
+      "kind": "translation",
+      "sourceTitle": "Florence Nightingale：Notes on Nursing，原著",
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/12439/pg12439-images.html",
+      "context": "IV. Noise，分號後完整子句。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "nightingale-03",
+      "scholarId": "nightingale",
+      "text": "觀察是為了挽救生命、增進健康與舒適。",
+      "original": "for the sake of saving life and increasing health and comfort.",
+      "kind": "translation",
+      "sourceTitle": "Florence Nightingale：Notes on Nursing，原著",
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/12439/pg12439-images.html",
+      "context": "XIII. Observation of the Sick，句內摘錄；觀察不是為了堆積雜亂的資料。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "drucker-01",
+      "scholarId": "drucker",
+      "text": "時間是最稀缺的資源。",
+      "original": "Time is the scarcest resource.",
+      "kind": "translation",
+      "sourceTitle": "The Drucker Institute：Quote Library",
+      "sourceUrl": "https://drucker.institute/quote-library/",
+      "context": "官方名言庫 Strategy and Other Frequently Cited Lines；完整段落續談時間管理。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "drucker-02",
+      "scholarId": "drucker",
+      "text": "有效性，就是做對的事。",
+      "original": "Effectiveness is doing the right things.",
+      "kind": "translation",
+      "sourceTitle": "The Drucker Institute：Quote Library",
+      "sourceUrl": "https://drucker.institute/quote-library/",
+      "context": "官方列為精確原文的第二句，避免常見誤改的 efficiency/effectiveness 版本。",
+      "checkedAt": "2026-10-03"
+    },
+    {
+      "id": "drucker-03",
+      "scholarId": "drucker",
+      "text": "策略是商品，執行是藝術。",
+      "original": "Strategy is a commodity. Execution is an art.",
+      "kind": "translation",
+      "sourceTitle": "The Drucker Institute：Quote Library",
+      "sourceUrl": "https://drucker.institute/quote-library/",
+      "context": "官方名言庫 Strategy and Other Frequently Cited Lines。",
+      "checkedAt": "2026-10-03"
+    }
+  ]
+}
