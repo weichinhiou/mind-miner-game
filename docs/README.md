@@ -6,6 +6,7 @@
 | [版本規劃](roadmap.md) | 版本順序、交付範圍、驗收門檻及依賴 |
 | [架構](architecture.md) | 模組責任、遊戲狀態、資料流與存檔契約 |
 | [開發與驗收](development.md) | Git 工作流程、測試、版本標記與回復方式 |
+| [名句來源](quote-sources.md) | 24 句的原文、譯法、語境與誤歸排除 |
 | [實作紀錄](implementation.md) | 已做決策、測試結果、問題與限制 |
 | [AI 交接](AI_HANDOFF.md) | 當前進度與下一次工作的入口 |
 | [變更紀錄](../CHANGELOG.md) | 已交付版本；不放未來提案 |

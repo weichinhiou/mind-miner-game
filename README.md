@@ -28,6 +28,8 @@ npm run check
 - 收藏詳情包含人物頭像（缺图時用姓名卡）、短介、視角摘要、反思問題與 PRD 提供的來源。
 - 靜音與收藏保存在此瀏覽器。存檔損毀、未知 schema 或容量不足會顯示保存限制，仍可繼續玩；不默默覆蓋舊資料。
 
+每本藏書另帶回一句短句：每位人物 3 句，共 24 句。優先發現未見句子，全數解鎖後避免連續重複；遊戲中即時揭曉，結算及收藏詳情保留原文、語境及來源。英文由本專案繁中編譯，非人物原始中文發言。
+
 ## 設定與檔案
 
 | 位置 | 用途 |
@@ -37,6 +39,7 @@ npm run check
 | `src/render.js` | 原創 Canvas 黑貓、物件、山景與土層繪製 |
 | `src/storage.js` | `thought-miner:save` 命名空間及存檔容錯 |
 | `src/app.js` | 頁面流程、唯一 RAF、DOM 操作、音效、收藏詳情 |
+| `data/quotes.json`、`src/quotes.js` | 查核短句資料與未見優先輪替 |
 | `data/scholars.json` | PRD 第 15 節八位人物原始文字資料 |
 | `tests/game.test.js` | 核心規則自動測試 |
 | `docs/implementation.md` | 盤點、設計取捨、驗證與待補 |
@@ -51,11 +54,11 @@ npm run check
 
 ## 版本與開發文件
 
-目前版本為 `v0.1.1` 本機 MVP；後續建議先補驗收，再做正式入口整合與發布。
+目前版本為 `v0.2.0` 本機 MVP；後續建議先補驗收，再做正式入口整合與發布。
 
 - [文件索引](docs/README.md)：所有專案文件入口。
-- [版本規劃](docs/roadmap.md)：v0.2.0、v0.3.0、v1.0.0 範圍及完成門檻。
+- [版本規劃](docs/roadmap.md)：v0.2.x、v0.3.0、v1.0.0 範圍及完成門檻。
 - [架構](docs/architecture.md)、[開發與驗收](docs/development.md)：模組、保存契約與 Git 流程。
 - [變更紀錄](CHANGELOG.md)、[AI 交接](docs/AI_HANDOFF.md)：已交付內容與下一步。
 
-Git 目前只有本機歷史，尚未設定 origin。程式與文件分開提交，整合於 main 並標記 v0.1.0。重新開工請先確認实际 Git 狀態。
+Git 目前只有本機歷史，尚未設定 origin。程式與文件分開提交，整合於 main 並標記 v0.2.0。重新開工請先確認实际 Git 狀態。

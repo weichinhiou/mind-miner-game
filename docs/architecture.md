@@ -1,6 +1,6 @@
 # 架構與資料契約
 
-日期：2026-10-03。對應 v0.1.1。
+日期：2026-10-03。對應 v0.2.0。
 
 ## 系統邊界
 
@@ -49,3 +49,9 @@ Key：`thought-miner:save`，schemaVersion：1。
 URL 只接受已確認的 http(s) 設定，未配置時入口隱藏。Persona Lens 目前連功能首頁，人物映射尚未啟用。`portrait` 包含 src、sheetWidth、sheetHeight、crop（x、y、size）。DOM 以圓形容器裁切原圖；首頁已收藏預覽、結算卡、收藏冊與詳情共用顯示函式。image error 時移除失敗圖片並保留姓名卡；未解鎖及礦坑藏書保持剪影／通用封面。
 
 物件數量已有 config 欄位，但生成順序及 fallback 位置仍在 engine；新增物件類型／改數量需要同步生成與繪製並更新測試，不能只改 count 即宣稱完整支援。
+
+## 名句發現（v0.2.0）
+
+`data/quotes.json` 保存穩定 id、scholarId、繁中文字、original、kind、sourceTitle、sourceUrl、context；`quotes.js` 純函式先選未見句子，耗盡後排除 lastQuoteId。藏書回支點時由 app 選句並與人物入帳一次保存。遊戲中提示不暫停計時，本局保存每次發現的句子；收藏詳情只揭露已發現句子。
+
+schemaVersion 維持 1，每個人物收藏新增 `quoteIds: []` 與可選 `lastQuoteId`。舊存檔補空陣列，保留分數、靜音、次數與首次日期。已移除的句子 id 不影響人物收藏，新句子自然進入未見池。失敗保存沿用記憶體降級。
