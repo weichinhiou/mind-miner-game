@@ -1,6 +1,6 @@
 # 架構與資料契約
 
-日期：2026-10-03。對應 v0.1.0。
+日期：2026-10-03。對應 v0.1.1。
 
 ## 系統邊界
 
@@ -13,7 +13,7 @@
 | `render.js` | Canvas 素材與場景繪製、DPR backing store | 讀取 Game，保持遊戲規則在 engine |
 | `storage.js` | 本機資料驗證、收藏與最高分保存、失敗降級 | 瀏覽器 storage 由 app 注入，測試可用記憶體替代 |
 | `app.js` | 頁面、RAF、輸入、暫停、音效、內容載入與 callback 組裝 | 唯一的瀏覽器整合層 |
-| `scholars.json` | 人物資料、來源、編寫轉譯 | 人物 id 穩定；portrait 與 personaLensKey 目前皆 null |
+| `scholars.json` | 人物資料、來源、編寫轉譯 | 人物 id 穩定；portrait 包含圖源與裁切座標，personaLensKey 仍為 null |
 
 ## 狀態與入帳
 
@@ -46,6 +46,6 @@ Key：`thought-miner:save`，schemaVersion：1。
 
 ## 後續整合
 
-URL 只接受已確認的 http(s) 設定，未配置時入口隱藏。Persona Lens 目前連功能首頁，人物映射尚未啟用。`portrait` 欄位預留於資料中；目前詳情仍以姓名卡繪製，匯入頭像時也需修改顯示與失敗替代。
+URL 只接受已確認的 http(s) 設定，未配置時入口隱藏。Persona Lens 目前連功能首頁，人物映射尚未啟用。`portrait` 包含 src、sheetWidth、sheetHeight、crop（x、y、size）。DOM 以圓形容器裁切原圖；首頁已收藏預覽、結算卡、收藏冊與詳情共用顯示函式。image error 時移除失敗圖片並保留姓名卡；未解鎖及礦坑藏書保持剪影／通用封面。
 
 物件數量已有 config 欄位，但生成順序及 fallback 位置仍在 engine；新增物件類型／改數量需要同步生成與繪製並更新測試，不能只改 count 即宣稱完整支援。
