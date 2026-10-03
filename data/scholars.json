@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": "1.0",
+  "language": "zh-TW",
+  "summaryType": "editorial-paraphrase",
+  "scholars": [
+    {
+      "id": "feynman",
+      "nameZh": "費曼",
+      "nameEn": "Richard P. Feynman",
+      "birthYear": 1918,
+      "deathYear": 1988,
+      "era": "20 世紀",
+      "field": "理論物理、科學教育與科學誠信",
+      "intro": "美國理論物理學家，因量子電動力學研究與兩位學者共同獲得1965年諾貝爾物理學獎。他善於用直觀方式解釋複雜概念，也重視對證據保持誠實。借用他的視角，可以把難懂的問題拆開，找出自己還說不清楚的地方。",
+      "lensSummary": "用白話重新解釋，找出理解的漏洞。",
+      "coreMethods": [
+        "概念拆解",
+        "簡單語言解釋",
+        "辨識理解缺口",
+        "科學誠信"
+      ],
+      "reflectionQuestion": "如果不用專有名詞，我能把這件事說清楚嗎？",
+      "contentNote": "「費曼學習法」是後人依其學習與教學精神整理的方法，勿寫成他正式提出的完整教育理論。",
+      "sources": [
+        {
+          "title": "Richard Feynman 官方網站：Biography",
+          "url": "https://www.richardfeynman.com/about/bio.html"
+        }
+      ],
+      "lifeYearsLabel": "1918～1988年",
+      "portrait": null,
+      "portraitAlt": "費曼人物頭像",
+      "personaLensKey": null,
+      "tags": [
+        "概念拆解",
+        "簡單語言解釋",
+        "辨識理解缺口",
+        "科學誠信"
+      ],
+      "enabled": true,
+      "sourceCheckedAt": "2026-10-03"
+    },
+    {
+      "id": "deming",
+      "nameZh": "戴明",
+      "nameEn": "W. Edwards Deming",
+      "birthYear": 1900,
+      "deathYear": 1993,
+      "era": "20 世紀",
+      "field": "統計、品質管理與系統改善",
+      "intro": "美國統計學家與管理思想家，對戰後日本及全球品質改善產生重要影響。他強調理解系統、變異、知識與人的心理，透過持續學習改善成果。借用他的視角，可以先檢查流程與回饋，理解錯誤為何反覆發生，再規劃改善。",
+      "lensSummary": "看懂系統與變異，讓改善形成持續學習的循環。",
+      "coreMethods": [
+        "系統思考",
+        "變異辨識",
+        "PDSA",
+        "持續改善"
+      ],
+      "reflectionQuestion": "如果錯誤反覆發生，流程中哪裡需要改變？",
+      "contentNote": "PDSA 的 S 為 Study；戴明強調研究結果與學習，不將其簡化為只做檢查的 PDCA。",
+      "sources": [
+        {
+          "title": "The W. Edwards Deming Institute：About Dr. Deming",
+          "url": "https://deming.org/learn/about-dr-deming/"
+        },
+        {
+          "title": "The W. Edwards Deming Institute：PDSA Cycle",
+          "url": "https://deming.org/explore/pdsa/"
+        }
+      ],
+      "lifeYearsLabel": "1900～1993年",
+      "portrait": null,
+      "portraitAlt": "戴明人物頭像",
+      "personaLensKey": null,
+      "tags": [
+        "系統思考",
+        "變異辨識",
+        "PDSA",
+        "持續改善"
+      ],
+      "enabled": true,
+      "sourceCheckedAt": "2026-10-03"
+    },
+    {
+      "id": "popper",
+      "nameZh": "波普爾",
+      "nameEn": "Karl Popper",
+      "birthYear": 1902,
+      "deathYear": 1994,
+      "era": "20 世紀",
+      "field": "科學哲學與知識論",
+      "intro": "奧地利出生的英國哲學家，以可證偽性與批判理性主義聞名。他關心科學理論如何接受檢驗，主張透過猜想與反駁推進知識。借用他的視角，可以找出可能推翻想法的證據，避免只收集支持自己的案例，讓研究更能接受挑戰。",
+      "lensSummary": "先問哪些證據可能推翻想法，再設計檢驗。",
+      "coreMethods": [
+        "可證偽性",
+        "猜想與反駁",
+        "批判理性主義",
+        "反例檢驗"
+      ],
+      "reflectionQuestion": "什麼結果出現時，我會修改或放棄這個假說？",
+      "contentNote": "可證偽性涉及科學與非科學的區分；不能把暫未被推翻當成永遠正確，也不能把非科學直接等同毫無價值。",
+      "sources": [
+        {
+          "title": "Stanford Encyclopedia of Philosophy：Karl Popper",
+          "url": "https://plato.stanford.edu/entries/popper/"
+        }
+      ],
+      "lifeYearsLabel": "1902～1994年",
+      "portrait": null,
+      "portraitAlt": "波普爾人物頭像",
+      "personaLensKey": null,
+      "tags": [
+        "可證偽性",
+        "猜想與反駁",
+        "批判理性主義",
+        "反例檢驗"
+      ],
+      "enabled": true,
+      "sourceCheckedAt": "2026-10-03"
+    },
+    {
+      "id": "munger",
+      "nameZh": "蒙格",
+      "nameEn": "Charlie Munger",
+      "birthYear": 1924,
+      "deathYear": 2023,
+      "era": "20～21 世紀",
+      "field": "投資、跨領域思考與決策",
+      "intro": "美國投資人，長年擔任波克夏海瑟威副董事長，也是巴菲特的重要事業夥伴。他提倡從不同學科建立心智模型，並用反向思考辨識失敗條件。借用他的視角，可以檢查單一專業的盲點，考慮誘因與偏誤，讓決策看得更全面。",
+      "lensSummary": "借用多種模型，反過來找出容易失敗的條件。",
+      "coreMethods": [
+        "多元心智模型",
+        "反向思考",
+        "認知偏誤辨識",
+        "誘因分析"
+      ],
+      "reflectionQuestion": "如果要把這件事搞砸，最可能有哪些做法？",
+      "contentNote": "人物定位為投資人與決策思想來源，勿誤稱為正式的學術理論創立者；不將此卡作為投資建議。",
+      "sources": [
+        {
+          "title": "Stripe Press：Poor Charlie’s Almanack",
+          "url": "https://press.stripe.com/poor-charlies-almanack"
+        }
+      ],
+      "lifeYearsLabel": "1924～2023年",
+      "portrait": null,
+      "portraitAlt": "蒙格人物頭像",
+      "personaLensKey": null,
+      "tags": [
+        "多元心智模型",
+        "反向思考",
+        "認知偏誤辨識",
+        "誘因分析"
+      ],
+      "enabled": true,
+      "sourceCheckedAt": "2026-10-03"
+    },
+    {
+      "id": "confucius",
+      "nameZh": "孔子",
+      "nameEn": "Confucius",
+      "birthYear": -551,
+      "deathYear": -479,
+      "lifeYearsLabel": "西元前551～479年（傳統紀年）",
+      "era": "春秋時期",
+      "field": "教育、倫理與儒家思想",
+      "intro": "中國古代思想家與教育家，其言行主要見於弟子及後學傳承的《論語》。他重視學習、思考、實踐與修養，也關注如何引導不同學生。借用他的視角，可以把新知連回過去經驗，反思學到什麼，並思考如何在生活與工作中實踐。",
+      "lensSummary": "讓學習、思考與實踐連在一起。",
+      "coreMethods": [
+        "學思並重",
+        "溫故知新",
+        "啟發式引導",
+        "因材施教精神"
+      ],
+      "reflectionQuestion": "我學到的內容，如何轉成下一次做得到的行動？",
+      "contentNote": "生卒年採傳統紀年；「因材施教」為後世對其教學實踐的概括。負數年僅供資料表示，不用於精確年齡計算。",
+      "sources": [
+        {
+          "title": "Stanford Encyclopedia of Philosophy：Confucius",
+          "url": "https://plato.stanford.edu/entries/confucius/"
+        }
+      ],
+      "portrait": null,
+      "portraitAlt": "孔子人物頭像",
+      "personaLensKey": null,
+      "tags": [
+        "學思並重",
+        "溫故知新",
+        "啟發式引導",
+        "因材施教精神"
+      ],
+      "enabled": true,
+      "sourceCheckedAt": "2026-10-03"
+    },
+    {
+      "id": "osler",
+      "nameZh": "奧斯勒",
+      "nameEn": "William Osler",
+      "birthYear": 1849,
+      "deathYear": 1919,
+      "era": "19～20 世紀",
+      "field": "內科、臨床教學與醫學教育",
+      "intro": "加拿大醫師，為約翰霍普金斯醫院創院四位重要醫師之一，對臨床醫學教育影響深遠。他推動學生到病人床邊學習病史詢問、檢查與觀察。借用他的視角，可以把書本與指標帶回真實現場，理解個別情境中的證據與人的需要。",
+      "lensSummary": "回到現場，讓直接觀察與書本知識互相印證。",
+      "coreMethods": [
+        "床邊教學",
+        "直接觀察",
+        "臨床推理",
+        "現場學習"
+      ],
+      "reflectionQuestion": "除了書本和數字，現場還有哪些值得觀察的線索？",
+      "contentNote": "此卡介紹醫學教育精神，不提供個案診斷或治療指示；不將現代 EPA 或 WBA 誤寫成其原創制度。",
+      "sources": [
+        {
+          "title": "Johns Hopkins Medicine：The Founding Physicians",
+          "url": "https://www.hopkinsmedicine.org/about/history/history-of-jhh/founding-physicians"
+        }
+      ],
+      "lifeYearsLabel": "1849～1919年",
+      "portrait": null,
+      "portraitAlt": "奧斯勒人物頭像",
+      "personaLensKey": null,
+      "tags": [
+        "床邊教學",
+        "直接觀察",
+        "臨床推理",
+        "現場學習"
+      ],
+      "enabled": true,
+      "sourceCheckedAt": "2026-10-03"
+    },
+    {
+      "id": "nightingale",
+      "nameZh": "南丁格爾",
+      "nameEn": "Florence Nightingale",
+      "birthYear": 1820,
+      "deathYear": 1910,
+      "era": "19～20 世紀",
+      "field": "護理改革、公共衛生與統計",
+      "intro": "英國護理改革者與統計應用先驅，曾組織克里米亞戰爭中的傷病照護，並推動護理教育與衛生改革。她運用數據與圖表呈現死亡原因和環境問題。借用她的視角，可以看見被忽略的照護條件，把資料轉成清楚可理解的改善方向。",
+      "lensSummary": "用資料看見環境問題，讓證據推動改善。",
+      "coreMethods": [
+        "統計分析",
+        "資料視覺化",
+        "環境與衛生改善",
+        "證據溝通"
+      ],
+      "reflectionQuestion": "哪些資料能揭露我們習以為常、卻可以改善的問題？",
+      "contentNote": "不把她描述成單靠提燈照護的象徵，也不聲稱她發明了所有統計圖表。",
+      "sources": [
+        {
+          "title": "Florence Nightingale Museum：Florence Nightingale",
+          "url": "https://www.florence-nightingale.co.uk/about-florence-nightingale/"
+        },
+        {
+          "title": "The National Archives：Florence Nightingale",
+          "url": "https://www.nationalarchives.gov.uk/education/resources/florence-nightingale/"
+        }
+      ],
+      "lifeYearsLabel": "1820～1910年",
+      "portrait": null,
+      "portraitAlt": "南丁格爾人物頭像",
+      "personaLensKey": null,
+      "tags": [
+        "統計分析",
+        "資料視覺化",
+        "環境與衛生改善",
+        "證據溝通"
+      ],
+      "enabled": true,
+      "sourceCheckedAt": "2026-10-03"
+    },
+    {
+      "id": "drucker",
+      "nameZh": "杜拉克",
+      "nameEn": "Peter F. Drucker",
+      "birthYear": 1909,
+      "deathYear": 2005,
+      "era": "20～21 世紀",
+      "field": "管理、知識工作與組織成果",
+      "intro": "奧地利出生的管理思想家，長期研究組織、知識工作者與有效管理，是現代管理學的重要奠基者。他關心組織的目的、人的貢獻與成果。借用他的視角，可以先釐清服務對象與真正目標，再決定工作優先順序，避免把忙碌當成有效。",
+      "lensSummary": "先釐清要產生的成果，再決定值得做的工作。",
+      "coreMethods": [
+        "目標管理",
+        "知識工作",
+        "有效性",
+        "成果與貢獻"
+      ],
+      "reflectionQuestion": "這項工作真正要為誰帶來什麼成果？",
+      "contentNote": "不將 KPI、OKR 等後來的管理工具全部歸為杜拉克原創；此處是方法轉譯。",
+      "sources": [
+        {
+          "title": "The Drucker Institute：About Peter Drucker",
+          "url": "https://drucker.institute/about-peter-drucker/"
+        }
+      ],
+      "lifeYearsLabel": "1909～2005年",
+      "portrait": null,
+      "portraitAlt": "杜拉克人物頭像",
+      "personaLensKey": null,
+      "tags": [
+        "目標管理",
+        "知識工作",
+        "有效性",
+        "成果與貢獻"
+      ],
+      "enabled": true,
+      "sourceCheckedAt": "2026-10-03"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { Game, generateBoard, segmentHit } from '../src/engine.js';
+import { createStore } from '../src/storage.js';
+import { CONFIG, sceneSize } from '../src/config.js';
+const ids=JSON.parse(readFileSync(new URL('../data/scholars.json',import.meta.url))).scholars.map(s=>s.id);
+function playing(options={}) {const g=new Game({scholars:ids,...options});g.update(3);return g;}
+function seedRandom(seed){return()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};}
+test('PRD imports eight unique people with full editorial data',()=>{const {scholars}=JSON.parse(readFileSync(new URL('../data/scholars.json',import.meta.url)));assert.equal(scholars.length,8);assert.equal(new Set(ids).size,8);for(const s of scholars){for(const key of ['nameZh','nameEn','lifeYearsLabel','field','intro','lensSummary','reflectionQuestion'])assert.ok(s[key]);assert.ok(s.sources.every(x=>new URL(x.url).protocol==='https:'));assert.equal(s.portrait,null);assert.equal(s.personaLensKey,null);}});
+test('countdown blocks input and does not consume play time',()=>{const g=new Game({scholars:ids});assert.equal(g.fire(),false);g.update(2);assert.equal(g.remaining,60);g.update(1);assert.equal(g.phase,'playing');assert.equal(g.remaining,60);assert.equal(g.fire(),true);assert.equal(g.fire(),false);});
+test('swept collision catches nearest item even at low frame rate',()=>{const g=playing();g.items=[{id:2,type:'gem',x:480,y:370,radius:14,score:100,weight:1},{id:1,type:'smallGold',x:480,y:250,radius:19,score:20,weight:1.2}];g.fire();g.update(.6);assert.equal(g.hook.caught.id,1);assert.equal(g.score,0);assert.equal(g.fire(),false);g.update(1);assert.equal(g.score,20);g.update(.2);assert.equal(g.score,20);});
+test('expiration occurs before delivery; no score, unlock, or collection callback',()=>{let collects=0,finishes=0;const g=playing({onCollect:()=>collects++,onFinish:()=>finishes++});g.hook={state:'returning',length:31,angle:0,caught:{type:'book',score:50,weight:1.8,scholarId:ids[0]}};g.remaining=.01;g.update(.02);g.update(1);assert.equal(g.score,0);assert.deepEqual(g.discoveries,[]);assert.equal(collects,0);assert.equal(finishes,1);});
+test('pause holds all state and resumes a loaded return',()=>{const g=playing();g.hook={state:'returning',angle:.4,length:180,caught:{type:'rock',weight:4,score:5,x:550,y:260}};const before=JSON.stringify(g);g.pause();const paused=JSON.stringify(g);g.update(10);assert.equal(JSON.stringify(g),paused);g.resume();assert.equal(JSON.stringify(g),before);g.update(.1);assert.equal(g.remaining,59.9);assert.ok(g.hook.length<180);});
+test('empty return restores swing; clearing board replenishes without resetting score/time',()=>{const g=playing();g.items=[];g.hook.state='empty';g.hook.length=40;g.score=100;g.update(.1);assert.equal(g.hook.state,'swing');assert.equal(g.items.length,12);assert.equal(g.score,100);assert.equal(g.remaining,59.9);});
+test('weight determines return speed',()=>{for(const type of ['largeGold','rock']){const g=playing();g.hook={state:'returning',angle:0,length:300,caught:{type,...CONFIG.objects[type]}};g.update(.2);assert.ok(Math.abs(g.hook.length-(300-420/CONFIG.objects[type].weight*.2))<1e-8);}});
+test('resize pauses and preserves item identity, hook cargo, elapsed time and score',()=>{const g=playing();g.hook={state:'returning',angle:.6,length:200,caught:{id:99,type:'book',...CONFIG.objects.book,x:540,y:300,scholarId:ids[0]}};g.score=50;g.remaining=35;const before=g.items.map(x=>x.id);g.resize(true);assert.equal(g.phase,'paused');assert.deepEqual(g.items.map(x=>x.id),before);assert.equal(g.hook.caught.id,99);assert.equal(g.remaining,35);assert.equal(g.score,50);g.resize(false);assert.ok(Math.abs(g.hook.angle-.6)<1e-8);assert.ok(Math.abs(g.hook.length-200)<1e-8);});
+test('generation: 2000 boards plus exhausted randomness are bounded, separated, reachable and include accessible shallow book',()=>{
+  for(const portrait of [false,true])for(let seed=0;seed<1001;seed++){
+    const size=sceneSize(portrait),items=generateBoard(size,ids,seed===1000?()=>0:seedRandom(seed));assert.equal(items.length,12);assert.equal(new Set(items.filter(x=>x.type==='book').map(x=>x.scholarId)).size,2);
+    const origin={x:size.width/2,y:124};
+    for(const [i,p] of items.entries()){
+      assert.ok(p.x-p.radius>=0&&p.x+p.radius<=size.width&&p.y-p.radius>=200&&p.y+p.radius<=size.height,`bounds ${portrait} ${seed} ${i}`);
+      assert.ok(Math.abs(Math.atan2(p.x-origin.x,p.y-origin.y))<=CONFIG.swingAngle,`reach ${portrait} ${seed} ${i}`);
+      for(const q of items.slice(i+1))assert.ok(Math.hypot(p.x-q.x,p.y-q.y)>p.radius+q.radius,`overlap ${portrait} ${seed} ${i} ${q.id}`);
+    }
+    const book=items[0];assert.ok(book.y<350);assert.ok(!items.slice(1).some(q=>segmentHit(origin,book,q,q.radius+CONFIG.hookRadius)!==null),`book blocked ${portrait} ${seed}`);
+  }
+});
+function memoryStorage(raw=null){return{raw,getItem(){return this.raw;},setItem(key,value){this.raw=value;}};}
+test('new/duplicate discoveries save immediately, keep first date and increment one entry',()=>{const storage=memoryStorage(),store=createStore(storage);assert.equal(store.discover(ids[0]),true);const first=store.data.collection[ids[0]].firstUnlockedAt;assert.equal(store.discover(ids[0]),false);assert.equal(store.data.collection[ids[0]].count,2);assert.equal(store.data.collection[ids[0]].firstUnlockedAt,first);assert.equal(Object.keys(store.data.collection).length,1);assert.equal(createStore(storage).data.collection[ids[0]].count,2);assert.equal(store.data.bestScore,0);assert.equal(store.finish(50),true);assert.equal(store.finish(20),false);assert.equal(createStore(storage).data.bestScore,50);});
+test('corrupt/unknown saves and disabled/quota storage keep game playable and preserve old data',()=>{for(const raw of ['broken',JSON.stringify({schemaVersion:99,collection:{keep:true}}),JSON.stringify({schemaVersion:1,bestScore:0,mute:false,collection:{bad:{count:-1}}})]){const storage=memoryStorage(raw),store=createStore(storage);assert.equal(store.available,false);store.discover(ids[0]);store.finish(50);assert.equal(storage.raw,raw);}const store=createStore({getItem(){return null;},setItem(){throw Error('quota');}});store.discover(ids[0]);assert.equal(store.available,false);assert.equal(store.data.collection[ids[0]].count,1);});
