@@ -1,6 +1,6 @@
 # 架構與資料契約
 
-日期：2026-10-05。對應 v0.2.4。
+日期：2026-10-05。對應 v0.2.5。
 
 ## 系統邊界
 
@@ -62,11 +62,13 @@ schemaVersion 維持 1，每個人物收藏新增 `quoteIds: []` 與可選 `last
 
 退役句子不重用 id；保留的 id 必須仍代表同一人物與同一原文。保存保留歷史 quoteIds，進度僅計當前有效池，因此退役項目不會誤解鎖新句。quote-history-v0.2.0.json 為已交付 id 的相容性快照。
 
-## 場景、採礦設備與寶物素材（v0.2.2–v0.2.4）
+## 場景、採礦設備與寶物素材（v0.2.2–v0.2.5）
 
 render.loadSceneAssets 在內容啟動前載入本機圖片，成功存於渲染層，失敗允許程式繪圖。金／銀礦及藏書用透明主體裁切框正規化顯示，再按各尺寸碰撞半徑等比縮放。各物件分數、重量、半徑及每盤數量集中於 config.js 控制，盤面生成器依 count 建立。礦坑地表切線對齊既有邏輯y=200，兩區段縮放，不更改碰撞、origin或物品座標。背景金塊不參與碰撞；活物件亮框與半透明背板、鉤繩對比由render管理；地下遮罩 alpha 為 a8 以兼顧辨識與氣氛。場景來源見 assets/scene/README.md，寶物見 assets/treasures/README.md。server 必須先讀檔再寫200 header，以免缺圖404觸發重複寫header造成程序退出。
 render.loadSceneAssets 在內容啟動前載入本機圖片，成功存於渲染層，失敗允許程式繪圖。金／銀礦及藏書用透明主體裁切框正規化顯示，再按各尺寸碰撞半徑等比縮放。各物件分數、重量、半徑及每盤數量集中於 config.js 控制，盤面生成器依 count 建立。礦坑地表切線對齊既有邏輯y=200，兩區段縮放，不更改碰撞或物品座標。背景金塊不參與碰撞；活物件亮框與半透明背板、鉤繩對比由render管理；地下遮罩 alpha 為 a8 以兼顧辨識與氣氛。場景來源見 assets/scene/README.md，寶物見 assets/treasures/README.md。server 必須先讀檔再寫200 header，以免缺圖404觸發重複寫header造成程序退出。
 
-v0.2.4 將平台、絞盤與三爪抓鉤作為一組設備素材。config.equipmentLayout(size) 是渲染與引擎共用的唯一定位來源：桌面與直向尺寸會等比縮放平台與絞盤，平台頂面與絞盤底座落在同一高度，winch cable outlet、Game.origin 三者垂直對齊。resize 依新舊 origin 將盤面、鉤尖及貨物座標映射至新畫布。render 以素材透明邊界裁切留白；鋼索從 outlet 連至 game.point，抓鉤 connector 對齊物理鉤尖並以目前 angle 旋轉。閒置時重畫平台前板及平台上的角色／絞盤，將短線與鉤子收至平台後方；伸出、抓取與回收期間改在設備前方繪製。
+v0.2.4 將平台、絞盤與三爪抓鉤作為一組設備素材。config.equipmentLayout(size) 是渲染與引擎共用的唯一定位來源：桌面與直向尺寸會等比縮放平台與絞盤，平台頂面與絞盤底座落在同一高度，winch cable outlet、Game.origin 三者垂直對齊。resize 依新舊 origin 將盤面、鉤尖及貨物座標映射至新畫布。render 以素材透明邊界裁切留白；鋼索從 outlet 連至 game.point，抓鉤 connector 對齊物理鉤尖並以目前 angle 旋轉。
+
+v0.2.5 明確固定 Canvas Z-order：背景 → 平台／角色／絞盤 → 地下目標與載物 → 鋼索 → 抓鉤。待機時也不再重畫平台前板覆蓋短鋼索或抓鉤，使線與鉤在所有狀態維持可見前景。此為純繪製順序調整，不改 Game 狀態、origin、angle、碰撞尺寸、玩法或入帳。
 
 圖片尺寸／旋轉只控制視覺，CONFIG.hookRadius 仍為 7，礦物與書本 hitbox、角度、射出速度、重量回收速度、分數與入帳流程皆未調整。場景組裝參考圖不是 production asset，也未複製進專案。素材檔名與透明通道檢查記於 assets/scene/README.md。
