@@ -1,0 +1,122 @@
+[
+  {
+    "id": "feynman-01",
+    "scholarId": "feynman",
+    "originalHash": "8b5b17b3a64bd686a111bdbe774e8e68ec5cf9f5e2562acd3522f0a432cda5ef"
+  },
+  {
+    "id": "feynman-02",
+    "scholarId": "feynman",
+    "originalHash": "dd0f6810182143859406b1b39f04a82d92a700d2b1d25c1525eebb9aa73a9a8e"
+  },
+  {
+    "id": "feynman-03",
+    "scholarId": "feynman",
+    "originalHash": "2a38d344063a670a1f9409cf475676088f4b911bb7d6d397b33ac1dad739a1b1"
+  },
+  {
+    "id": "deming-01",
+    "scholarId": "deming",
+    "originalHash": "402f7082f5b5ccf9ca3429473045a90b4e29652b64bb035f4d057ff2326ead5d"
+  },
+  {
+    "id": "deming-02",
+    "scholarId": "deming",
+    "originalHash": "aaed7eeab324a3c6fcb71395f7fc03ab44faf0d8d2707d9ed9ff8bbd12eb3cd5"
+  },
+  {
+    "id": "deming-03",
+    "scholarId": "deming",
+    "originalHash": "e3a980f0759d494bda8e3714ad9462f08cf519c90e606b85c1dffd9c50d3ffc4"
+  },
+  {
+    "id": "popper-01",
+    "scholarId": "popper",
+    "originalHash": "5dc8750ec9d29aab623b30a41595265044c467bac515c86462139bedfd262810"
+  },
+  {
+    "id": "popper-02",
+    "scholarId": "popper",
+    "originalHash": "d604c59ad187f81528e49d54189ea804fbaf8f685df4ba20c5c0284bcf9e988e"
+  },
+  {
+    "id": "popper-03",
+    "scholarId": "popper",
+    "originalHash": "2eecbe9647d95a68f800325ace4fb5e34a2f4ce6e32dc5e615ced6b8e9fc21ff"
+  },
+  {
+    "id": "munger-01",
+    "scholarId": "munger",
+    "originalHash": "3bdfcfe7eb85be1174068dce3ca95034ea44f03c3942569ab8c8d0e0694b2527"
+  },
+  {
+    "id": "munger-02",
+    "scholarId": "munger",
+    "originalHash": "e553c32d17c3d3aeabc56ab67d488037c49c50d2d82970fa98775012aa6e92aa"
+  },
+  {
+    "id": "munger-03",
+    "scholarId": "munger",
+    "originalHash": "bc3858b8051a9326c62411e2a5c38b8a481abf1d1e0e8c00ef0db64962f1acff"
+  },
+  {
+    "id": "confucius-01",
+    "scholarId": "confucius",
+    "originalHash": "84972219ac11da1fc16b3fd77a4424b75b9387a160db98e4349cd3fa28f5e66b"
+  },
+  {
+    "id": "confucius-02",
+    "scholarId": "confucius",
+    "originalHash": "58c922e10c3b38804d6144c7b1a3ee8a964772878837cd55d66ba708bdea5446"
+  },
+  {
+    "id": "confucius-03",
+    "scholarId": "confucius",
+    "originalHash": "803a327438aa1429b1a89c9ecf137cdb81df391bba21e48540d1078f7f3ca7be"
+  },
+  {
+    "id": "osler-01",
+    "scholarId": "osler",
+    "originalHash": "94e7a5354826ffac1760544dc92ff4e15c5ad678470b95c6aeb06db6f116ab6b"
+  },
+  {
+    "id": "osler-02",
+    "scholarId": "osler",
+    "originalHash": "6c255f3019a2eb209f34921e2d19200496cd0a7fe4d7d27166d295a0f01f525b"
+  },
+  {
+    "id": "osler-03",
+    "scholarId": "osler",
+    "originalHash": "ed5efc2ccf1e5a4525c0a077a2687789871a3ed191d14bc25a76e15d6266e65c"
+  },
+  {
+    "id": "nightingale-01",
+    "scholarId": "nightingale",
+    "originalHash": "09d3ad00e74552e88aa505f2ba2e16d98f75b44f5c5efebb9d0fa4c62de1b969"
+  },
+  {
+    "id": "nightingale-02",
+    "scholarId": "nightingale",
+    "originalHash": "06f2c9d6ec7f15cb05183a5238984aa69725a5a1a53f4a00ebeb1989f1d37b21"
+  },
+  {
+    "id": "nightingale-03",
+    "scholarId": "nightingale",
+    "originalHash": "8620c8bbda73b00ef6baa8a0577e1c78587f6f06e962fb01fae2f021c04ba2de"
+  },
+  {
+    "id": "drucker-01",
+    "scholarId": "drucker",
+    "originalHash": "98db07d3521061ffdfda71bbb81e33cefa9de946b726db2ec605c38acc717578"
+  },
+  {
+    "id": "drucker-02",
+    "scholarId": "drucker",
+    "originalHash": "233a8b561fde74ecb9b3d3592d8c098f3313f8240eb206ca625206a6ec9b8f8b"
+  },
+  {
+    "id": "drucker-03",
+    "scholarId": "drucker",
+    "originalHash": "62a44131486132f51a3eb406839cf4af465b946e58dcf03a5a70f341a1d1b331"
+  }
+]
