@@ -5,10 +5,13 @@ export const CONFIG = Object.freeze({
   hookRadius: 7, itemGap: 12, generationAttempts: 120,
   portalUrl: null, personaLensUrl: null,
   objects: {
-    smallGold: { score: 20, weight: 1.2, radius: 19, count: 4, label: '小金塊' },
-    largeGold: { score: 80, weight: 3, radius: 32, count: 2, label: '大金塊' },
+    smallGold: { score: 20, weight: 1.2, radius: 18, count: 2, label: '小金礦' },
+    mediumGold: { score: 45, weight: 2.1, radius: 24, count: 1, label: '中金礦' },
+    largeGold: { score: 80, weight: 3, radius: 31, count: 1, label: '大金礦' },
+    smallSilver: { score: 15, weight: 1.3, radius: 18, count: 2, label: '小銀礦' },
+    mediumSilver: { score: 30, weight: 2.2, radius: 24, count: 2, label: '中銀礦' },
+    largeSilver: { score: 60, weight: 3.2, radius: 30, count: 1, label: '大銀礦' },
     gem: { score: 100, weight: 1, radius: 14, count: 1, label: '寶石' },
-    rock: { score: 5, weight: 4, radius: 27, count: 3, label: '石頭' },
     book: { score: 50, weight: 1.8, radius: 22, count: 2, label: '學者藏書' },
   },
 });

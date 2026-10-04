@@ -14,10 +14,15 @@ function shuffle(values, random) {
   for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
   return arr;
 }
+function boardTypes() {
+  return ['book', 'book', ...Object.entries(CONFIG.objects)
+    .filter(([type]) => type !== 'book')
+    .flatMap(([type, spec]) => Array(spec.count).fill(type))];
+}
 export function generateBoard(size, scholars, random = Math.random) {
   const origin = { x: size.width / 2, y: 124 };
   const ids = shuffle(scholars, random);
-  const types = ['book', 'book', 'largeGold', 'largeGold', 'rock', 'rock', 'rock', 'smallGold', 'smallGold', 'smallGold', 'smallGold', 'gem'];
+  const types = boardTypes();
   const items = [];
   const valid = (p, r) => p.x >= r + 16 && p.x <= size.width - r - 16 && p.y >= 215 + r && p.y <= size.height - r - 24 && Math.abs(Math.atan2(p.x - origin.x, p.y - origin.y)) < CONFIG.swingAngle - .04 && items.every(q => Math.hypot(p.x - q.x, p.y - q.y) > r + q.radius + CONFIG.itemGap);
   for (const [i, type] of types.entries()) {
@@ -37,7 +42,7 @@ export function generateBoard(size, scholars, random = Math.random) {
 function fallbackBoard(size, ids) {
   const portrait = size.width < size.height;
   const slots = portrait ? [[.35,.20],[.68,.33],[.22,.52],[.70,.65],[.47,.45],[.18,.78],[.85,.85],[.62,.86],[.44,.72],[.82,.48],[.14,.31],[.48,.93]] : [[.40,.20],[.70,.45],[.18,.64],[.80,.80],[.50,.64],[.30,.83],[.88,.35],[.12,.40],[.62,.73],[.33,.50],[.60,.28],[.48,.94]];
-  const types = ['book','book','largeGold','largeGold','rock','rock','rock','smallGold','smallGold','smallGold','smallGold','gem'];
+  const types = boardTypes();
   return slots.map(([x,y], i) => ({ id:i, type:types[i], x: x * size.width, y: 225 + y * (size.height - 280), ...CONFIG.objects[types[i]], scholarId: i < 2 ? ids[i] : null }));
 }
 export class Game {

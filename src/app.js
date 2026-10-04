@@ -20,7 +20,7 @@ function enableAudio() { try { audio ??= new (window.AudioContext || window.webk
 function sound(type) {
   if (store.data.mute || !audio || audio.state !== 'running') return;
   try {
-    const tones = { fire:[250,180], smallGold:[640,880],largeGold:[640,880],gem:[880,1200],rock:[120,80],book:[520,780,1040] }[type] || [440];
+    const tones = { fire:[250,180], smallGold:[640,880],mediumGold:[620,820],largeGold:[600,780],smallSilver:[520,680],mediumSilver:[480,620],largeSilver:[440,560],gem:[880,1200],book:[520,780,1040] }[type] || [440];
     tones.forEach((frequency,i)=> {const osc=audio.createOscillator(),gain=audio.createGain();osc.type='sine';osc.frequency.value=frequency;gain.gain.setValueAtTime(.0001,audio.currentTime+i*.08);gain.gain.exponentialRampToValueAtTime(.07,audio.currentTime+i*.08+.01);gain.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+i*.08+.17);osc.connect(gain).connect(audio.destination);activeSounds.add(osc);osc.onended=()=>{activeSounds.delete(osc);osc.disconnect();gain.disconnect();};osc.start(audio.currentTime+i*.08);osc.stop(audio.currentTime+i*.08+.18);});
   } catch {}
 }
@@ -35,11 +35,13 @@ function portrait(s, mini=false) {
   return '<div class="portrait with-image'+(mini?' mini-portrait':'')+'" role="img" aria-label="'+escapeHtml(s.portraitAlt)+'"><span aria-hidden="true">'+initial+'</span><img src="'+escapeHtml(p.src)+'" alt="" style="'+style+'" decoding="async"></div>';
 }
 function miniCards() {return scholars.map(s=>`<div class="mini-card ${store.data.collection[s.id]?'unlocked':''}">${store.data.collection[s.id]?portrait(s,true):'<span class="book-shape">▤</span>'}${store.data.collection[s.id]?escapeHtml(s.nameZh):'尚未發現'}</div>`).join('');}
+const treasureAsset={smallGold:'gold-small.png',mediumGold:'gold-medium.png',largeGold:'gold-large.png',smallSilver:'silver-small.png',mediumSilver:'silver-medium.png',largeSilver:'silver-large.png',book:'thought-book.png'};
+function guideGroup(title,entries,className='') {return '<div class="guide-group '+className+'"><b>'+title+'</b><div class="guide-levels">'+entries.map(([type,label,score])=>'<span class="guide-level">'+(type==='gem'?'<span class="guide-gem">◇</span>':'<img src="assets/treasures/'+treasureAsset[type]+'" alt="" onerror="this.hidden=true">')+'<span>'+label+'<small>'+score+' 分</small></span></span>').join('')+'</div></div>';}
 function home() {
   game=null;
   view(`<section class="home-top"><div><span class="eyebrow">A LITTLE MINE. A WORLD OF IDEAS.</span><h1>思想淘金記</h1><p class="subtitle">挖出寶藏，也遇見一種新的眼光。</p></div><div class="best"><span>本機最高分</span><strong>${store.data.bestScore.toLocaleString()}</strong></div></section>
   <section class="home-layout"><div class="scene-frame"><canvas id="preview" aria-label="黑貓坐在礦坑上方，地下藏著金塊與思想藏書"></canvas><div class="scene-caption"><span>✦ 60 秒的地下探險 · ${quotes.length} 句教學與研究短句</span><span>看準方向，把寶藏帶回來。</span></div></div><aside class="intro-panel"><img class="hero-mascot" src="assets/scene/miner-cat.png" alt="戴著礦工帽、揮手迎接你的黑貓礦工" onerror="this.hidden=true"><span class="eyebrow">HOW TO PLAY</span><h2>一鉤寶藏，<br>一點新發現。</h2><ol class="instructions"><li><b>01</b>看準方向，點一下出鉤。</li><li><b>02</b>越重的寶物，拉回越慢。</li><li><b>03</b>挖到藏書，發現一句教學或研究短句。</li></ol><button class="primary" data-action="start">開始挖礦 →</button><button data-action="collection">思想收藏冊</button><small>桌機點擊／空白鍵 · 手機輕點<br>遊戲成績代表操作與取捨。</small>${portal()}</aside></section>
-  <section class="treasure-guide"><span class="guide-heading">礦坑裡有什麼？</span>${[['◆','小金塊','20 分 · 輕巧'],['◆','大金塊','80 分 · 較重'],['◇','寶石','100 分 · 難瞄準'],['●','石頭','5 分 · 最重'],['▤','學者藏書','50 分 · 新的眼光']].map(([icon,title,sub],i)=>`<div class="guide-item ${i===4?'book':''}"><span class="guide-icon">${icon}</span><div>${title}<small>${sub}</small></div></div>`).join('')}</section>
+  <section class="treasure-guide"><span class="guide-heading">礦坑裡有什麼？<small>礦物越大，分數與重量越高</small></span><div class="guide-groups">${guideGroup('金礦',[['smallGold','小','20'],['mediumGold','中','45'],['largeGold','大','80']],'gold')}${guideGroup('銀礦',[['smallSilver','小','15'],['mediumSilver','中','30'],['largeSilver','大','60']],'silver')}${guideGroup('寶石',[['gem','寶石','100']],'single')}${guideGroup('學者藏書',[['book','藏書','50']],'single book')}</div></section>
   <section><div class="section-title"><h2>等待發現的思想藏書</h2><span>${unlockedCount()} / ${scholars.length} 已收藏</span></div><div class="collection-preview">${miniCards()}</div></section>`, 'home');
   const preview=new Game({scholars:scholars.map(s=>s.id),random:seedRandom(42)});preview.hook.angle=.4;drawScene(document.querySelector('#preview'),preview,true);
 }
@@ -47,7 +49,7 @@ function seedRandom(seed){return()=>{seed=(seed*1664525+1013904223)>>>0;return s
 function unlockedCount(){return scholars.filter(s=>Object.hasOwn(store.data.collection,s.id)).length;}
 function card(s, result=false) {
   const found=store.data.collection[s.id];
-  if(!found)return `<div class="scholar-card locked"><div class="portrait" aria-hidden="true">▤</div><h2>尚未發現</h2><p>一本藏書，等待你帶回地面。</p><small>在礦坑中尋找藍紫色藏書</small></div>`;
+  if(!found)return `<div class="scholar-card locked"><div class="portrait" aria-hidden="true">▤</div><h2>尚未發現</h2><p>一本藏書，等待你帶回地面。</p><small>在礦坑中尋找紫色藏書</small></div>`;
   const earned=lastResult?.finds.find(f=>f.id===s.id);
   return `<button class="scholar-card" data-scholar="${escapeHtml(s.id)}">${result&&earned?.isNew?'<span class="badge">NEW</span>':''}${portrait(s)}<h2>${escapeHtml(s.nameZh)}</h2><p>${escapeHtml(s.field)}</p><small>${result?`本局發現 ${earned?.count||0} 次`:`已發現 ${found.count} 次`} · ${quotes.filter(q=>q.scholarId===s.id&&(found.quoteIds||[]).includes(q.id)).length} / ${quotes.filter(q=>q.scholarId===s.id).length} 句 · 查看介紹 ↗</small></button>`;
 }
@@ -83,7 +85,7 @@ function start() {
   enableAudio();lastResult=null;toastText='';toastUntil=0;
   game=new Game({portrait:window.matchMedia('(max-width:600px)').matches,scholars:scholars.map(s=>s.id),onCollect(item){sound(item.type);if(item.scholarId){collectBook(item);}},onFinish(){finish();}});
   gameFinds=[];
-  view(`<section class="game-board"><div class="game-top"><div class="hud"><div><label>本局分數</label><output id="score">0</output></div><div><label>剩餘時間</label><output id="time">60<span> 秒</span></output></div></div><div class="game-buttons"><button data-action="mute" id="mute">${store.data.mute?'音效：關':'音效：開'}</button><button data-action="pause">暫停 Ⅱ</button></div></div><div class="scene-frame"><canvas id="game-canvas" tabindex="0" aria-label="挖礦遊戲區，點擊或空白鍵出鉤"></canvas><div id="overlay" class="overlay"></div><div id="toast" class="toast" role="status" hidden></div></div><div class="discovery-note" id="discovery-note" role="status"><span class="eyebrow">每本藏書，帶回一句新發現。</span><p>重複遇見一位人物，也能發現不同的教學與研究觀點。</p></div><div class="game-help"><span>看準方向，點擊／空白鍵出鉤。<br>亮框寶物可抓取，背景金塊是礦坑裝飾。<br>藏書完整拉回後才會揭曉人物。</span><button class="fire-button" data-action="fire">出鉤 ↓</button></div></section>`, 'game');
+  view(`<section class="game-board"><div class="game-top"><div class="hud"><div><label>本局分數</label><output id="score">0</output></div><div><label>剩餘時間</label><output id="time">60<span> 秒</span></output></div></div><div class="game-buttons"><button data-action="mute" id="mute">${store.data.mute?'音效：關':'音效：開'}</button><button data-action="pause">暫停 Ⅱ</button></div></div><div class="scene-frame"><canvas id="game-canvas" tabindex="0" aria-label="挖礦遊戲區，點擊或空白鍵出鉤"></canvas><div id="overlay" class="overlay"></div><div id="toast" class="toast" role="status" hidden></div></div><div class="discovery-note" id="discovery-note" role="status"><span class="eyebrow">每本藏書，帶回一句新發現。</span><p>重複遇見一位人物，也能發現不同的教學與研究觀點。</p></div><div class="game-help"><span>看準方向，點擊／空白鍵出鉤。<br>金銀礦依大小計分，亮框寶物可抓取。<br>藏書完整拉回後才會揭曉人物。</span><button class="fire-button" data-action="fire">出鉤 ↓</button></div></section>`, 'game');
   document.querySelector('#game-canvas').addEventListener('pointerdown',e=>{if(e.isPrimary&&e.button===0){e.preventDefault();fire();}});
   document.querySelector('#game-canvas').focus({preventScroll:true});loop(performance.now());
 }

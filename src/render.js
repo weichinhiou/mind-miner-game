@@ -1,7 +1,17 @@
 import { CONFIG } from './config.js';
 const artwork = {};
+const treasureSprites = {
+  book: ['assets/treasures/thought-book.png', [96, 72, 1092, 1128]],
+  smallGold: ['assets/treasures/gold-small.png', [356, 404, 540, 464]],
+  mediumGold: ['assets/treasures/gold-medium.png', [48, 128, 1160, 1032]],
+  largeGold: ['assets/treasures/gold-large.png', [224, 288, 828, 732]],
+  smallSilver: ['assets/treasures/silver-small.png', [360, 400, 544, 512]],
+  mediumSilver: ['assets/treasures/silver-medium.png', [164, 212, 940, 860]],
+  largeSilver: ['assets/treasures/silver-large.png', [64, 124, 1124, 1032]],
+};
 export async function loadSceneAssets() {
-  await Promise.all([['cat','assets/scene/miner-cat.png'],['mine','assets/scene/sunset-mine.png']].map(([key,src])=>new Promise(resolve=>{
+  const sources = [['cat','assets/scene/miner-cat.png'],['mine','assets/scene/sunset-mine.png'], ...Object.entries(treasureSprites).map(([key,[src]])=>[key,src])];
+  await Promise.all(sources.map(([key,src])=>new Promise(resolve=>{
     const image=new Image();image.onload=()=>{artwork[key]=image;resolve();};image.onerror=()=>resolve();image.src=src;
   })));
 }
@@ -24,25 +34,31 @@ export function drawCat(ctx, x, y, scale=1) {
   ctx.fillStyle='#c59b4d';ctx.fillRect(-24,15,48,7);
   ctx.restore();
 }
+function drawTreasureSprite(ctx, type, radius) {
+  const image=artwork[type], definition=treasureSprites[type];
+  if(!image||!definition)return false;
+  const [x,y,width,height]=definition[1], scale=radius*1.9/Math.max(width,height);
+  const drawWidth=width*scale,drawHeight=height*scale;
+  ctx.drawImage(image,x,y,width,height,-drawWidth/2,-drawHeight/2,drawWidth,drawHeight);
+  return true;
+}
 export function drawItem(ctx, item, x=item.x, y=item.y) {
   const r=item.radius;ctx.save();ctx.translate(x,y);
-  {ellipse(ctx,0,0,r+7,r+7,artwork.mine?'#15262be6':'#fff7dc80');ctx.strokeStyle=item.type==='book'?'#dacbff':item.type==='gem'?'#b8ffec':'#ffe8a6';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,r+7,0,Math.PI*2);ctx.stroke();}
-
-  ellipse(ctx,2,r*.75,r*.9,6,'#7a573621');
-  if(item.type==='book') {
-    ctx.rotate(-.13);ctx.fillStyle='#fcf2d9';ctx.fillRect(-r+4,-r+4,r*2-3,r*2-1);
-    ctx.fillStyle='#716994';ctx.fillRect(-r,-r,r*2-3,r*2);ctx.fillStyle='#514c70';ctx.fillRect(-r,-r,6,r*2);
-    ctx.strokeStyle='#e7d4a0';ctx.lineWidth=1.5;ctx.strokeRect(-r+9,-r+6,r*2-19,r*2-12);
-    ctx.fillStyle='#efe1b2';ctx.font='18px Georgia';ctx.textAlign='center';ctx.fillText('✦',3,7);
-  } else if(item.type==='gem') {
-    polygon(ctx,[[-r,-r*.35],[-r*.5,-r],[r*.5,-r],[r,-r*.35],[0,r]],'#8cb8b5','#507f82');
-    polygon(ctx,[[-r,-r*.35],[0,-r*.6],[0,r]],'#b7dbd0');polygon(ctx,[[0,-r*.6],[r*.5,-r],[r,-r*.35],[0,r]],'#659b9e');
-  } else {
-    const gold=item.type!=='rock';
-    polygon(ctx,[[-r,-r*.35],[-r*.7,-r*.85],[r*.15,-r],[r*.82,-r*.48],[r,r*.32],[r*.25,r*.78],[-r*.65,r*.6]],gold?'#ddb556':'#969487',gold?'#ba8b38':'#787c72');
-    polygon(ctx,[[-r*.7,-r*.85],[r*.15,-r],[r*.2,-r*.3],[-r*.6,r*.1]],gold?'#f5d887':'#b5b3a2');
-    polygon(ctx,[[r*.2,-r*.3],[r*.82,-r*.48],[r,r*.32],[r*.25,r*.78]],gold?'#c6973c':'#7e8278');
-    if(gold){ctx.fillStyle='#fff4cb';ctx.font='17px serif';ctx.fillText('✧',-r*.45,-r*.05);}
+  ellipse(ctx,0,0,r+5,r+5,artwork.mine?'#332b2224':'#fff7dc55');
+  ctx.strokeStyle=item.type==='book'?'#dacbffba':item.type==='gem'?'#b8ffecba':item.type.endsWith('Silver')?'#dce9ffbb':'#ffe8a6bb';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(0,0,r+5,0,Math.PI*2);ctx.stroke();
+  ellipse(ctx,2,r*.75,r*.9,5,'#38261324');
+  if(!drawTreasureSprite(ctx,item.type,r)) {
+    if(item.type==='book') {
+      ctx.rotate(-.13);ctx.fillStyle='#fcf2d9';ctx.fillRect(-r+4,-r+4,r*2-3,r*2-1);ctx.fillStyle='#716994';ctx.fillRect(-r,-r,r*2-3,r*2);ctx.fillStyle='#514c70';ctx.fillRect(-r,-r,6,r*2);ctx.strokeStyle='#e7d4a0';ctx.lineWidth=1.5;ctx.strokeRect(-r+5,-r+5,r*2-11,r*2-10);
+    } else if(item.type==='gem') {
+      polygon(ctx,[[-r,-r*.35],[-r*.5,-r],[r*.5,-r],[r,-r*.35],[0,r]],'#8cb8b5','#507f82');
+      polygon(ctx,[[-r,-r*.35],[0,-r*.6],[0,r]],'#b7dbd0');polygon(ctx,[[0,-r*.6],[r*.5,-r],[r,-r*.35],[0,r]],'#659b9e');
+    } else {
+      const gold=item.type.includes('Gold'),main=gold?'#ddb556':'#aab4c6',edge=gold?'#ba8b38':'#738098';
+      polygon(ctx,[[-r,-r*.35],[-r*.7,-r*.85],[r*.15,-r],[r*.82,-r*.48],[r,r*.32],[r*.25,r*.78],[-r*.65,r*.6]],main,edge);
+      polygon(ctx,[[-r*.7,-r*.85],[r*.15,-r],[r*.2,-r*.3],[-r*.6,r*.1]],gold?'#f5d887':'#e1e9f4');
+      polygon(ctx,[[r*.2,-r*.3],[r*.82,-r*.48],[r,r*.32],[r*.25,r*.78]],gold?'#c6973c':'#8290a7');
+    }
   }
   ctx.restore();
 }
@@ -66,8 +82,8 @@ export function drawScene(canvas, game, preview=false) {
     const image=artwork.mine;
     ctx.drawImage(image,0,0,image.width,205,0,0,w,200);
     ctx.drawImage(image,0,205,image.width,image.height-205,0,200,w,h-200);
-    ctx.fillStyle='#152126c9';ctx.fillRect(0,200,w,h-200);
-    const shade=ctx.createLinearGradient(0,200,0,h);shade.addColorStop(0,'#4d2f1710');shade.addColorStop(1,'#07191960');ctx.fillStyle=shade;ctx.fillRect(0,200,w,h-200);
+    ctx.fillStyle='#152126a8';ctx.fillRect(0,200,w,h-200);
+    const shade=ctx.createLinearGradient(0,200,0,h);shade.addColorStop(0,'#4d2f1708');shade.addColorStop(1,'#07191935');ctx.fillStyle=shade;ctx.fillRect(0,200,w,h-200);
   }
   ctx.fillStyle='#766146';ctx.fillRect(w/2-80,166,160,13);ctx.fillRect(w/2-61,179,10,25);ctx.fillRect(w/2+51,179,10,25);
   drawCat(ctx,w/2-32,119,.83);
