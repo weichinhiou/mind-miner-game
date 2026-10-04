@@ -53,13 +53,6 @@ function drawPlatform(ctx, rect) {
   ctx.fillStyle = '#aa7040'; ctx.fillRect(rect.x, surfaceY, rect.width, rect.height * .15);
   ctx.fillStyle = '#d39a57'; ctx.fillRect(rect.x, surfaceY, rect.width, rect.height * .045);
 }
-function drawPlatformFace(ctx, rect) {
-  const image = artwork.platform, definition = equipmentSprites.platform;
-  if (!image || !definition) return;
-  const [sx, sy, sw, sh] = definition[1], deckRatio = .31;
-  const faceTop = sy + sh * deckRatio;
-  ctx.drawImage(image, sx, faceTop, sw, sy + sh - faceTop, rect.x, rect.y + rect.height * deckRatio, rect.width, rect.height * (1 - deckRatio));
-}
 function drawWinch(ctx, rect) {
   if (drawCroppedArt(ctx, 'winch', rect)) return;
   const { x, y, width, height } = rect;
@@ -138,20 +131,15 @@ export function drawScene(canvas, game, preview=false) {
   drawCat(ctx, w / 2 - 115 * scale, deckY - 51 * .83 * scale, .83 * scale);
   drawWinch(ctx, equipment.winch);
   const tip = game.point();
-  ctx.save(); ctx.lineCap = 'round'; ctx.shadowColor = '#1a1c1a88'; ctx.shadowBlur = 2; ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 1;
-  ctx.lineWidth = 5; ctx.strokeStyle = '#606b70'; ctx.beginPath(); ctx.moveTo(equipment.origin.x, equipment.origin.y); ctx.lineTo(tip.x, tip.y); ctx.stroke();
-  ctx.shadowColor = 'transparent'; ctx.lineWidth = 1.4; ctx.strokeStyle = '#c2c2b6'; ctx.beginPath(); ctx.moveTo(equipment.origin.x, equipment.origin.y); ctx.lineTo(tip.x, tip.y); ctx.stroke(); ctx.restore();
   for (const item of game.items) drawItem(ctx, item);
   if (game.hook.caught) {
     const cargo = game.hook.caught, offset = cargo.radius * .4;
     drawItem(ctx, cargo, tip.x + Math.sin(game.hook.angle) * offset, tip.y + Math.cos(game.hook.angle) * offset);
   }
+  // Keep the cable and claw visible over the platform, winch, and all targets.
+  ctx.save(); ctx.lineCap = 'round'; ctx.shadowColor = '#1a1c1a88'; ctx.shadowBlur = 2; ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 1;
+  ctx.lineWidth = 5; ctx.strokeStyle = '#606b70'; ctx.beginPath(); ctx.moveTo(equipment.origin.x, equipment.origin.y); ctx.lineTo(tip.x, tip.y); ctx.stroke();
+  ctx.shadowColor = 'transparent'; ctx.lineWidth = 1.4; ctx.strokeStyle = '#c2c2b6'; ctx.beginPath(); ctx.moveTo(equipment.origin.x, equipment.origin.y); ctx.lineTo(tip.x, tip.y); ctx.stroke(); ctx.restore();
   drawClaw(ctx, tip, game.hook.angle, scale);
-  if (game.hook.state === 'swing') {
-    // The short idle cable and claw are stowed behind the platform's front face.
-    drawPlatformFace(ctx, equipment.platform);
-    drawCat(ctx, w / 2 - 115 * scale, deckY - 51 * .83 * scale, .83 * scale);
-    drawWinch(ctx, equipment.winch);
-  }
   if(preview&&!artwork.mine){ctx.fillStyle='#f8eed633';ctx.fillRect(0,0,w,h);}
 }
