@@ -54,11 +54,11 @@ npm run check
 
 ## 版本與開發文件
 
-目前版本為 `v0.2.5` 本機 MVP；後續建議先補驗收，再做正式入口整合與發布。
+目前版本為 `v0.2.6` 本機 MVP；後續建議先補驗收，再做正式入口整合與發布。
 
 - [文件索引](docs/README.md)：所有專案文件入口。
 - [版本規劃](docs/roadmap.md)：v0.2.x、v0.3.0、v1.0.0 範圍及完成門檻。
 - [架構](docs/architecture.md)、[開發與驗收](docs/development.md)：模組、保存契約與 Git 流程。
 - [變更紀錄](CHANGELOG.md)、[AI 交接](docs/AI_HANDOFF.md)：已交付內容與下一步。
 
-Git 目前只有本機歷史，尚未設定 origin。v0.2.5 程式先整合 main，文件另行提交，完成後標記本機版本；未 push 或部署。重新開工請先確認實際 Git 狀態。
+Git 目前只有本機歷史，尚未設定 origin。v0.2.6 程式先整合 main，文件另行提交，完成後標記本機版本；未 push 或部署。重新開工請先確認實際 Git 狀態。
