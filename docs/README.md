@@ -8,6 +8,7 @@
 | [開發與驗收](development.md) | Git 工作流程、測試、版本標記與回復方式 |
 | [名句來源](quote-sources.md) | 80 句的原文、譯法、語境與誤歸排除 |
 | [實作紀錄](implementation.md) | 已做決策、測試結果、問題與限制 |
+| [寶物素材](../assets/treasures/README.md) | 金／銀礦、藏書圖片來源與遊戲顯示方式 |
 | [AI 交接](AI_HANDOFF.md) | 當前進度與下一次工作的入口 |
 | [變更紀錄](../CHANGELOG.md) | 已交付版本；不放未來提案 |
 
