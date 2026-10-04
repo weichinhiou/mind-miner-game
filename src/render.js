@@ -1,7 +1,15 @@
 import { CONFIG } from './config.js';
+const artwork = {};
+export async function loadSceneAssets() {
+  await Promise.all([['cat','assets/scene/miner-cat.png'],['mine','assets/scene/sunset-mine.png']].map(([key,src])=>new Promise(resolve=>{
+    const image=new Image();image.onload=()=>{artwork[key]=image;resolve();};image.onerror=()=>resolve();image.src=src;
+  })));
+}
+
 function ellipse(ctx, x, y, rx, ry, fill) { ctx.fillStyle = fill; ctx.beginPath(); ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2); ctx.fill(); }
 function polygon(ctx, points, fill, stroke) { ctx.beginPath(); points.forEach(([x,y],i) => i ? ctx.lineTo(x,y) : ctx.moveTo(x,y)); ctx.closePath(); ctx.fillStyle=fill; ctx.fill(); if (stroke) {ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();} }
 export function drawCat(ctx, x, y, scale=1) {
+  if(artwork.cat){ctx.drawImage(artwork.cat,x-60*scale,y-72*scale,120*scale,120*scale);return;}
   ctx.save(); ctx.translate(x,y); ctx.scale(scale,scale);
   ctx.strokeStyle='#313838'; ctx.lineWidth=13; ctx.lineCap='round'; ctx.beginPath(); ctx.moveTo(26,28); ctx.bezierCurveTo(65,36,70,0,52,-8);ctx.stroke();
   ellipse(ctx,0,20,27,32,'#313838');
@@ -18,6 +26,8 @@ export function drawCat(ctx, x, y, scale=1) {
 }
 export function drawItem(ctx, item, x=item.x, y=item.y) {
   const r=item.radius;ctx.save();ctx.translate(x,y);
+  {ellipse(ctx,0,0,r+7,r+7,artwork.mine?'#15262be6':'#fff7dc80');ctx.strokeStyle=item.type==='book'?'#dacbff':item.type==='gem'?'#b8ffec':'#ffe8a6';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,r+7,0,Math.PI*2);ctx.stroke();}
+
   ellipse(ctx,2,r*.75,r*.9,6,'#7a573621');
   if(item.type==='book') {
     ctx.rotate(-.13);ctx.fillStyle='#fcf2d9';ctx.fillRect(-r+4,-r+4,r*2-3,r*2-1);
@@ -51,12 +61,20 @@ export function drawScene(canvas, game, preview=false) {
   for(let i=0;i<150;i++){const x=(Math.sin(i*41.3)*.5+.5)*w,y=213+(Math.cos(i*11.9)*.5+.5)*(h-224);ellipse(ctx,x,y,2+(i%6),1+(i%3),'#8d71451a');}
   ctx.strokeStyle='#b29968';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,200);for(let x=0;x<=w;x+=20)ctx.lineTo(x,199+Math.sin(x*.05)*3);ctx.stroke();
   ctx.fillStyle='#8b9273';for(let x=8;x<w;x+=43){ctx.fillRect(x,187+Math.sin(x)*3,2,12);}
+  if(artwork.mine){
+    // Align the supplied surface to the game's existing soil boundary.
+    const image=artwork.mine;
+    ctx.drawImage(image,0,0,image.width,205,0,0,w,200);
+    ctx.drawImage(image,0,205,image.width,image.height-205,0,200,w,h-200);
+    ctx.fillStyle='#152126c9';ctx.fillRect(0,200,w,h-200);
+    const shade=ctx.createLinearGradient(0,200,0,h);shade.addColorStop(0,'#4d2f1710');shade.addColorStop(1,'#07191960');ctx.fillStyle=shade;ctx.fillRect(0,200,w,h-200);
+  }
   ctx.fillStyle='#766146';ctx.fillRect(w/2-80,166,160,13);ctx.fillRect(w/2-61,179,10,25);ctx.fillRect(w/2+51,179,10,25);
   drawCat(ctx,w/2-32,119,.83);
   ellipse(ctx,w/2+25,124,22,22,'#8b7557');ellipse(ctx,w/2+25,124,14,14,'#d4ba8e');ellipse(ctx,w/2+25,124,5,5,'#766146');
   for(const item of game.items)drawItem(ctx,item);
-  const tip=game.point();ctx.strokeStyle='#776248';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(game.origin.x,game.origin.y);ctx.lineTo(tip.x,tip.y);ctx.stroke();
+  const tip=game.point();ctx.lineWidth=5;ctx.strokeStyle='#192b2d';ctx.beginPath();ctx.moveTo(game.origin.x,game.origin.y);ctx.lineTo(tip.x,tip.y);ctx.stroke();ctx.lineWidth=2;ctx.strokeStyle=artwork.mine?'#ffe8b5':'#776248';ctx.stroke();
   if(game.hook.caught)drawItem(ctx,game.hook.caught,tip.x,tip.y+game.hook.caught.radius*.4);
-  ctx.save();ctx.translate(tip.x,tip.y);ctx.rotate(-game.hook.angle);ctx.strokeStyle='#454f4c';ctx.lineWidth=4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-10,0);ctx.lineTo(-8,9);ctx.quadraticCurveTo(0,19,8,9);ctx.lineTo(10,0);ctx.stroke();ctx.restore();
-  if(preview){ctx.fillStyle='#f8eed633';ctx.fillRect(0,0,w,h);}
+  ctx.save();ctx.translate(tip.x,tip.y);ctx.rotate(-game.hook.angle);ctx.strokeStyle=artwork.mine?'#fff2cb':'#454f4c';ctx.lineWidth=4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-10,0);ctx.lineTo(-8,9);ctx.quadraticCurveTo(0,19,8,9);ctx.lineTo(10,0);ctx.stroke();ctx.restore();
+  if(preview&&!artwork.mine){ctx.fillStyle='#f8eed633';ctx.fillRect(0,0,w,h);}
 }
