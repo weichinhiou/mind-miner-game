@@ -10,3 +10,20 @@
 .quote-topic{display:inline-block;color:#52756f;font-size:11px;letter-spacing:1px;margin:0 0 4px}.quote-application{font-size:12px!important;line-height:1.8;color:var(--muted);margin:8px 0!important}.quote-application span{display:block;font-size:10px;color:#8a7756;margin-bottom:3px}.quote-original{margin-top:10px;font-size:12px;line-height:1.8}.quote-original summary{cursor:pointer;color:#52756f}.quote-original p{font-size:12px}.quote-entry .badge{position:static;display:inline-block;margin-right:10px}
 
 body{background:radial-gradient(ellipse at top,#fff3d9 0,#f6f2e9 60%)}.hero-mascot{display:block;width:108px;height:108px;object-fit:contain;margin:-8px auto 10px;filter:drop-shadow(0 8px 7px #58381e22)}.scene-frame{box-shadow:0 12px 35px #74422224;border-color:#c9ad74}.intro-panel{background:linear-gradient(145deg,#fffdf4,#f6ebd7)}button.primary,.fire-button{background:#75502c;border-color:#75502c}button.primary:hover{background:#5d3b20}.discovery-note{background:#fff5df;border-color:#ddc399}@media(max-width:600px){.hero-mascot{float:right;width:88px;height:88px;margin:0 0 8px 10px}.intro-panel .primary{clear:both}}
+
+/* Keep the four treasure-guide groups inside narrow phone viewports. */
+@media(max-width:600px){
+  .treasure-guide{display:flex;flex-wrap:wrap;gap:12px}
+  .guide-heading{display:block;width:100%}
+  .guide-heading small{display:block;margin:4px 0 0}
+  .guide-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:100%;min-width:0}
+  .guide-group{min-width:0;padding:9px 8px}
+  .guide-levels{gap:4px}
+  .guide-level{gap:2px;font-size:9px}
+  .guide-level img,.guide-gem{width:20px;height:20px;flex:0 0 20px}
+  .guide-gem{font-size:20px}
+}
+@media(max-width:360px){
+  .guide-groups{grid-template-columns:minmax(0,1fr)}
+  .guide-level{font-size:10px}
+}
