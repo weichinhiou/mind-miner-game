@@ -29,4 +29,4 @@ v0.1.0 為本機初版，尚未完整通過產品發布驗收。先重測，再�
 
 ## 此機器的 Git 擁有者限制
 
-首次 .git 由 Windows sandbox 帳號建立，一般終端可能報 dubious ownership，修改擁有者的嘗試被 Windows 拒絕。可在本目錄使用 `git -c safe.directory=D:/Git/Game/mind-miner status -sb`，其他 Git 子命令沿用相同 -c 前綴。這是單次限定此路徑的設定，不写入全域信任檔案。日後若使用者修正擁有者，確認普通 git status 成功後再更新這項限制。
+2026-10-05 重試時確認，Codex sandbox 初始化曾把 `.git` 目錄擁有者設為 `LAPTOP-3UTNSAOB\CodexSandboxOffline`，sandbox 後續套用 deny ACL 失敗（`deny ACE failed ... open deny ACL target for update`），導致一般 command runner setup refresh 失敗。使用者核准 UAC 後只將 `.git` 目錄擁有者改為目前 Windows 使用者，沒有遞迴改動內部檔案；command runner 隨即恢復。Git 操作仍使用路徑限定的 `-c safe.directory=D:/Git/Game/mind-miner`，不寫入全域信任檔案。若再次出現，先檢查 sandbox log 與 `.git` owner；不要直接改用其他工作目錄或重建 repo。

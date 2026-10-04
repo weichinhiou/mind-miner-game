@@ -36,7 +36,7 @@ npm run check
 |---|---|
 | `src/config.js` | 時間、重量、分數、速度、各尺寸礦物數量、正式整合 URL |
 | `src/engine.js` | 獨立遊戲狀態、線段碰撞、盤面生成、暫停、座標重映射 |
-| `src/render.js` | Canvas 黑貓、寶物素材、山景與土層繪製 |
+| `src/render.js` | Canvas 場景、黑貓、平台／絞盤／抓鉤及寶物素材繪製 |
 | `src/storage.js` | `thought-miner:save` 命名空間及存檔容錯 |
 | `src/app.js` | 頁面流程、唯一 RAF、DOM 操作、音效、收藏詳情 |
 | `data/quotes.json`、`src/quotes.js` | 查核短句資料與未見優先輪替 |
@@ -48,17 +48,17 @@ npm run check
 
 ## 素材與內容
 
-遊戲場景與黑貓使用 Jean 提供的夕陽礦坑與吉祥物，素材載入失敗會回退程式繪圖；場景說明見 [素材說明](assets/scene/README.md)；六種金／銀礦及紫色思想藏書圖見 [寶物素材說明](assets/treasures/README.md)。八位頭像使用 Jean 提供的參考圖，在本機素材中以 CSS 裁切顯示；音效由 Web Audio 合成，沒有外部圖片或字體網路載入。人物文字直接取自 PRD，未擅自重寫；方法摘要為編寫轉譯。人物來源連結可在收藏詳情查看。頭像來源與裁切設定見 [素材說明](assets/portraits/README.md)，載入失敗仍以姓名卡替代。
+遊戲場景、黑貓與採礦設備使用 Jean 提供的夕陽礦坑、吉祥物、操作平台、絞盤及三爪抓鉤，素材載入失敗會回退程式繪圖；場景說明見 [素材說明](assets/scene/README.md)；六種金／銀礦及紫色思想藏書圖見 [寶物素材說明](assets/treasures/README.md)。八位頭像使用 Jean 提供的參考圖，在本機素材中以 CSS 裁切顯示；音效由 Web Audio 合成，沒有外部圖片或字體網路載入。人物文字直接取自 PRD，未擅自重寫；方法摘要為編寫轉譯。人物來源連結可在收藏詳情查看。頭像來源與裁切設定見 [素材說明](assets/portraits/README.md)，載入失敗仍以姓名卡替代。
 
 待補正式任意門／Persona Lens URL 。詳細限制及測試見 [實作紀錄](docs/implementation.md)。本資料夾原先只有 PRD，現已建立本機 Git；此版本未部署或 push。
 
 ## 版本與開發文件
 
-目前版本為 `v0.2.3` 本機 MVP；後續建議先補驗收，再做正式入口整合與發布。
+目前版本為 `v0.2.4` 本機 MVP；後續建議先補驗收，再做正式入口整合與發布。
 
 - [文件索引](docs/README.md)：所有專案文件入口。
 - [版本規劃](docs/roadmap.md)：v0.2.x、v0.3.0、v1.0.0 範圍及完成門檻。
 - [架構](docs/architecture.md)、[開發與驗收](docs/development.md)：模組、保存契約與 Git 流程。
 - [變更紀錄](CHANGELOG.md)、[AI 交接](docs/AI_HANDOFF.md)：已交付內容與下一步。
 
-Git 目前只有本機歷史，尚未設定 origin。程式與文件分開提交，整合於 main 並標記 v0.2.0。重新開工請先確認实际 Git 狀態。
+Git 目前只有本機歷史，尚未設定 origin。v0.2.4 程式先整合 main，文件另行提交，完成後標記本機版本；未 push 或部署。重新開工請先確認實際 Git 狀態。
