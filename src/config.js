@@ -16,3 +16,32 @@ export const CONFIG = Object.freeze({
   },
 });
 export function sceneSize(portrait) { return portrait ? { width: 480, height: 720 } : { width: 960, height: 540 }; }
+
+// Keep the platform, winch outlet, and physics origin on one responsive layout.
+export function equipmentLayout(size) {
+  const scale = Math.min(1, size.width / 960);
+  const deckY = 162;
+  const platformWidth = 330 * scale;
+  const platformHeight = platformWidth * 405 / 1191;
+  const winchHeight = 82 * scale;
+  const winchWidth = winchHeight * 1212 / 837;
+  const outletRatio = .77;
+  const origin = { x: size.width / 2, y: deckY - winchHeight * (1 - outletRatio) };
+  return {
+    scale,
+    deckY,
+    origin,
+    platform: {
+      x: size.width / 2 - 40 * scale - platformWidth / 2,
+      y: deckY - platformHeight * .31,
+      width: platformWidth,
+      height: platformHeight,
+    },
+    winch: {
+      x: origin.x - winchWidth / 2,
+      y: origin.y - winchHeight * outletRatio,
+      width: winchWidth,
+      height: winchHeight,
+    },
+  };
+}

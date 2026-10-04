@@ -1,5 +1,10 @@
-import { CONFIG } from './config.js';
+import { equipmentLayout } from './config.js';
 const artwork = {};
+const equipmentSprites = {
+  platform: ['assets/scene/mining-platform.png', [30, 420, 1191, 405]],
+  winch: ['assets/scene/mining-winch.png', [30, 204, 1212, 837]],
+  claw: ['assets/scene/mining-claw.png', [150, 90, 951, 978]],
+};
 const treasureSprites = {
   book: ['assets/treasures/thought-book.png', [96, 72, 1092, 1128]],
   smallGold: ['assets/treasures/gold-small.png', [356, 404, 540, 464]],
@@ -10,7 +15,7 @@ const treasureSprites = {
   largeSilver: ['assets/treasures/silver-large.png', [64, 124, 1124, 1032]],
 };
 export async function loadSceneAssets() {
-  const sources = [['cat','assets/scene/miner-cat.png'],['mine','assets/scene/sunset-mine.png'], ...Object.entries(treasureSprites).map(([key,[src]])=>[key,src])];
+  const sources = [['cat','assets/scene/miner-cat.png'],['mine','assets/scene/sunset-mine.png'], ...Object.entries(equipmentSprites).map(([key,[src]])=>[key,src]), ...Object.entries(treasureSprites).map(([key,[src]])=>[key,src])];
   await Promise.all(sources.map(([key,src])=>new Promise(resolve=>{
     const image=new Image();image.onload=()=>{artwork[key]=image;resolve();};image.onerror=()=>resolve();image.src=src;
   })));
@@ -32,6 +37,49 @@ export function drawCat(ctx, x, y, scale=1) {
   ctx.strokeStyle='#c6c2aa';ctx.lineWidth=1;for(const side of [-1,1])for(let i=0;i<3;i++){ctx.beginPath();ctx.moveTo(side*12,2+i*3);ctx.lineTo(side*38,-3+i*9);ctx.stroke();}
   ellipse(ctx,-16,44,12,6,'#252c2c');ellipse(ctx,16,44,12,6,'#252c2c');
   ctx.fillStyle='#c59b4d';ctx.fillRect(-24,15,48,7);
+  ctx.restore();
+}
+function drawCroppedArt(ctx, key, destination) {
+  const image = artwork[key], definition = equipmentSprites[key];
+  if (!image || !definition) return false;
+  const [sx, sy, sw, sh] = definition[1];
+  ctx.drawImage(image, sx, sy, sw, sh, destination.x, destination.y, destination.width, destination.height);
+  return true;
+}
+function drawPlatform(ctx, rect) {
+  if (drawCroppedArt(ctx, 'platform', rect)) return;
+  const surfaceY = rect.y + rect.height * .31;
+  ctx.fillStyle = '#65452c'; ctx.fillRect(rect.x, surfaceY, rect.width, rect.height * .69);
+  ctx.fillStyle = '#aa7040'; ctx.fillRect(rect.x, surfaceY, rect.width, rect.height * .15);
+  ctx.fillStyle = '#d39a57'; ctx.fillRect(rect.x, surfaceY, rect.width, rect.height * .045);
+}
+function drawPlatformFace(ctx, rect) {
+  const image = artwork.platform, definition = equipmentSprites.platform;
+  if (!image || !definition) return;
+  const [sx, sy, sw, sh] = definition[1], deckRatio = .31;
+  const faceTop = sy + sh * deckRatio;
+  ctx.drawImage(image, sx, faceTop, sw, sy + sh - faceTop, rect.x, rect.y + rect.height * deckRatio, rect.width, rect.height * (1 - deckRatio));
+}
+function drawWinch(ctx, rect) {
+  if (drawCroppedArt(ctx, 'winch', rect)) return;
+  const { x, y, width, height } = rect;
+  ctx.fillStyle = '#353b3b'; ctx.fillRect(x + width * .08, y + height * .22, width * .84, height * .73);
+  ctx.fillStyle = '#b88328'; ctx.fillRect(x + width * .18, y + height * .18, width * .64, height * .61);
+  ctx.fillStyle = '#54402c'; ctx.fillRect(x + width * .28, y + height * .31, width * .44, height * .4);
+  ctx.strokeStyle = '#d0b188'; ctx.lineWidth = Math.max(2, height * .035);
+  for (const fraction of [.38, .51, .64]) { ctx.beginPath(); ctx.moveTo(x + width * fraction, y + height * .34); ctx.lineTo(x + width * fraction, y + height * .67); ctx.stroke(); }
+  ctx.fillStyle = '#96703a'; ctx.fillRect(x + width * .03, y + height * .92, width * .94, height * .08);
+}
+function drawClaw(ctx, tip, angle, scale) {
+  const height = 48 * scale, width = height * 951 / 978;
+  ctx.save(); ctx.translate(tip.x, tip.y); ctx.rotate(-angle);
+  if (!drawCroppedArt(ctx, 'claw', { x: -width / 2, y: 0, width, height })) {
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(2, 5 * scale);
+    ctx.strokeStyle = '#d5a74e'; ctx.beginPath(); ctx.moveTo(0, 1 * scale); ctx.lineTo(0, 11 * scale); ctx.stroke();
+    ctx.strokeStyle = '#d8dce0'; ctx.lineWidth = Math.max(2, 7 * scale);
+    for (const side of [-1, 1]) { ctx.beginPath(); ctx.moveTo(side * 4 * scale, 11 * scale); ctx.quadraticCurveTo(side * 22 * scale, 25 * scale, side * 17 * scale, 43 * scale); ctx.stroke(); }
+    ctx.beginPath(); ctx.moveTo(0, 11 * scale); ctx.lineTo(0, 39 * scale); ctx.stroke();
+  }
   ctx.restore();
 }
 function drawTreasureSprite(ctx, type, radius) {
@@ -85,12 +133,25 @@ export function drawScene(canvas, game, preview=false) {
     ctx.fillStyle='#152126a8';ctx.fillRect(0,200,w,h-200);
     const shade=ctx.createLinearGradient(0,200,0,h);shade.addColorStop(0,'#4d2f1708');shade.addColorStop(1,'#07191935');ctx.fillStyle=shade;ctx.fillRect(0,200,w,h-200);
   }
-  ctx.fillStyle='#766146';ctx.fillRect(w/2-80,166,160,13);ctx.fillRect(w/2-61,179,10,25);ctx.fillRect(w/2+51,179,10,25);
-  drawCat(ctx,w/2-32,119,.83);
-  ellipse(ctx,w/2+25,124,22,22,'#8b7557');ellipse(ctx,w/2+25,124,14,14,'#d4ba8e');ellipse(ctx,w/2+25,124,5,5,'#766146');
-  for(const item of game.items)drawItem(ctx,item);
-  const tip=game.point();ctx.lineWidth=5;ctx.strokeStyle='#192b2d';ctx.beginPath();ctx.moveTo(game.origin.x,game.origin.y);ctx.lineTo(tip.x,tip.y);ctx.stroke();ctx.lineWidth=2;ctx.strokeStyle=artwork.mine?'#ffe8b5':'#776248';ctx.stroke();
-  if(game.hook.caught)drawItem(ctx,game.hook.caught,tip.x,tip.y+game.hook.caught.radius*.4);
-  ctx.save();ctx.translate(tip.x,tip.y);ctx.rotate(-game.hook.angle);ctx.strokeStyle=artwork.mine?'#fff2cb':'#454f4c';ctx.lineWidth=4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-10,0);ctx.lineTo(-8,9);ctx.quadraticCurveTo(0,19,8,9);ctx.lineTo(10,0);ctx.stroke();ctx.restore();
+  const equipment = equipmentLayout(game.size), { scale, deckY } = equipment;
+  drawPlatform(ctx, equipment.platform);
+  drawCat(ctx, w / 2 - 115 * scale, deckY - 51 * .83 * scale, .83 * scale);
+  drawWinch(ctx, equipment.winch);
+  const tip = game.point();
+  ctx.save(); ctx.lineCap = 'round'; ctx.shadowColor = '#1a1c1a88'; ctx.shadowBlur = 2; ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 1;
+  ctx.lineWidth = 5; ctx.strokeStyle = '#606b70'; ctx.beginPath(); ctx.moveTo(equipment.origin.x, equipment.origin.y); ctx.lineTo(tip.x, tip.y); ctx.stroke();
+  ctx.shadowColor = 'transparent'; ctx.lineWidth = 1.4; ctx.strokeStyle = '#c2c2b6'; ctx.beginPath(); ctx.moveTo(equipment.origin.x, equipment.origin.y); ctx.lineTo(tip.x, tip.y); ctx.stroke(); ctx.restore();
+  for (const item of game.items) drawItem(ctx, item);
+  if (game.hook.caught) {
+    const cargo = game.hook.caught, offset = cargo.radius * .4;
+    drawItem(ctx, cargo, tip.x + Math.sin(game.hook.angle) * offset, tip.y + Math.cos(game.hook.angle) * offset);
+  }
+  drawClaw(ctx, tip, game.hook.angle, scale);
+  if (game.hook.state === 'swing') {
+    // The short idle cable and claw are stowed behind the platform's front face.
+    drawPlatformFace(ctx, equipment.platform);
+    drawCat(ctx, w / 2 - 115 * scale, deckY - 51 * .83 * scale, .83 * scale);
+    drawWinch(ctx, equipment.winch);
+  }
   if(preview&&!artwork.mine){ctx.fillStyle='#f8eed633';ctx.fillRect(0,0,w,h);}
 }

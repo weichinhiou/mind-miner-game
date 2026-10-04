@@ -1,4 +1,4 @@
-import { CONFIG, sceneSize } from './config.js';
+import { CONFIG, equipmentLayout, sceneSize } from './config.js';
 export function segmentHit(a, b, center, radius) {
   const dx = b.x - a.x, dy = b.y - a.y, fx = a.x - center.x, fy = a.y - center.y;
   const aa = dx * dx + dy * dy, cc = fx * fx + fy * fy - radius * radius;
@@ -20,7 +20,7 @@ function boardTypes() {
     .flatMap(([type, spec]) => Array(spec.count).fill(type))];
 }
 export function generateBoard(size, scholars, random = Math.random) {
-  const origin = { x: size.width / 2, y: 124 };
+  const origin = equipmentLayout(size).origin;
   const ids = shuffle(scholars, random);
   const types = boardTypes();
   const items = [];
@@ -50,7 +50,7 @@ export class Game {
     this.size = sceneSize(portrait); this.scholars = scholars; this.random = random; this.onCollect = onCollect; this.onFinish = onFinish;
     this.phase = 'countdown'; this.resumePhase = null; this.countdown = CONFIG.countdown; this.remaining = CONFIG.duration; this.score = 0; this.elapsed = 0; this.discoveries = []; this.hook = { state: 'swing', angle: 0, length: 30, caught: null }; this.items = generateBoard(this.size, scholars, random);
   }
-  get origin() { return { x: this.size.width / 2, y: 124 }; }
+  get origin() { return equipmentLayout(this.size).origin; }
   point(length = this.hook.length) { return { x: this.origin.x + Math.sin(this.hook.angle) * length, y: this.origin.y + Math.cos(this.hook.angle) * length }; }
   maxLength() {
     const dx = Math.sin(this.hook.angle), dy = Math.cos(this.hook.angle), o = this.origin;
@@ -61,13 +61,14 @@ export class Game {
   resume() { if (this.phase === 'paused') { this.phase = this.resumePhase; this.resumePhase = null; } }
   resize(portrait) {
     this.pause(); const next = sceneSize(portrait), old = this.size;
-    const map = p => ({ x: p.x / old.width * next.width, y: 124 + (p.y - 124) / (old.height - 124) * (next.height - 124) });
+    const oldOrigin = this.origin, nextOrigin = equipmentLayout(next).origin;
+    const map = p => ({ x: p.x / old.width * next.width, y: nextOrigin.y + (p.y - oldOrigin.y) / (old.height - oldOrigin.y) * (next.height - nextOrigin.y) });
     const tip = map(this.point());
     this.items.forEach(p => Object.assign(p, map(p)));
     if (this.hook.caught) Object.assign(this.hook.caught, map(this.hook.caught));
     this.size = next;
-    this.hook.angle = Math.atan2(tip.x - next.width / 2, tip.y - 124);
-    this.hook.length = Math.hypot(tip.x - next.width / 2, tip.y - 124);
+    this.hook.angle = Math.atan2(tip.x - nextOrigin.x, tip.y - nextOrigin.y);
+    this.hook.length = Math.hypot(tip.x - nextOrigin.x, tip.y - nextOrigin.y);
   }
   update(dt) {
     if (this.phase === 'paused' || this.phase === 'finished' || dt <= 0) return;

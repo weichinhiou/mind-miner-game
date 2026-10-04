@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync as fsExists } from 'node:fs';
 import { Game, generateBoard, segmentHit } from '../src/engine.js';
 import { createStore } from '../src/storage.js';
-import { CONFIG, sceneSize } from '../src/config.js';
+import { CONFIG, equipmentLayout, sceneSize } from '../src/config.js';
 const ids=JSON.parse(readFileSync(new URL('../data/scholars.json',import.meta.url))).scholars.map(s=>s.id);
 function playing(options={}) {const g=new Game({scholars:ids,...options});g.update(3);return g;}
 function seedRandom(seed){return()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};}
@@ -15,11 +15,12 @@ test('pause holds all state and resumes a loaded return',()=>{const g=playing();
 test('empty return restores swing; clearing board replenishes without resetting score/time',()=>{const g=playing();g.items=[];g.hook.state='empty';g.hook.length=40;g.score=100;g.update(.1);assert.equal(g.hook.state,'swing');assert.equal(g.items.length,12);assert.equal(g.score,100);assert.equal(g.remaining,59.9);});
 test('weight determines return speed',()=>{for(const type of ['largeGold','largeSilver']){const g=playing();g.hook={state:'returning',angle:0,length:300,caught:{type,...CONFIG.objects[type]}};g.update(.2);assert.ok(Math.abs(g.hook.length-(300-420/CONFIG.objects[type].weight*.2))<1e-8);}});
 test('resize pauses and preserves item identity, hook cargo, elapsed time and score',()=>{const g=playing();g.hook={state:'returning',angle:.6,length:200,caught:{id:99,type:'book',...CONFIG.objects.book,x:540,y:300,scholarId:ids[0]}};g.score=50;g.remaining=35;const before=g.items.map(x=>x.id);g.resize(true);assert.equal(g.phase,'paused');assert.deepEqual(g.items.map(x=>x.id),before);assert.equal(g.hook.caught.id,99);assert.equal(g.remaining,35);assert.equal(g.score,50);g.resize(false);assert.ok(Math.abs(g.hook.angle-.6)<1e-8);assert.ok(Math.abs(g.hook.length-200)<1e-8);});
+test('desktop and mobile equipment keep the deck, winch outlet and physics origin aligned',()=>{for(const portrait of [false,true]){const size=sceneSize(portrait),layout=equipmentLayout(size),catHeight=120*.83*layout.scale;assert.equal(layout.origin.x,size.width/2);assert.ok(Math.abs(layout.platform.y+layout.platform.height*.31-layout.deckY)<1e-8);assert.ok(Math.abs(layout.winch.y+layout.winch.height*.77-layout.origin.y)<1e-8);assert.ok(Math.abs(layout.winch.y+layout.winch.height-layout.deckY)<1e-8);assert.ok(Math.abs(layout.winch.height/catHeight-.823)<.01);assert.ok(layout.platform.x>=0&&layout.platform.x+layout.platform.width<=size.width);const game=new Game({portrait,scholars:ids});assert.deepEqual(game.origin,layout.origin);}});
 test('six gold and silver sizes keep ascending size, score and weight tiers across generated boards',()=>{const items=generateBoard(sceneSize(false),ids,seedRandom(42));assert.equal(items.length,12);assert.equal(items.some(x=>x.type==='rock'),false);for(const [small,medium,large] of [['smallGold','mediumGold','largeGold'],['smallSilver','mediumSilver','largeSilver']]){const tiers=[small,medium,large].map(type=>items.find(x=>x.type===type));assert.ok(tiers.every(Boolean));assert.ok(tiers[0].radius<tiers[1].radius&&tiers[1].radius<tiers[2].radius);assert.ok(tiers[0].score<tiers[1].score&&tiers[1].score<tiers[2].score);assert.ok(tiers[0].weight<tiers[1].weight&&tiers[1].weight<tiers[2].weight);}assert.deepEqual(Object.fromEntries(Object.entries(CONFIG.objects).map(([type,spec])=>[type,spec.count])),{smallGold:2,mediumGold:1,largeGold:1,smallSilver:2,mediumSilver:2,largeSilver:1,gem:1,book:2});});
 test('generation: 2000 boards plus exhausted randomness are bounded, separated, reachable and include accessible shallow book',()=>{
   for(const portrait of [false,true])for(let seed=0;seed<1001;seed++){
     const size=sceneSize(portrait),items=generateBoard(size,ids,seed===1000?()=>0:seedRandom(seed));assert.equal(items.length,12);assert.equal(new Set(items.filter(x=>x.type==='book').map(x=>x.scholarId)).size,2);
-    const origin={x:size.width/2,y:124};
+    const origin=equipmentLayout(size).origin;
     for(const [i,p] of items.entries()){
       assert.ok(p.x-p.radius>=0&&p.x+p.radius<=size.width&&p.y-p.radius>=200&&p.y+p.radius<=size.height,`bounds ${portrait} ${seed} ${i}`);
       assert.ok(Math.abs(Math.atan2(p.x-origin.x,p.y-origin.y))<=CONFIG.swingAngle,`reach ${portrait} ${seed} ${i}`);
