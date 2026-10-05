@@ -1,6 +1,6 @@
 # 架構與資料契約
 
-日期：2026-10-05。對應 v0.2.5。
+日期：2026-10-05。對應 v0.2.7。
 
 ## 系統邊界
 
@@ -17,9 +17,9 @@
 
 ## 狀態與入帳
 
-頁面：首頁、遊戲、結算、收藏冊及載入失敗。Game phase：`countdown` → `playing` → `finished`；倒數／遊玩可暫停，`resumePhase` 保存恢復目標。
+頁面：首頁、遊戲、結算、收藏冊及載入失敗。Game phase：`countdown` → `playing` ↔ `roundComplete` → `finished`；倒數／遊玩可暫停，`resumePhase` 保存恢復目標。`roundComplete` 凍結倒數，等待玩家選擇下一輪或結算。
 
-鉤子：`swing` → `extending` → `returning`（載物）或 `empty`（抓空）→ `swing`。角度在發射時鎖定，線段碰撞取第一件。碰撞只把物件移到鉤子貨物；回支點才計分並觸發 onCollect。
+鉤子：`swing` → `extending` → `returning`（載物）或 `empty`（抓空）→ `swing`。角度在發射時鎖定，線段碰撞取第一件。碰撞只把物件移到鉤子貨物；回支點才計分並觸發 onCollect。小／大廢鐵為 `collectible:false`，分數 −25／−60、重量 5.5／9；它們仍可抓取及回收，但不計入過關條件。本輪最後一件可收集物完整回收後進入 `roundComplete`，玩家開始下一輪時保留分數與剩餘時間，回合數加一、鉤子重置、盤面重新生成；未挖廢鐵隨盤面捨棄。遊戲仍以原 60 秒倒數結束。
 
 更新先扣有效經過時間並判定到期，再處理鉤子；到期不入帳。app 使用單一 RAF 與時間差，暫停／恢復／resize 清除舊時間基準。切頁及失焦自動暫停，需使用者繼續。
 
@@ -48,7 +48,7 @@ Key：`thought-miner:save`，schemaVersion：1。
 
 URL 只接受已確認的 http(s) 設定，未配置時入口隱藏。Persona Lens 目前連功能首頁，人物映射尚未啟用。`portrait` 包含 src、sheetWidth、sheetHeight、crop（x、y、size）。DOM 以圓形容器裁切原圖；首頁已收藏預覽、結算卡、收藏冊與詳情共用顯示函式。image error 時移除失敗圖片並保留姓名卡；未解鎖及礦坑藏書保持剪影／通用封面。
 
-物件數量已有 config 欄位，但生成順序及 fallback 位置仍在 engine；新增物件類型／改數量需要同步生成與繪製並更新測試，不能只改 count 即宣稱完整支援。
+物件數量已有 config 欄位，但生成順序及 fallback 位置仍在 engine；新增物件類型／改數量需要同步生成與繪製並更新測試，不能只改 count 即宣稱完整支援。極端隨機序列無法以 120 次嘗試排完時，fallback 依 5×3 固定格位配置 15 件，桌機／手機生成測試會檢查物件不重疊及首本藏書可達。
 
 ## 名句發現（v0.2.0）
 
