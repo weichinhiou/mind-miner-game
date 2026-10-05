@@ -27,3 +27,9 @@ body{background:radial-gradient(ellipse at top,#fff3d9 0,#f6f2e9 60%)}.hero-masc
   .guide-groups{grid-template-columns:minmax(0,1fr)}
   .guide-level{font-size:10px}
 }
+
+.guide-groups{grid-template-columns:2fr 2fr .9fr 1.25fr 1.25fr}
+.guide-group.scrap>b{color:#a34f2e}
+.hud{gap:28px}
+@media(max-width:600px){.hud{gap:13px}.game-top{align-items:flex-start}.guide-groups{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:360px){.guide-groups{grid-template-columns:minmax(0,1fr)}}

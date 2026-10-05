@@ -40,15 +40,14 @@ export function generateBoard(size, scholars, random = Math.random) {
   return items;
 }
 function fallbackBoard(size, ids) {
-  const portrait = size.width < size.height;
-  const slots = portrait ? [[.35,.20],[.68,.33],[.22,.52],[.70,.65],[.47,.45],[.18,.78],[.85,.85],[.62,.86],[.44,.72],[.82,.48],[.14,.31],[.48,.93]] : [[.40,.20],[.70,.45],[.18,.64],[.80,.80],[.50,.64],[.30,.83],[.88,.35],[.12,.40],[.62,.73],[.33,.50],[.60,.28],[.48,.94]];
+  const slots = [.2,.52,.84].flatMap(y => [.17,.335,.5,.665,.83].map(x => [x,y]));
   const types = boardTypes();
   return slots.map(([x,y], i) => ({ id:i, type:types[i], x: x * size.width, y: 225 + y * (size.height - 280), ...CONFIG.objects[types[i]], scholarId: i < 2 ? ids[i] : null }));
 }
 export class Game {
   constructor({ portrait = false, scholars, random = Math.random, onCollect = () => {}, onFinish = () => {} }) {
     this.size = sceneSize(portrait); this.scholars = scholars; this.random = random; this.onCollect = onCollect; this.onFinish = onFinish;
-    this.phase = 'countdown'; this.resumePhase = null; this.countdown = CONFIG.countdown; this.remaining = CONFIG.duration; this.score = 0; this.elapsed = 0; this.discoveries = []; this.hook = { state: 'swing', angle: 0, length: 30, caught: null }; this.items = generateBoard(this.size, scholars, random);
+    this.phase = 'countdown'; this.resumePhase = null; this.countdown = CONFIG.countdown; this.remaining = CONFIG.duration; this.score = 0; this.elapsed = 0; this.round = 1; this.discoveries = []; this.hook = { state: 'swing', angle: 0, length: 30, caught: null }; this.items = generateBoard(this.size, scholars, random);
   }
   get origin() { return equipmentLayout(this.size).origin; }
   point(length = this.hook.length) { return { x: this.origin.x + Math.sin(this.hook.angle) * length, y: this.origin.y + Math.cos(this.hook.angle) * length }; }
@@ -57,6 +56,14 @@ export class Game {
     return Math.min((this.size.height - 14 - o.y) / dy, dx > 0 ? (this.size.width - 14 - o.x) / dx : dx < 0 ? (14 - o.x) / dx : Infinity);
   }
   fire() { if (this.phase !== 'playing' || this.hook.state !== 'swing') return false; this.hook.state = 'extending'; return true; }
+  nextRound() {
+    if (this.phase !== 'roundComplete') return false;
+    this.round++;
+    this.items = generateBoard(this.size, this.scholars, this.random);
+    this.hook = { state: 'swing', angle: 0, length: 30, caught: null };
+    this.phase = 'playing';
+    return true;
+  }
   pause() { if (['countdown','playing'].includes(this.phase)) { this.resumePhase = this.phase; this.phase = 'paused'; } }
   resume() { if (this.phase === 'paused') { this.phase = this.resumePhase; this.resumePhase = null; } }
   resize(portrait) {
@@ -71,7 +78,7 @@ export class Game {
     this.hook.length = Math.hypot(tip.x - nextOrigin.x, tip.y - nextOrigin.y);
   }
   update(dt) {
-    if (this.phase === 'paused' || this.phase === 'finished' || dt <= 0) return;
+    if (this.phase === 'paused' || this.phase === 'finished' || this.phase === 'roundComplete' || dt <= 0) return;
     if (this.phase === 'countdown') { this.countdown -= dt; if (this.countdown <= 0) this.phase = 'playing'; return; }
     this.remaining = Math.max(0, this.remaining - dt);
     if (this.remaining <= 0) { this.phase = 'finished'; this.onFinish(this); return; }
@@ -90,7 +97,7 @@ export class Game {
       if (h.length <= 30) {
         if (h.caught) { const item = h.caught; this.score += item.score; if (item.scholarId) this.discoveries.push(item.scholarId); h.caught = null; this.onCollect(item); }
         h.state = 'swing';
-        if (!this.items.length) this.items = generateBoard(this.size, this.scholars, this.random);
+        if (!this.items.some(item => item.collectible !== false)) this.phase = 'roundComplete';
       }
     }
   }

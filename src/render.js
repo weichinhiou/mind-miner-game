@@ -13,6 +13,8 @@ const treasureSprites = {
   smallSilver: ['assets/treasures/silver-small.png', [360, 400, 544, 512]],
   mediumSilver: ['assets/treasures/silver-medium.png', [164, 212, 940, 860]],
   largeSilver: ['assets/treasures/silver-large.png', [64, 124, 1124, 1032]],
+  smallScrap: ['assets/treasures/scrap-small.png', [55, 210, 1170, 800]],
+  largeScrap: ['assets/treasures/scrap-large.png', [20, 120, 1240, 1130]],
 };
 export async function loadSceneAssets() {
   const sources = [['cat','assets/scene/miner-cat.png'],['mine','assets/scene/sunset-mine.png'], ...Object.entries(equipmentSprites).map(([key,[src]])=>[key,src]), ...Object.entries(treasureSprites).map(([key,[src]])=>[key,src])];
@@ -86,7 +88,7 @@ function drawTreasureSprite(ctx, type, radius) {
 export function drawItem(ctx, item, x=item.x, y=item.y) {
   const r=item.radius;ctx.save();ctx.translate(x,y);
   ellipse(ctx,0,0,r+5,r+5,artwork.mine?'#332b2224':'#fff7dc55');
-  ctx.strokeStyle=item.type==='book'?'#dacbffba':item.type==='gem'?'#b8ffecba':item.type.endsWith('Silver')?'#dce9ffbb':'#ffe8a6bb';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(0,0,r+5,0,Math.PI*2);ctx.stroke();
+  ctx.strokeStyle=item.type==='book'?'#dacbffba':item.type==='gem'?'#b8ffecba':item.type.endsWith('Silver')?'#dce9ffbb':item.type.endsWith('Scrap')?'#e7a56abb':'#ffe8a6bb';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(0,0,r+5,0,Math.PI*2);ctx.stroke();
   ellipse(ctx,2,r*.75,r*.9,5,'#38261324');
   if(!drawTreasureSprite(ctx,item.type,r)) {
     if(item.type==='book') {
@@ -94,6 +96,9 @@ export function drawItem(ctx, item, x=item.x, y=item.y) {
     } else if(item.type==='gem') {
       polygon(ctx,[[-r,-r*.35],[-r*.5,-r],[r*.5,-r],[r,-r*.35],[0,r]],'#8cb8b5','#507f82');
       polygon(ctx,[[-r,-r*.35],[0,-r*.6],[0,r]],'#b7dbd0');polygon(ctx,[[0,-r*.6],[r*.5,-r],[r,-r*.35],[0,r]],'#659b9e');
+    } else if(item.type.endsWith('Scrap')) {
+      ctx.fillStyle='#684635';ctx.strokeStyle='#cf7840';ctx.lineWidth=Math.max(2,r*.12);ctx.beginPath();ctx.arc(0,0,r*.82,0,Math.PI*2);ctx.fill();ctx.stroke();
+      ctx.strokeStyle='#e39a5c';ctx.lineWidth=Math.max(2,r*.1);ctx.beginPath();ctx.moveTo(-r*.48,-r*.42);ctx.lineTo(r*.43,r*.38);ctx.moveTo(r*.42,-r*.42);ctx.lineTo(-r*.38,r*.4);ctx.stroke();
     } else {
       const gold=item.type.includes('Gold'),main=gold?'#ddb556':'#aab4c6',edge=gold?'#ba8b38':'#738098';
       polygon(ctx,[[-r,-r*.35],[-r*.7,-r*.85],[r*.15,-r],[r*.82,-r*.48],[r,r*.32],[r*.25,r*.78],[-r*.65,r*.6]],main,edge);

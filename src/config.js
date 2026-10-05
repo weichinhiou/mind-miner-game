@@ -13,6 +13,8 @@ export const CONFIG = Object.freeze({
     largeSilver: { score: 60, weight: 3.2, radius: 30, count: 1, label: '大銀礦' },
     gem: { score: 100, weight: 1, radius: 14, count: 1, label: '寶石' },
     book: { score: 50, weight: 1.8, radius: 22, count: 2, label: '學者藏書' },
+    smallScrap: { score: -25, weight: 5.5, radius: 22, count: 2, label: '小廢鐵', collectible: false },
+    largeScrap: { score: -60, weight: 9, radius: 34, count: 1, label: '大廢鐵', collectible: false },
   },
 });
 export function sceneSize(portrait) { return portrait ? { width: 480, height: 720 } : { width: 960, height: 540 }; }
