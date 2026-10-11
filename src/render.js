@@ -1,5 +1,6 @@
 import { equipmentLayout } from './config.js';
 const artwork = {};
+const CAT_VISIBLE_BOTTOM = 1222 / 1254;
 const equipmentSprites = {
   platform: ['assets/scene/mining-platform.png', [30, 420, 1191, 405]],
   winch: ['assets/scene/mining-winch.png', [30, 204, 1212, 837]],
@@ -26,9 +27,9 @@ export async function loadSceneAssets() {
 
 function ellipse(ctx, x, y, rx, ry, fill) { ctx.fillStyle = fill; ctx.beginPath(); ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2); ctx.fill(); }
 function polygon(ctx, points, fill, stroke) { ctx.beginPath(); points.forEach(([x,y],i) => i ? ctx.lineTo(x,y) : ctx.moveTo(x,y)); ctx.closePath(); ctx.fillStyle=fill; ctx.fill(); if (stroke) {ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();} }
-export function drawCat(ctx, x, y, scale=1) {
-  if(artwork.cat){ctx.drawImage(artwork.cat,x-60*scale,y-72*scale,120*scale,120*scale);return;}
-  ctx.save(); ctx.translate(x,y); ctx.scale(scale,scale);
+export function drawCat(ctx, x, footY, scale=1) {
+  if(artwork.cat){const height=120*scale;ctx.drawImage(artwork.cat,x-60*scale,footY-height*CAT_VISIBLE_BOTTOM,120*scale,120*scale);return;}
+  ctx.save(); ctx.translate(x,footY-50*scale); ctx.scale(scale,scale);
   ctx.strokeStyle='#313838'; ctx.lineWidth=13; ctx.lineCap='round'; ctx.beginPath(); ctx.moveTo(26,28); ctx.bezierCurveTo(65,36,70,0,52,-8);ctx.stroke();
   ellipse(ctx,0,20,27,32,'#313838');
   polygon(ctx,[[-28,-11],[-25,-44],[-6,-26],[13,-27],[29,-44],[30,-9]],'#313838');
@@ -88,10 +89,6 @@ function drawTreasureSprite(ctx, type, radius) {
 }
 export function drawItem(ctx, item, x=item.x, y=item.y) {
   const r=item.radius;ctx.save();ctx.translate(x,y);
-  if(item.type!=='gem') {
-    ellipse(ctx,0,0,r+5,r+5,artwork.mine?'#332b2224':'#fff7dc55');
-    ctx.strokeStyle=item.type==='book'?'#dacbffba':item.type.endsWith('Silver')?'#dce9ffbb':item.type.endsWith('Scrap')?'#e7a56abb':'#ffe8a6bb';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(0,0,r+5,0,Math.PI*2);ctx.stroke();
-  }
   ellipse(ctx,2,r*.75,r*.9,5,'#38261324');
   if(!drawTreasureSprite(ctx,item.type,r)) {
     if(item.type==='book') {
@@ -136,7 +133,7 @@ export function drawScene(canvas, game, preview=false) {
   }
   const equipment = equipmentLayout(game.size), { scale, deckY } = equipment;
   drawPlatform(ctx, equipment.platform);
-  drawCat(ctx, w / 2 - 115 * scale, deckY - 51 * .83 * scale, .83 * scale);
+  drawCat(ctx, w / 2 - 115 * scale, deckY, .83 * scale);
   drawWinch(ctx, equipment.winch);
   const tip = game.point();
   for (const item of game.items) drawItem(ctx, item);
