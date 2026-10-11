@@ -65,6 +65,8 @@ schemaVersion 維持 1，每個人物收藏新增 `quoteIds: []` 與可選 `last
 ## 場景、採礦設備與寶物素材（v0.2.2–v0.2.5）
 
 render.loadSceneAssets 在內容啟動前載入本機圖片，成功存於渲染層，失敗允許程式繪圖。金／銀礦及藏書用透明主體裁切框正規化顯示，再按各尺寸碰撞半徑等比縮放。各物件分數、重量、半徑及每盤數量集中於 config.js 控制，盤面生成器依 count 建立。礦坑地表切線對齊既有邏輯y=200，兩區段縮放，不更改碰撞、origin或物品座標。背景金塊不參與碰撞；活物件亮框與半透明背板、鉤繩對比由render管理；地下遮罩 alpha 為 a8 以兼顧辨識與氣氛。場景來源見 assets/scene/README.md，寶物見 assets/treasures/README.md。server 必須先讀檔再寫200 header，以免缺圖404觸發重複寫header造成程序退出。
+
+v0.2.10 起，直式 Canvas（width < height）優先使用 1024×1536 手機專用礦坑場景，整張繪製至 480×720 邏輯畫布；桌機持續使用原 1672×941 橫圖並依地表分段對齊 y=200。兩套素材只影響裝飾背景，不影響設備定位、目標座標或碰撞。
 render.loadSceneAssets 在內容啟動前載入本機圖片，成功存於渲染層，失敗允許程式繪圖。金／銀礦及藏書用透明主體裁切框正規化顯示，再按各尺寸碰撞半徑等比縮放。各物件分數、重量、半徑及每盤數量集中於 config.js 控制，盤面生成器依 count 建立。礦坑地表切線對齊既有邏輯y=200，兩區段縮放，不更改碰撞或物品座標。背景金塊不參與碰撞；活物件亮框與半透明背板、鉤繩對比由render管理；地下遮罩 alpha 為 a8 以兼顧辨識與氣氛。場景來源見 assets/scene/README.md，寶物見 assets/treasures/README.md。server 必須先讀檔再寫200 header，以免缺圖404觸發重複寫header造成程序退出。
 
 v0.2.4 將平台、絞盤與三爪抓鉤作為一組設備素材。config.equipmentLayout(size) 是渲染與引擎共用的唯一定位來源：桌面與直向尺寸會等比縮放平台與絞盤，平台頂面與絞盤底座落在同一高度，winch cable outlet、Game.origin 三者垂直對齊。resize 依新舊 origin 將盤面、鉤尖及貨物座標映射至新畫布。render 以素材透明邊界裁切留白；鋼索從 outlet 連至 game.point，抓鉤 connector 對齊物理鉤尖並以目前 angle 旋轉。
