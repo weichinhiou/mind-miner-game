@@ -6,6 +6,7 @@ const equipmentSprites = {
   claw: ['assets/scene/mining-claw.png', [150, 90, 951, 978]],
 };
 const treasureSprites = {
+  gem: ['assets/treasures/gem.png', [0, 9, 1204, 1203]],
   book: ['assets/treasures/thought-book.png', [96, 72, 1092, 1128]],
   smallGold: ['assets/treasures/gold-small.png', [356, 404, 540, 464]],
   mediumGold: ['assets/treasures/gold-medium.png', [48, 128, 1160, 1032]],
@@ -87,8 +88,10 @@ function drawTreasureSprite(ctx, type, radius) {
 }
 export function drawItem(ctx, item, x=item.x, y=item.y) {
   const r=item.radius;ctx.save();ctx.translate(x,y);
-  ellipse(ctx,0,0,r+5,r+5,artwork.mine?'#332b2224':'#fff7dc55');
-  ctx.strokeStyle=item.type==='book'?'#dacbffba':item.type==='gem'?'#b8ffecba':item.type.endsWith('Silver')?'#dce9ffbb':item.type.endsWith('Scrap')?'#e7a56abb':'#ffe8a6bb';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(0,0,r+5,0,Math.PI*2);ctx.stroke();
+  if(item.type!=='gem') {
+    ellipse(ctx,0,0,r+5,r+5,artwork.mine?'#332b2224':'#fff7dc55');
+    ctx.strokeStyle=item.type==='book'?'#dacbffba':item.type.endsWith('Silver')?'#dce9ffbb':item.type.endsWith('Scrap')?'#e7a56abb':'#ffe8a6bb';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(0,0,r+5,0,Math.PI*2);ctx.stroke();
+  }
   ellipse(ctx,2,r*.75,r*.9,5,'#38261324');
   if(!drawTreasureSprite(ctx,item.type,r)) {
     if(item.type==='book') {
