@@ -19,7 +19,7 @@ const treasureSprites = {
   largeScrap: ['assets/treasures/scrap-large.png', [20, 120, 1240, 1130]],
 };
 export async function loadSceneAssets() {
-  const sources = [['cat','assets/scene/miner-cat.png'],['mine','assets/scene/sunset-mine.png'], ...Object.entries(equipmentSprites).map(([key,[src]])=>[key,src]), ...Object.entries(treasureSprites).map(([key,[src]])=>[key,src])];
+  const sources = [['cat','assets/scene/miner-cat.png'],['mine','assets/scene/sunset-mine.png'],['minePortrait','assets/scene/sunset-mine-mobile.png'], ...Object.entries(equipmentSprites).map(([key,[src]])=>[key,src]), ...Object.entries(treasureSprites).map(([key,[src]])=>[key,src])];
   await Promise.all(sources.map(([key,src])=>new Promise(resolve=>{
     const image=new Image();image.onload=()=>{artwork[key]=image;resolve();};image.onerror=()=>resolve();image.src=src;
   })));
@@ -123,11 +123,16 @@ export function drawScene(canvas, game, preview=false) {
   for(let i=0;i<150;i++){const x=(Math.sin(i*41.3)*.5+.5)*w,y=213+(Math.cos(i*11.9)*.5+.5)*(h-224);ellipse(ctx,x,y,2+(i%6),1+(i%3),'#8d71451a');}
   ctx.strokeStyle='#b29968';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,200);for(let x=0;x<=w;x+=20)ctx.lineTo(x,199+Math.sin(x*.05)*3);ctx.stroke();
   ctx.fillStyle='#8b9273';for(let x=8;x<w;x+=43){ctx.fillRect(x,187+Math.sin(x)*3,2,12);}
-  if(artwork.mine){
+  if(artwork.mine || artwork.minePortrait){
     // Align the supplied surface to the game's existing soil boundary.
-    const image=artwork.mine;
-    ctx.drawImage(image,0,0,image.width,205,0,0,w,200);
-    ctx.drawImage(image,0,205,image.width,image.height-205,0,200,w,h-200);
+    const image = w < h && artwork.minePortrait ? artwork.minePortrait : artwork.mine;
+    if (image === artwork.minePortrait) {
+      // The portrait asset matches the mobile canvas ratio; draw it as one scene to avoid warping landmarks.
+      ctx.drawImage(image, 0, 0, w, h);
+    } else if (image) {
+      ctx.drawImage(image,0,0,image.width,205,0,0,w,200);
+      ctx.drawImage(image,0,205,image.width,image.height-205,0,200,w,h-200);
+    }
     ctx.fillStyle='#152126a8';ctx.fillRect(0,200,w,h-200);
     const shade=ctx.createLinearGradient(0,200,0,h);shade.addColorStop(0,'#4d2f1708');shade.addColorStop(1,'#07191935');ctx.fillStyle=shade;ctx.fillRect(0,200,w,h-200);
   }
