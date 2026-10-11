@@ -11,6 +11,7 @@
 | `silver-medium.png` | ChatGPT 圖像 2026年10月4日 下午08_38_18-5.png | 中銀礦，30 分 |
 | `silver-large.png` | ChatGPT 圖像 2026年10月4日 下午08_38_21-6.png | 大銀礦，60 分 |
 | `thought-book.png` | ChatGPT 圖像 2026年10月4日 下午08_39_27-1.png | 學者藏書，50 分 |
+| `gem.png` | 閃耀青藍水晶寶石.png（2026-10-11） | 青藍水晶寶石，100 分 |
 | `scrap-small.png` | 小廢鐵.png | 小廢鐵，−25 分、重量 5.5，不阻擋下一輪 |
 | `scrap-large.png` | 大廢鐵.png | 大廢鐵，−60 分、重量 9，不阻擋下一輪 |
 
