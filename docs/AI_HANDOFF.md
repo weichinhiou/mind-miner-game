@@ -1,6 +1,6 @@
 # AI 交接：思想淘金記
 
-更新：2026-10-15。目前版本：v0.2.12，GitHub `main` 與 tag 已同步，GitHub Pages 已部署：[https://weichinhiou.github.io/mind-miner-game/](https://weichinhiou.github.io/mind-miner-game/)。repository：[weichinhiou/mind-miner-game](https://github.com/weichinhiou/mind-miner-game)。目前本機路徑：`D:\Git\Game\mind-miner-game`。
+更新：2026-10-15。目前版本：v0.2.13（本次變更待推送及部署驗證），GitHub Pages 既有部署：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
 
 ## 開工入口
 
@@ -10,8 +10,8 @@
 
 - 無依賴 Canvas／DOM 遊戲、60 秒倒數、重量拉回、暫停及 resize 映射、結算與八位人物收藏。
 - 本機保存、靜音、八位頭像、缺圖姓名卡與來源詳情；正式入口待配置。
-- 28 項核心／名句／HTTP 測試通過。桌機 1280×800、手機 viewport 390×844 已檢查；此次實際回收南丁格爾藏書一本並保存於目前本機瀏覽器，最高分 450 未變。細節與未驗證範圍見 [實作紀錄](implementation.md)。
-- 依 Jean 指示建立 Git、v0.1.0 基線、版本與工程文件；2026-10-15 設定 GitHub origin 並推送 `main`、`v0.2.12`。尚未部署。
+- 28 項核心／名句／HTTP 測試通過（含本次 branding metadata 與 PNG 回應測試）。桌機 1280×800、手機 viewport 390×844 已檢查；此次實際回收南丁格爾藏書一本並保存於目前本機瀏覽器，最高分 450 未變。細節與未驗證範圍見 [實作紀錄](implementation.md)。
+- 依 Jean 指示建立 Git、v0.1.0 基線、版本與工程文件；2026-10-15 設定 GitHub origin，並已推送 main、v0.2.12 版本與 GitHub Pages。
 
 - 新增 80 句教學／研究導向查核短句、未見優先輪替、主題、編寫應用提示、回收提示、結算及收藏來源；舊存檔相容。來源見 quote-sources.md。
 
@@ -24,7 +24,7 @@
 - 新增直式手機專用礦坑背景；手機 375×667 實際瀏覽器確認路燈與礦坑入口不再扭曲、地表與地下物件區正常；桌機沿用原橫向背景。28 項 Node 測試與語法檢查通過。圖片素材與驗證細節記於 [實作紀錄](implementation.md)。
 - 依 Jean 回饋新增桌機專用橫向地層背景，保留夕陽礦場並降低背景礦石干擾；手機仍用直式專用背景。28 項 Node 測試及語法檢查通過；隔離瀏覽器桌機 1280×900 畫面已檢查。詳細素材與限制記於 [實作紀錄](implementation.md)。
 - 更新清盤續輪規則：每輪重新計時 60 秒，累積分數／收藏延續，廢鐵可略過；28 項 Node 測試與語法檢查通過。瀏覽器續輪實際操作待驗。
-- GitHub Pages workflow 已建立：每次 main 更新先執行 Node 測試及語法檢查，再只發布遊戲 HTML、JS、JSON 與 PNG 素材。首次 Actions run 成功，部署網址首頁、人物 JSON 與黑貓 PNG 均回應 HTTP 200。
+- GitHub Pages workflow 已建立：每次 main 更新先執行 Node 測試及語法檢查，再發布遊戲 HTML、JS、JSON 與 PNG 素材。首次 Actions run 成功，首頁、人物 JSON 與黑貓 PNG 均回應 HTTP 200。v0.2.13 新增 favicon 與 OG／Twitter 分享圖，待本次部署確認素材 HTTP 狀態。
 
 ## 下一次建議工作
 
@@ -33,7 +33,7 @@
 ## 待 Jean 提供／決定
 
 - 任意門及 Persona Lens 正式 URL、人物映射、整合目標 repo／入口。
-- 八位頭像、黑貓與礦坑已由 Jean 提供原圖接入；正式發布位置與入口待決定。
+- GitHub Pages 已公開；正式任意門與 Persona Lens 入口仍待提供。
 - repository 與 Pages 網站皆為公開。正式部署已完成；後續仍可補做桌機／手機瀏覽器內遊戲操作驗收。
 
 ## 工作邊界

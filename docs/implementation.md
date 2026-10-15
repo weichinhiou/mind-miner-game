@@ -1,5 +1,11 @@
 # 初版實作與驗證
 
+## Open Graph 與網站圖示（2026-10-15，v0.2.13）
+
+將提供的方形淘金貓 PNG 原檔放入 assets/branding/favicon.png，作為瀏覽器分頁圖示；將橫式夕陽礦山 PNG 原檔放入 assets/branding/og-image.png，用於 Open Graph 與 Twitter 大圖卡片。index.html 加入繁體中文頁面描述、絕對分享網址、圖片尺寸與替代文字等 metadata。Pages workflow 將 branding PNG 一併打包；不把原圖重新壓縮或改成 JPG。
+
+驗證：Node server test 檢查 metadata 與兩張圖都能以 image/png 正常取得；完整測試與正式站 HTTPS 回應待本次推送後確認。社群平台實際抓取和快取更新不在本地測試範圍。
+
 ## GitHub Pages 部署設定（2026-10-15）
 
 Jean 要求部署遊戲。repository 為公開 GitHub repo，Pages 尚未啟用；採 GitHub Pages + Actions，因為遊戲是無建置步驟的靜態 ES modules，且程式資源均使用相對路徑。新增 workflow 於 main push／手動觸發時執行 `npm test` 與 `npm run check`，只把 `index.html`、`styles.css`、`src/*.js`、`data/*.json` 及場景／寶物／頭像 PNG 素材打包發布；不把 PRD、開發文件及素材說明放入網站 artifact。預定網址為 `https://weichinhiou.github.io/mind-miner-game/`。
