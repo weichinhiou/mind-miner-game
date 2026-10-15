@@ -35,7 +35,8 @@ jobs:
           cp assets/scene/*.png dist/assets/scene/
           cp assets/treasures/*.png dist/assets/treasures/
           cp assets/portraits/*.png dist/assets/portraits/
-          cp assets/branding/*.png dist/assets/branding/
+          cp assets/branding/og-image.png dist/assets/branding/
+          cp assets/branding/favicon.png assets/branding/favicon.ico assets/branding/favicon-transparent.png assets/branding/favicon-transparent.ico assets/branding/apple-touch-icon.png dist/
           touch dist/.nojekyll
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
