@@ -61,6 +61,7 @@ export class Game {
     this.round++;
     this.items = generateBoard(this.size, this.scholars, this.random);
     this.hook = { state: 'swing', angle: 0, length: 30, caught: null };
+    this.remaining = CONFIG.duration;
     this.phase = 'playing';
     return true;
   }
