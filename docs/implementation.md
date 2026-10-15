@@ -1,5 +1,11 @@
 # 初版實作與驗證
 
+## GitHub 同步與工作目錄改名（2026-10-15）
+
+Jean 將專案資料夾由 `D:\Git\Game\mind-miner` 改名為 `D:\Git\Game\mind-miner-game`。確認 Git `main`、工作目錄乾淨、HEAD 為 `1f5db553`（v0.2.12 文件提交），並且沒有額外 worktree；既有 stash 保留未動。設定 `origin` 為 `https://github.com/weichinhiou/mind-miner-game.git`，該遠端起初沒有 refs。依 Jean 指示推送 `main` 和 `v0.2.12`，再以 `git ls-remote` 確認兩者指向正確提交。推送後本機 `main` 追蹤 `origin/main`，工作目錄乾淨。此操作只同步 Git，不部署網站。
+
+驗證範圍：資料夾改名後確認 `git status`、branch、HEAD、tag 正常；推送後遠端 refs 已回查。未重新執行遊戲測試（沒有程式變更），亦未進行部署驗證。
+
 ## 清盤後每輪重新計時（2026-10-15，v0.2.12）
 
 Jean 決定將續輪從「延續前一輪剩餘時間」改為「新一輪重新計時」。按下「下一輪」時，新盤立即開始並把倒數重設為 60 秒，不增加另一段 3、2、1 倒數；總分、已入帳收藏和回合數延續，鉤子重置，未挖廢鐵仍可略過。`elapsed` 維持單一遊戲 session 的動畫／提示時鐘，不作為每輪倒數來源。此為 v0.2.7 續輪規則的明確修訂；存檔格式和遊戲結算流程不變。

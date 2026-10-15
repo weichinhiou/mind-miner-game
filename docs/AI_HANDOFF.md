@@ -1,6 +1,6 @@
 # AI 交接：思想淘金記
 
-更新：2026-10-15。目前版本：v0.2.12，本機 MVP。目標是依現有 PRD 交付穩定單人遊戲。
+更新：2026-10-15。目前版本：v0.2.12，GitHub `main` 與 tag 已同步，本機 MVP 尚未部署。repository：[weichinhiou/mind-miner-game](https://github.com/weichinhiou/mind-miner-game)。目前本機路徑：`D:\Git\Game\mind-miner-game`。
 
 ## 開工入口
 
@@ -10,8 +10,8 @@
 
 - 無依賴 Canvas／DOM 遊戲、60 秒倒數、重量拉回、暫停及 resize 映射、結算與八位人物收藏。
 - 本機保存、靜音、八位頭像、缺圖姓名卡與來源詳情；正式入口待配置。
-- 22 項核心／名句／HTTP 測試通過。桌機 1280×800、手機 viewport 390×844 已檢查；此次實際回收南丁格爾藏書一本並保存於目前本機瀏覽器，最高分 450 未變。細節與未驗證範圍見 [實作紀錄](implementation.md)。
-- 依 Jean 指示建立本機 Git、v0.1.0 基線、版本與工程文件。origin 尚未提供，沒有 push／部署。
+- 28 項核心／名句／HTTP 測試通過。桌機 1280×800、手機 viewport 390×844 已檢查；此次實際回收南丁格爾藏書一本並保存於目前本機瀏覽器，最高分 450 未變。細節與未驗證範圍見 [實作紀錄](implementation.md)。
+- 依 Jean 指示建立 Git、v0.1.0 基線、版本與工程文件；2026-10-15 設定 GitHub origin 並推送 `main`、`v0.2.12`。尚未部署。
 
 - 新增 80 句教學／研究導向查核短句、未見優先輪替、主題、編寫應用提示、回收提示、結算及收藏來源；舊存檔相容。來源見 quote-sources.md。
 
@@ -33,7 +33,7 @@
 
 - 任意門及 Persona Lens 正式 URL、人物映射、整合目標 repo／入口。
 - 八位頭像、黑貓與礦坑已由 Jean 提供原圖接入；正式發布位置與入口待決定。
-- 遠端 repository 與正式部署位置；GitHub 建 repo／push／部署需另行授權。
+- 正式部署位置與部署流程；目前已完成 GitHub 備份，尚未部署。
 
 ## 工作邊界
 

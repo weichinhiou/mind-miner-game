@@ -6,7 +6,7 @@
 
 ## Git 工作流程
 
-`main` 保存已驗證的本機基線。開工先確認 branch、HEAD、worktree、status、stash、近期 commit；有 origin 才 fetch 並比較。未設定 origin 時明確記錄「只有本機歷史」，不把本機 commit 當異地備份。
+`main` 保存整合基線。開工先確認 branch、HEAD、worktree、status、stash、近期 commit；設定 origin 後先 fetch 並比較。此 repo 的 GitHub remote 為 `https://github.com/weichinhiou/mind-miner-game.git`，`main` 追蹤 `origin/main`。推送仍須 Jean 明確授權。
 
 每個主題從最新 main 開自己的 `feat/`、`fix/` 或 `docs/` 分支。一個工作目錄只容納一個 session。看到非本任務變更或分支變動先釐清；保留別人的檔案。程式與文件使用分開的 commit／分支，程式先整合、文件後整合。
 
@@ -25,8 +25,10 @@ v0.1.0 為本機初版，尚未完整通過產品發布驗收。先重測，再�
 
 查閱舊版可用 `git show v0.1.0:src/engine.js`；需要舊版工作副本可在新分支／worktree 使用該 tag，保留現在工作目錄。已共享歷史的修正用 revert commit；不以 reset --hard 清掉工作。Git 只保存程式，不能回復瀏覽器收藏，因此保存格式遷移需另準備資料回復方案。
 
-初建紀錄：2026-10-03，先於 `feat/initial-mvp` 保存程式，再建立 main 基線；`docs/project-foundation` 保存文件並以 fast-forward 整合。版本 tag 在文件整合後建立。未設定 origin，未 push／部署。
+初建紀錄：2026-10-03，先於 `feat/initial-mvp` 保存程式，再建立 main 基線；`docs/project-foundation` 保存文件並以 fast-forward 整合。版本 tag 在文件整合後建立。當時尚未設定 origin，未 push／部署。
+
+2026-10-15：Jean 將工作目錄由 `D:\Git\Game\mind-miner` 改名為 `D:\Git\Game\mind-miner-game`，Git working tree 與歷史均保留。設定上述 GitHub origin，推送 `main`（`1f5db553`）及 annotated tag `v0.2.12`；以 `git ls-remote` 回查確認 refs。遊戲未部署。
 
 ## 此機器的 Git 擁有者限制
 
-2026-10-05 重試時確認，Codex sandbox 初始化曾把 `.git` 目錄擁有者設為 `LAPTOP-3UTNSAOB\CodexSandboxOffline`，sandbox 後續套用 deny ACL 失敗（`deny ACE failed ... open deny ACL target for update`），導致一般 command runner setup refresh 失敗。使用者核准 UAC 後只將 `.git` 目錄擁有者改為目前 Windows 使用者，沒有遞迴改動內部檔案；command runner 隨即恢復。Git 操作仍使用路徑限定的 `-c safe.directory=D:/Git/Game/mind-miner`，不寫入全域信任檔案。若再次出現，先檢查 sandbox log 與 `.git` owner；不要直接改用其他工作目錄或重建 repo。
+2026-10-05 重試時確認，Codex sandbox 初始化曾把 `.git` 目錄擁有者設為 `LAPTOP-3UTNSAOB\CodexSandboxOffline`，sandbox 後續套用 deny ACL 失敗（`deny ACE failed ... open deny ACL target for update`），導致一般 command runner setup refresh 失敗。使用者核准 UAC 後只將 `.git` 目錄擁有者改為目前 Windows 使用者，沒有遞迴改動內部檔案；command runner 隨即恢復。當時 Git 操作使用路徑限定的 `-c safe.directory=D:/Git/Game/mind-miner`，不寫入全域信任檔案。2026-10-15 資料夾改名為 `D:\Git\Game\mind-miner-game`。若再次出現，先檢查 sandbox log 與 `.git` owner；不要直接改用其他工作目錄或重建 repo。
