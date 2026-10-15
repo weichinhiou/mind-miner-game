@@ -1,5 +1,12 @@
 # 初版實作與驗證
 
+## Favicon 套件補齊（2026-10-15，v0.2.14 候選）
+
+Jean 回報 favicon 未生效，並指出其他遊戲提供 favicon.ico、favicon.png 與透明版本。檢查發現 v0.2.13 只有 HTML 指向 assets/branding/favicon.png；沒有網站根目錄的 favicon.ico fallback，也沒有標準多尺寸、透明圖檔或 Apple touch icon。此前瀏覽器檢查亦曾記錄 /favicon.ico 403。此缺漏加上 favicon 快取，是圖示未顯示／未更新的可能原因。
+
+沿用 Jean 的方形淘金貓原圖，原檔保留為 assets/branding/favicon-source.png，產生 16／32／48／64px ICO、512px PNG、透明 ICO／RGBA PNG 與 180px Apple 圖示。透明版本只移除金色圓角框外、連到畫布邊界的近黑背景，框內暗色保留。index.html 指向根目錄 favicon 並加版本 query；Pages workflow 發布根目錄圖示，預覽伺服器新增 ICO MIME type。
+
+28 項測試與語法檢查通過；HTTP 測試確認圖示端點狀態、MIME、ICO 四種尺寸與透明 PNG RGBA。測試中一度因斷言仍期待舊 HTML 屬性而失敗；更新斷言符合新標記後全數重跑通過。功能與文件保存在 feat/favicon-suite 分支，尚未推送或部署，因此正式網站圖示尚未驗證。
 ## Open Graph 與網站圖示（2026-10-15，v0.2.13）
 
 將提供的方形淘金貓 PNG 原檔放入 assets/branding/favicon.png，作為瀏覽器分頁圖示；將橫式夕陽礦山 PNG 原檔放入 assets/branding/og-image.png，用於 Open Graph 與 Twitter 大圖卡片。index.html 加入繁體中文頁面描述、絕對分享網址、圖片尺寸與替代文字等 metadata。Pages workflow 將 branding PNG 一併打包；不把原圖重新壓縮或改成 JPG。
