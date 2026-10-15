@@ -1,0 +1,56 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run tests
+        run: |
+          npm test
+          npm run check
+      - name: Prepare static site
+        run: |
+          mkdir -p dist/src dist/data dist/assets/scene dist/assets/treasures dist/assets/portraits
+          cp index.html styles.css dist/
+          cp src/*.js dist/src/
+          cp data/*.json dist/data/
+          cp assets/scene/*.png dist/assets/scene/
+          cp assets/treasures/*.png dist/assets/treasures/
+          cp assets/portraits/*.png dist/assets/portraits/
+          touch dist/.nojekyll
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
