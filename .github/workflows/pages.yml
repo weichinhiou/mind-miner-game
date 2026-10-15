@@ -28,13 +28,14 @@ jobs:
           npm run check
       - name: Prepare static site
         run: |
-          mkdir -p dist/src dist/data dist/assets/scene dist/assets/treasures dist/assets/portraits
+          mkdir -p dist/src dist/data dist/assets/scene dist/assets/treasures dist/assets/portraits dist/assets/branding
           cp index.html styles.css dist/
           cp src/*.js dist/src/
           cp data/*.json dist/data/
           cp assets/scene/*.png dist/assets/scene/
           cp assets/treasures/*.png dist/assets/treasures/
           cp assets/portraits/*.png dist/assets/portraits/
+          cp assets/branding/*.png dist/assets/branding/
           touch dist/.nojekyll
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
