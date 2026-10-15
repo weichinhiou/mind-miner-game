@@ -55,7 +55,7 @@ npm run check
 
 ## 版本與開發文件
 
-目前版本為 `v0.2.12` MVP。GitHub Pages 部署流程已設定，預定網址為 [https://weichinhiou.github.io/mind-miner-game/](https://weichinhiou.github.io/mind-miner-game/)；首次 Actions 部署完成後即可公開遊玩。後續建議先補驗收，再做正式入口整合與發布。
+目前版本為 `v0.2.12` MVP，已部署至 [思想淘金記遊戲網站](https://weichinhiou.github.io/mind-miner-game/)。後續建議先補驗收，再做正式入口整合與發布。
 
 - [文件索引](docs/README.md)：所有專案文件入口。
 - [版本規劃](docs/roadmap.md)：v0.2.x、v0.3.0、v1.0.0 範圍及完成門檻。

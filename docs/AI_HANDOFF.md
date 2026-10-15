@@ -1,6 +1,6 @@
 # AI 交接：思想淘金記
 
-更新：2026-10-15。目前版本：v0.2.12，GitHub `main` 與 tag 已同步。已加入 GitHub Pages workflow；首次 Actions 部署結果待確認。預定網址：[https://weichinhiou.github.io/mind-miner-game/](https://weichinhiou.github.io/mind-miner-game/)。repository：[weichinhiou/mind-miner-game](https://github.com/weichinhiou/mind-miner-game)。目前本機路徑：`D:\Git\Game\mind-miner-game`。
+更新：2026-10-15。目前版本：v0.2.12，GitHub `main` 與 tag 已同步，GitHub Pages 已部署：[https://weichinhiou.github.io/mind-miner-game/](https://weichinhiou.github.io/mind-miner-game/)。repository：[weichinhiou/mind-miner-game](https://github.com/weichinhiou/mind-miner-game)。目前本機路徑：`D:\Git\Game\mind-miner-game`。
 
 ## 開工入口
 
@@ -24,7 +24,7 @@
 - 新增直式手機專用礦坑背景；手機 375×667 實際瀏覽器確認路燈與礦坑入口不再扭曲、地表與地下物件區正常；桌機沿用原橫向背景。28 項 Node 測試與語法檢查通過。圖片素材與驗證細節記於 [實作紀錄](implementation.md)。
 - 依 Jean 回饋新增桌機專用橫向地層背景，保留夕陽礦場並降低背景礦石干擾；手機仍用直式專用背景。28 項 Node 測試及語法檢查通過；隔離瀏覽器桌機 1280×900 畫面已檢查。詳細素材與限制記於 [實作紀錄](implementation.md)。
 - 更新清盤續輪規則：每輪重新計時 60 秒，累積分數／收藏延續，廢鐵可略過；28 項 Node 測試與語法檢查通過。瀏覽器續輪實際操作待驗。
-- GitHub Pages workflow 已建立：每次 main 更新先執行 Node 測試及語法檢查，再只發布遊戲 HTML、JS、JSON 與 PNG 素材；workflow 設定與首次部署結果待確認。
+- GitHub Pages workflow 已建立：每次 main 更新先執行 Node 測試及語法檢查，再只發布遊戲 HTML、JS、JSON 與 PNG 素材。首次 Actions run 成功，部署網址首頁、人物 JSON 與黑貓 PNG 均回應 HTTP 200。
 
 ## 下一次建議工作
 
@@ -34,7 +34,7 @@
 
 - 任意門及 Persona Lens 正式 URL、人物映射、整合目標 repo／入口。
 - 八位頭像、黑貓與礦坑已由 Jean 提供原圖接入；正式發布位置與入口待決定。
-- 首次 GitHub Pages workflow 部署結果與正式 URL 可用性待驗；目前 repository 為公開狀態，Pages 網站也會公開。
+- repository 與 Pages 網站皆為公開。正式部署已完成；後續仍可補做桌機／手機瀏覽器內遊戲操作驗收。
 
 ## 工作邊界
 

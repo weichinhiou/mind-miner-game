@@ -4,7 +4,7 @@
 
 Jean 要求部署遊戲。repository 為公開 GitHub repo，Pages 尚未啟用；採 GitHub Pages + Actions，因為遊戲是無建置步驟的靜態 ES modules，且程式資源均使用相對路徑。新增 workflow 於 main push／手動觸發時執行 `npm test` 與 `npm run check`，只把 `index.html`、`styles.css`、`src/*.js`、`data/*.json` 及場景／寶物／頭像 PNG 素材打包發布；不把 PRD、開發文件及素材說明放入網站 artifact。預定網址為 `https://weichinhiou.github.io/mind-miner-game/`。
 
-已知公開影響：repo 已是 public，因此部署後遊戲與隨附人物／名句 JSON 也會公開瀏覽。待完成 GitHub Pages API 設定、推送 workflow、檢查 Actions run 和線上首頁／素材；尚未確認網站已可用。
+已知公開影響：repo 已是 public，因此遊戲與隨附人物／名句 JSON 都可公開瀏覽。GitHub Pages API 已建立 workflow publishing source，Actions run [#1](https://github.com/weichinhiou/mind-miner-game/actions/runs/38737236234) 成功，部署紀錄指向 main commit `62c3f94`。部署後對首頁、人物 JSON、黑貓 PNG 發出 HTTPS HEAD 請求，三者均回應 HTTP 200 且 content-type 正確；網站網址為 `https://weichinhiou.github.io/mind-miner-game/`。未在瀏覽器中操作完整遊戲，也未測實體手機；之後 main 更新會自動測試並重新部署。
 
 ## GitHub 同步與工作目錄改名（2026-10-15）
 

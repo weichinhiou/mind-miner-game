@@ -5,6 +5,7 @@
 - 調整續輪計時：清空一輪的金銀礦、寶石與藏書後，按「下一輪」即開始新一輪 60 秒倒數；分數與收藏延續，廢鐵可略過。
 - 更新回合提示文案及玩法／架構紀錄；不更改存檔格式與物件規則。
 - 28 項測試、語法檢查及 `git diff --check` 通過；瀏覽器續輪實際操作尚待補驗。
+- 新增 GitHub Pages 自動部署；部署至 [weichinhiou.github.io/mind-miner-game](https://weichinhiou.github.io/mind-miner-game/)。首次 Actions run 成功，首頁、人物 JSON 與主要圖片 HTTPS 回應 200；尚未做瀏覽器遊戲流程或實體手機驗收。
 
 ## v0.2.11 — 2026-10-11
 
