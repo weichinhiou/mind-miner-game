@@ -1,6 +1,6 @@
 # AI 交接：思想淘金記
 
-更新：2026-10-15。目前正式部署版本：v0.2.13；feat/favicon-suite 含尚未推送的 v0.2.14 favicon 修正。GitHub Pages 現有部署：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
+更新：2026-10-15。目前正式部署版本：v0.2.14，main 與 tag 已推送；GitHub Pages 部署與 favicon URL 驗證成功：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
 
 ## 開工入口
 

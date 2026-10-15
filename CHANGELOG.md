@@ -4,7 +4,7 @@
 
 - 補齊 favicon 套件：多尺寸 ICO、標準與透明 PNG／ICO、iOS 180px 圖示，並保留原始圖；網站根目錄提供 favicon.ico fallback。
 - 修正 favicon metadata URL 並加版本 query，Pages workflow 打包所有正式圖示；本機 HTTP 測試涵蓋各檔案與透明 PNG。
-- 28 項測試、語法檢查通過；本機圖檔與 HTTP 驗證完成。尚未推送／部署；部署後需再確認正式站各 favicon URL。
+- 28 項測試、語法檢查通過；GitHub Pages Actions run #5 成功。正式站首頁、ICO、標準／透明 PNG／ICO、Apple 圖示與 OG 圖均回應 HTTP 200，MIME 類型正確。
 ## v0.2.13 — 2026-10-15
 
 - 採用 Jean 提供的淘金貓方圖作為 favicon、夕陽礦山橫圖作為 Open Graph／Twitter 分享預覽，加入描述、替代文字與社群 metadata。
