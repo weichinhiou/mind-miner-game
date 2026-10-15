@@ -55,7 +55,7 @@ npm run check
 
 ## 版本與開發文件
 
-目前版本為 `v0.2.13` MVP，已部署至 [思想淘金記遊戲網站](https://weichinhiou.github.io/mind-miner-game/)。後續建議先補驗收，再做正式入口整合與發布。
+目前正式部署版本為 v0.2.13 MVP；feat/favicon-suite 分支包含待發布的 favicon 完整套件（v0.2.14），尚未推送。網站目前仍是 [思想淘金記遊戲網站](https://weichinhiou.github.io/mind-miner-game/)。後續建議先補驗收，再做正式入口整合與發布。
 
 - [文件索引](docs/README.md)：所有專案文件入口。
 - [版本規劃](docs/roadmap.md)：v0.2.x、v0.3.0、v1.0.0 範圍及完成門檻。
