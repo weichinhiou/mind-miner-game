@@ -1,6 +1,6 @@
 # AI 交接：思想淘金記
 
-更新：2026-10-15。目前版本：v0.2.13（本次變更待推送及部署驗證），GitHub Pages 既有部署：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
+更新：2026-10-15。目前版本：v0.2.13，main 與 tag 已推送；GitHub Pages 部署成功：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
 
 ## 開工入口
 
@@ -24,7 +24,7 @@
 - 新增直式手機專用礦坑背景；手機 375×667 實際瀏覽器確認路燈與礦坑入口不再扭曲、地表與地下物件區正常；桌機沿用原橫向背景。28 項 Node 測試與語法檢查通過。圖片素材與驗證細節記於 [實作紀錄](implementation.md)。
 - 依 Jean 回饋新增桌機專用橫向地層背景，保留夕陽礦場並降低背景礦石干擾；手機仍用直式專用背景。28 項 Node 測試及語法檢查通過；隔離瀏覽器桌機 1280×900 畫面已檢查。詳細素材與限制記於 [實作紀錄](implementation.md)。
 - 更新清盤續輪規則：每輪重新計時 60 秒，累積分數／收藏延續，廢鐵可略過；28 項 Node 測試與語法檢查通過。瀏覽器續輪實際操作待驗。
-- GitHub Pages workflow 已建立：每次 main 更新先執行 Node 測試及語法檢查，再發布遊戲 HTML、JS、JSON 與 PNG 素材。首次 Actions run 成功，首頁、人物 JSON 與黑貓 PNG 均回應 HTTP 200。v0.2.13 新增 favicon 與 OG／Twitter 分享圖，待本次部署確認素材 HTTP 狀態。
+- GitHub Pages workflow 已建立：每次 main 更新先執行 Node 測試及語法檢查，再發布遊戲 HTML、JS、JSON 與 PNG 素材。首次 Actions run 成功，首頁、人物 JSON 與黑貓 PNG 均回應 HTTP 200。v0.2.13 新增 favicon 與 OG／Twitter 分享圖；Actions run #3 成功，首頁與兩圖 HTTP 200。社群平台分享快取尚未實測。
 
 ## 下一次建議工作
 

@@ -4,7 +4,7 @@
 
 - 採用 Jean 提供的淘金貓方圖作為 favicon、夕陽礦山橫圖作為 Open Graph／Twitter 分享預覽，加入描述、替代文字與社群 metadata。
 - 原始 PNG 原樣保留；GitHub Pages workflow 將 branding 圖片納入部署產物。
-- 28 項測試及語法檢查通過；部署與 HTTPS 素材驗證待本次推送後確認，社群平台分享快取尚未實測。
+- 28 項測試及語法檢查通過；GitHub Pages Actions run #3 成功，首頁與兩張圖片 HTTPS 均回應 200、圖片類型為 image/png。社群平台分享快取尚未實測。
 
 ## v0.2.12 — 2026-10-15
 

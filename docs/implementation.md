@@ -4,7 +4,7 @@
 
 將提供的方形淘金貓 PNG 原檔放入 assets/branding/favicon.png，作為瀏覽器分頁圖示；將橫式夕陽礦山 PNG 原檔放入 assets/branding/og-image.png，用於 Open Graph 與 Twitter 大圖卡片。index.html 加入繁體中文頁面描述、絕對分享網址、圖片尺寸與替代文字等 metadata。Pages workflow 將 branding PNG 一併打包；不把原圖重新壓縮或改成 JPG。
 
-驗證：Node server test 檢查 metadata 與兩張圖都能以 image/png 正常取得；完整測試與正式站 HTTPS 回應待本次推送後確認。社群平台實際抓取和快取更新不在本地測試範圍。
+驗證：28 項 Node 測試及語法檢查通過。Pages Actions run #3 成功；正式站首頁、favicon 與 OG 圖 HEAD 均回應 HTTP 200，兩張 PNG 均為 image/png。社群平台實際抓取和快取更新未測。
 
 ## GitHub Pages 部署設定（2026-10-15）
 
