@@ -19,6 +19,10 @@ Commit 前重新確認基線分支，`git diff`／staged diff 只含本任務檔
 3. 複雜決策、失敗結果、修正重測、未驗證項目寫入實作紀錄；版本完成項目寫 CHANGELOG，當前下一步寫 AI_HANDOFF。
 4. 驗收與版本 metadata 一致才建立版本 tag；本機試玩版與正式發布需明確區分。
 
+## GitHub Pages 部署
+
+本 repo 是公開 repository；GitHub Pages 網站會公開給網際網路存取。`.github/workflows/pages.yml` 在 `main` 更新或手動觸發時先執行 `npm test`、`npm run check`，再將遊戲執行所需的 HTML、CSS、ES modules、JSON 與 PNG 放入 Pages artifact，不發布 PRD、文件或素材說明。預定網址為 `https://weichinhiou.github.io/mind-miner-game/`。部署完成前，須確認 Actions run 成功並以 HTTPS 開啟首頁、驗證 JSON 與主要圖片載入；不得把推送成功當作部署成功。
+
 ## 版本與回復
 
 v0.1.0 為本機初版，尚未完整通過產品發布驗收。先重測，再更新 `package.json` 版本與 CHANGELOG，在包含程式及文件的 commit 上建立 annotated tag `vX.Y.Z`。要部署時另確認正式環境、入口及資料相容性，記錄部署驗證。
