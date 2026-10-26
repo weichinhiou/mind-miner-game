@@ -1,8 +1,8 @@
 # AI 交接：思想淘金記
 
-更新：2026-10-27。目前正式部署版本：v0.2.15，main 與 annotated tag 已推送；GitHub Pages Actions run #7 成功，正式站首頁與兩張黑貓動作 PNG 均回應 HTTP 200：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
+更新：2026-10-27。目前正式部署版本：v0.2.16，main 與 annotated tag 已推送；GitHub Pages Actions run #9 成功，正式站首頁與新的拉重物 PNG 均回應 HTTP 200：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
 
-v0.2.15 新增黑貓回饋動作：回收正分物件顯示歡呼愛心動作，回收負分廢鐵顯示三滴大汗水動作；圖片為真正透明 PNG。程式提交 `b53bc6a`、文件提交 `138857c`，版本標籤 `v0.2.15` 可供回復。`npm test` 29 項、`npm run check` 通過；正式站新素材 HTTP 200。手動實際回收動畫尚未做瀏覽器互動驗收。
+v0.2.16 新增「費力拉重物」表情：重量至少 3 的物件回收時，黑貓後仰咬牙拉扯，動態鋼索穿過雙手並連回絞盤。透明 PNG：`assets/scene/miner-cat-pulling.png`。碰撞、鉤子物理、計分均未變。程式提交 `c3d9510`、文件提交 `5ce8ab9` 與 `e891c45`；annotated tag `v0.2.16` 可供回復。`npm test` 29 項、`npm run check` 通過；Pages Actions run #9 成功，正式首頁與新 PNG 均 HTTP 200。瀏覽器手動實際回收互動尚未驗收。
 
 ## 開工入口
 
