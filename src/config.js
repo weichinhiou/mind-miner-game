@@ -29,21 +29,24 @@ export function equipmentLayout(size) {
   const winchWidth = winchHeight * 1212 / 837;
   const outletRatio = .77;
   const origin = { x: size.width / 2, y: deckY - winchHeight * (1 - outletRatio) };
+  const winch = {
+    x: origin.x - winchWidth / 2,
+    y: origin.y - winchHeight * outletRatio,
+    width: winchWidth,
+    height: winchHeight,
+  };
   return {
     scale,
     deckY,
     origin,
+    // The outlet is centered below the drum; the operator crank is on its right edge.
+    crank: { x: winch.x + winch.width, y: winch.y + winch.height * .45 },
     platform: {
-      x: size.width / 2 - 40 * scale - platformWidth / 2,
+      x: size.width / 2 + 40 * scale - platformWidth / 2,
       y: deckY - platformHeight * .31,
       width: platformWidth,
       height: platformHeight,
     },
-    winch: {
-      x: origin.x - winchWidth / 2,
-      y: origin.y - winchHeight * outletRatio,
-      width: winchWidth,
-      height: winchHeight,
-    },
+    winch,
   };
 }

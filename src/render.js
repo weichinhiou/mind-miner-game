@@ -31,9 +31,9 @@ export function catMoodForGame(game) {
   if (game.hook.state === 'returning' && game.hook.caught?.weight >= 3) return 'pulling';
   return game.catMoodUntil > game.elapsed ? game.catMood : 'default';
 }
-export function drawCat(ctx, x, footY, scale=1, mood='default', cableX=null) {
+export function drawCat(ctx, x, footY, scale=1, mood='default', crank=null) {
   const sprite = (mood === 'happy' ? artwork.catHappy : mood === 'sweaty' ? artwork.catSweaty : mood === 'pulling' ? artwork.catPulling : null) || artwork.cat;
-  if(sprite){const size=120*scale,left=mood==='pulling'&&Number.isFinite(cableX)?cableX-size*.87:x-size/2;ctx.drawImage(sprite,left,footY-size*CAT_VISIBLE_BOTTOM,size,size);return;}
+  if(sprite){const size=120*scale,left=mood==='pulling'&&Number.isFinite(crank?.x)?crank.x-size*.17:x-size/2;ctx.drawImage(sprite,left,footY-size*CAT_VISIBLE_BOTTOM,size,size);return;}
   ctx.save(); ctx.translate(x,footY-50*scale); ctx.scale(scale,scale);
   ctx.strokeStyle='#313838'; ctx.lineWidth=13; ctx.lineCap='round'; ctx.beginPath(); ctx.moveTo(26,28); ctx.bezierCurveTo(65,36,70,0,52,-8);ctx.stroke();
   ellipse(ctx,0,20,27,32,'#313838');
@@ -145,7 +145,7 @@ export function drawScene(canvas, game, preview=false) {
   drawPlatform(ctx, equipment.platform);
   const catMood = catMoodForGame(game);
   if(catMood==='pulling')drawWinch(ctx,equipment.winch);
-  drawCat(ctx, w / 2 - 115 * scale, deckY, .83 * scale, catMood, equipment.origin.x);
+  drawCat(ctx, w / 2 + 115 * scale, deckY, .83 * scale, catMood, equipment.crank);
   if(catMood!=='pulling')drawWinch(ctx,equipment.winch);
   const tip = game.point();
   for (const item of game.items) drawItem(ctx, item);
