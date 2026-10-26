@@ -1,8 +1,8 @@
 # AI 交接：思想淘金記
 
-更新：2026-10-27。目前正式部署版本：v0.2.18，main 與 annotated tag 已推送；GitHub Pages Actions run #13 成功，正式站首頁、`src/app.js` 與 `styles.css` 均回應 HTTP 200，並已確認部署檔包含暫停分數圖例：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
+更新：2026-10-27。目前正式部署版本：v0.2.19，main 與 annotated tag 已推送；GitHub Pages Actions run #15 成功，正式站首頁、`src/render.js` 與 `assets/scene/miner-cat-expectant.png` 均回應 HTTP 200：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
 
-v0.2.18 暫停時新增依物件設定自動產生的加分／扣分圖例，含素材、物件名稱與分數，並保留繼續及結束操作。程式提交 `b31ecd1`、文件提交 `e9d9272`；annotated tag `v0.2.18` 可供回復。`npm test` 30 項、`npm run check` 通過；Pages Actions run #13 成功，正式站已確認載入更新後的 app.js 和 CSS。重物回收動畫仍未手動進行瀏覽器驗收。
+v0.2.19 讓所有正分物件在回收期間、不論重量都顯示期待操作搖柄的表情；負分重物仍用吃力表情，交付後沿用原有汗水反應。程式提交 `8cf5325`、文件提交 `2047595`；annotated tag `v0.2.19` 可供回復。`npm test` 30 項、`npm run check` 通過；Pages Actions run #15 成功，正式站首頁、`src/render.js` 與新表情 PNG 均回應 HTTP 200。未手動進行瀏覽器遊玩驗收。
 
 ## 開工入口
 
