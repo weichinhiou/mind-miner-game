@@ -19,7 +19,7 @@ const treasureSprites = {
   largeScrap: ['assets/treasures/scrap-large.png', [20, 120, 1240, 1130]],
 };
 export async function loadSceneAssets() {
-  const sources = [['cat','assets/scene/miner-cat.png'],['mine','assets/scene/sunset-mine.png'],['mineDesktop','assets/scene/sunset-mine-desktop.png'],['minePortrait','assets/scene/sunset-mine-mobile.png'], ...Object.entries(equipmentSprites).map(([key,[src]])=>[key,src]), ...Object.entries(treasureSprites).map(([key,[src]])=>[key,src])];
+  const sources = [['cat','assets/scene/miner-cat.png'],['catHappy','assets/scene/miner-cat-happy.png'],['catSweaty','assets/scene/miner-cat-sweaty.png'],['mine','assets/scene/sunset-mine.png'],['mineDesktop','assets/scene/sunset-mine-desktop.png'],['minePortrait','assets/scene/sunset-mine-mobile.png'], ...Object.entries(equipmentSprites).map(([key,[src]])=>[key,src]), ...Object.entries(treasureSprites).map(([key,[src]])=>[key,src])];
   await Promise.all(sources.map(([key,src])=>new Promise(resolve=>{
     const image=new Image();image.onload=()=>{artwork[key]=image;resolve();};image.onerror=()=>resolve();image.src=src;
   })));
@@ -27,8 +27,9 @@ export async function loadSceneAssets() {
 
 function ellipse(ctx, x, y, rx, ry, fill) { ctx.fillStyle = fill; ctx.beginPath(); ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2); ctx.fill(); }
 function polygon(ctx, points, fill, stroke) { ctx.beginPath(); points.forEach(([x,y],i) => i ? ctx.lineTo(x,y) : ctx.moveTo(x,y)); ctx.closePath(); ctx.fillStyle=fill; ctx.fill(); if (stroke) {ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();} }
-export function drawCat(ctx, x, footY, scale=1) {
-  if(artwork.cat){const height=120*scale;ctx.drawImage(artwork.cat,x-60*scale,footY-height*CAT_VISIBLE_BOTTOM,120*scale,120*scale);return;}
+export function drawCat(ctx, x, footY, scale=1, mood='default') {
+  const sprite = (mood === 'happy' ? artwork.catHappy : mood === 'sweaty' ? artwork.catSweaty : null) || artwork.cat;
+  if(sprite){const height=120*scale;ctx.drawImage(sprite,x-60*scale,footY-height*CAT_VISIBLE_BOTTOM,120*scale,120*scale);return;}
   ctx.save(); ctx.translate(x,footY-50*scale); ctx.scale(scale,scale);
   ctx.strokeStyle='#313838'; ctx.lineWidth=13; ctx.lineCap='round'; ctx.beginPath(); ctx.moveTo(26,28); ctx.bezierCurveTo(65,36,70,0,52,-8);ctx.stroke();
   ellipse(ctx,0,20,27,32,'#313838');
@@ -138,7 +139,8 @@ export function drawScene(canvas, game, preview=false) {
   }
   const equipment = equipmentLayout(game.size), { scale, deckY } = equipment;
   drawPlatform(ctx, equipment.platform);
-  drawCat(ctx, w / 2 - 115 * scale, deckY, .83 * scale);
+  const catMood = game.catMoodUntil > game.elapsed ? game.catMood : 'default';
+  drawCat(ctx, w / 2 - 115 * scale, deckY, .83 * scale, catMood);
   drawWinch(ctx, equipment.winch);
   const tip = game.point();
   for (const item of game.items) drawItem(ctx, item);
