@@ -1,8 +1,8 @@
 # AI 交接：思想淘金記
 
-更新：2026-10-15。目前正式部署版本：v0.2.14，main 與 tag 已推送；GitHub Pages 部署與 favicon URL 驗證成功：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
+更新：2026-10-27。目前正式部署版本：v0.2.15，main 與 annotated tag 已推送；GitHub Pages Actions run #7 成功，正式站首頁與兩張黑貓動作 PNG 均回應 HTTP 200：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
 
-本機 main 已加入 v0.2.15 黑貓回饋動作：回收正分物件顯示歡呼愛心動作，回收負分廢鐵顯示三滴大汗水動作；圖片為真正透明 PNG。程式提交 `b53bc6a`；`npm test` 29 項、`npm run check` 通過，新素材本機 HTTP 回應 200。推送與部署驗證待完成。
+v0.2.15 新增黑貓回饋動作：回收正分物件顯示歡呼愛心動作，回收負分廢鐵顯示三滴大汗水動作；圖片為真正透明 PNG。程式提交 `b53bc6a`、文件提交 `138857c`，版本標籤 `v0.2.15` 可供回復。`npm test` 29 項、`npm run check` 通過；正式站新素材 HTTP 200。手動實際回收動畫尚未做瀏覽器互動驗收。
 
 ## 開工入口
 
