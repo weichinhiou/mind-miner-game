@@ -19,7 +19,7 @@ const treasureSprites = {
   largeScrap: ['assets/treasures/scrap-large.png', [20, 120, 1240, 1130]],
 };
 export async function loadSceneAssets() {
-  const sources = [['cat','assets/scene/miner-cat.png'],['catHappy','assets/scene/miner-cat-happy.png'],['catSweaty','assets/scene/miner-cat-sweaty.png'],['catPulling','assets/scene/miner-cat-pulling.png'],['mine','assets/scene/sunset-mine.png'],['mineDesktop','assets/scene/sunset-mine-desktop.png'],['minePortrait','assets/scene/sunset-mine-mobile.png'], ...Object.entries(equipmentSprites).map(([key,[src]])=>[key,src]), ...Object.entries(treasureSprites).map(([key,[src]])=>[key,src])];
+  const sources = [['cat','assets/scene/miner-cat.png'],['catHappy','assets/scene/miner-cat-happy.png'],['catSweaty','assets/scene/miner-cat-sweaty.png'],['catPulling','assets/scene/miner-cat-pulling.png'],['catExpectant','assets/scene/miner-cat-expectant.png'],['mine','assets/scene/sunset-mine.png'],['mineDesktop','assets/scene/sunset-mine-desktop.png'],['minePortrait','assets/scene/sunset-mine-mobile.png'], ...Object.entries(equipmentSprites).map(([key,[src]])=>[key,src]), ...Object.entries(treasureSprites).map(([key,[src]])=>[key,src])];
   await Promise.all(sources.map(([key,src])=>new Promise(resolve=>{
     const image=new Image();image.onload=()=>{artwork[key]=image;resolve();};image.onerror=()=>resolve();image.src=src;
   })));
@@ -28,12 +28,13 @@ export async function loadSceneAssets() {
 function ellipse(ctx, x, y, rx, ry, fill) { ctx.fillStyle = fill; ctx.beginPath(); ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2); ctx.fill(); }
 function polygon(ctx, points, fill, stroke) { ctx.beginPath(); points.forEach(([x,y],i) => i ? ctx.lineTo(x,y) : ctx.moveTo(x,y)); ctx.closePath(); ctx.fillStyle=fill; ctx.fill(); if (stroke) {ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();} }
 export function catMoodForGame(game) {
+  if (game.hook.state === 'returning' && game.hook.caught?.score > 0) return 'expectant';
   if (game.hook.state === 'returning' && game.hook.caught?.weight >= 3) return 'pulling';
   return game.catMoodUntil > game.elapsed ? game.catMood : 'default';
 }
 export function drawCat(ctx, x, footY, scale=1, mood='default', crank=null) {
-  const sprite = (mood === 'happy' ? artwork.catHappy : mood === 'sweaty' ? artwork.catSweaty : mood === 'pulling' ? artwork.catPulling : null) || artwork.cat;
-  if(sprite){const size=120*scale,left=mood==='pulling'&&Number.isFinite(crank?.x)?crank.x-size*.17:x-size/2;ctx.drawImage(sprite,left,footY-size*CAT_VISIBLE_BOTTOM,size,size);return;}
+  const sprite = (mood === 'happy' ? artwork.catHappy : mood === 'sweaty' ? artwork.catSweaty : mood === 'pulling' ? artwork.catPulling : mood === 'expectant' ? artwork.catExpectant : null) || artwork.cat;
+  if(sprite){const size=120*scale,left=['pulling','expectant'].includes(mood)&&Number.isFinite(crank?.x)?crank.x-size*.17:x-size/2;ctx.drawImage(sprite,left,footY-size*CAT_VISIBLE_BOTTOM,size,size);return;}
   ctx.save(); ctx.translate(x,footY-50*scale); ctx.scale(scale,scale);
   ctx.strokeStyle='#313838'; ctx.lineWidth=13; ctx.lineCap='round'; ctx.beginPath(); ctx.moveTo(26,28); ctx.bezierCurveTo(65,36,70,0,52,-8);ctx.stroke();
   ellipse(ctx,0,20,27,32,'#313838');
@@ -144,9 +145,10 @@ export function drawScene(canvas, game, preview=false) {
   const equipment = equipmentLayout(game.size), { scale, deckY } = equipment;
   drawPlatform(ctx, equipment.platform);
   const catMood = catMoodForGame(game);
-  if(catMood==='pulling')drawWinch(ctx,equipment.winch);
+  const operatingWinch=catMood==='pulling'||catMood==='expectant';
+  if(operatingWinch)drawWinch(ctx,equipment.winch);
   drawCat(ctx, w / 2 + 115 * scale, deckY, .83 * scale, catMood, equipment.crank);
-  if(catMood!=='pulling')drawWinch(ctx,equipment.winch);
+  if(!operatingWinch)drawWinch(ctx,equipment.winch);
   const tip = game.point();
   for (const item of game.items) drawItem(ctx, item);
   if (game.hook.caught) {
