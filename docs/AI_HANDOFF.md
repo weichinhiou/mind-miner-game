@@ -2,6 +2,8 @@
 
 更新：2026-10-15。目前正式部署版本：v0.2.14，main 與 tag 已推送；GitHub Pages 部署與 favicon URL 驗證成功：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
 
+本機 main 已加入 v0.2.15 黑貓回饋動作：回收正分物件顯示歡呼愛心動作，回收負分廢鐵顯示三滴大汗水動作；圖片為真正透明 PNG。程式提交 `b53bc6a`；`npm test` 29 項、`npm run check` 通過，新素材本機 HTTP 回應 200。推送與部署驗證待完成。
+
 ## 開工入口
 
 先讀根目錄 AGENTS.md、README，確認 Git 真實狀態；依任務再讀 [文件索引](README.md)。歷史版本見 CHANGELOG，目前計畫見 [版本規劃](roadmap.md)。本檔的狀態不能取代 git status。
