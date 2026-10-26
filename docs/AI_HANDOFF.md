@@ -1,8 +1,8 @@
 # AI 交接：思想淘金記
 
-更新：2026-10-27。目前正式部署版本：v0.2.17，main 與 annotated tag 已推送；GitHub Pages Actions run #11 成功，正式站首頁與絞盤操作動作 PNG 均回應 HTTP 200：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
+更新：2026-10-27。目前正式部署版本：v0.2.18，main 與 annotated tag 已推送；GitHub Pages Actions run #13 成功，正式站首頁、`src/app.js` 與 `styles.css` 均回應 HTTP 200，並已確認部署檔包含暫停分數圖例：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
 
-v0.2.17 修正重物回收動作：重量至少 3 的物件回收時，貓站在絞盤右側轉動搖柄；纜線仍由下方導輪連到抓鉤。透明 PNG：`assets/scene/miner-cat-pulling.png`。碰撞、鉤子物理、計分均未變。程式提交 `f8c4721`、文件提交 `e435967`；annotated tag `v0.2.17` 可供回復。`npm test` 29 項、`npm run check` 通過；Pages Actions run #11 成功，正式首頁與新 PNG 均 HTTP 200。瀏覽器手動實際回收互動尚未驗收。
+v0.2.18 暫停時新增依物件設定自動產生的加分／扣分圖例，含素材、物件名稱與分數，並保留繼續及結束操作。程式提交 `b31ecd1`、文件提交 `e9d9272`；annotated tag `v0.2.18` 可供回復。`npm test` 30 項、`npm run check` 通過；Pages Actions run #13 成功，正式站已確認載入更新後的 app.js 和 CSS。重物回收動畫仍未手動進行瀏覽器驗收。
 
 ## 開工入口
 
