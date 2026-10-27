@@ -1,10 +1,12 @@
 # AI 交接：思想淘金記
 
-更新：2026-10-27。目前正式部署版本：v0.2.20，`main` 與 annotated tag 已推送；GitHub Pages Actions run #17 成功。正式首頁及 `src/app.js`、`src/engine.js`、`src/render.js`、`styles.css` 均以 HTTPS 回應 200，頁面程式已含戰利品清單及下移後的目標座標：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
+更新：2026-10-28。v0.2.21 修正已提交於 `f1f0d51`；`npm test` 30/30、`npm run check` 通過。文件整合與正式部署待完成。正式網站：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
 
 v0.2.19 讓所有正分物件在回收期間、不論重量都顯示期待操作搖柄的表情；負分重物仍用吃力表情，交付後沿用原有汗水反應。程式提交 `8cf5325`、文件提交 `2047595`；annotated tag `v0.2.19` 可供回復。`npm test` 30 項、`npm run check` 通過；Pages Actions run #15 成功，正式站首頁、`src/render.js` 與新表情 PNG 均回應 HTTP 200。未手動進行瀏覽器遊玩驗收。
 
 v0.2.20 增加按物件分類的結算次數與本局藏書清單，並下移地下物件及夾爪載物位置。程式提交 `750b8d7`、文件提交 `95e3f30`；annotated tag `v0.2.20` 可供回復，部署前 checkpoint 為 `checkpoint-v0.2.20-pre-release`。`npm test` 30 項、`npm run check` 通過；Pages run #17 成功，正式頁面及關鍵程式回應 200。未手動進行瀏覽器遊玩驗收。
+
+v0.2.21 依 Jean 回饋把地下物件中心最低高度從 y=275 再下調至 y=320，第一本書仍低於 y=420；桌機／手機備援盤面同步下移並拉開列距。程式提交 `f1f0d51`；`npm test` 30 項、`npm run check` 通過，正式部署待確認。
 
 ## 開工入口
 

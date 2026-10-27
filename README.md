@@ -55,11 +55,11 @@ npm run check
 
 ## 版本與開發文件
 
-目前版本為 v0.2.20 MVP：結算列出各類正負向物件回收次數與本局帶回的學者藏書；礦坑物件及抓鉤載物位置已下移。正式網站：[思想淘金記遊戲](https://weichinhiou.github.io/mind-miner-game/)。
+目前版本為 v0.2.21 MVP：結算列出各類正負向物件回收次數與本局帶回的學者藏書；地下物件已再往下調整。正式網站：[思想淘金記遊戲](https://weichinhiou.github.io/mind-miner-game/)。
 
 - [文件索引](docs/README.md)：所有專案文件入口。
 - [版本規劃](docs/roadmap.md)：v0.2.x、v0.3.0、v1.0.0 範圍及完成門檻。
 - [架構](docs/architecture.md)、[開發與驗收](docs/development.md)：模組、保存契約與 Git 流程。
 - [變更紀錄](CHANGELOG.md)、[AI 交接](docs/AI_HANDOFF.md)：已交付內容與下一步。
 
-GitHub：https://github.com/weichinhiou/mind-miner-game。main 追蹤 origin/main；v0.2.20 發布後建立 annotated tag。重新開工請先確認實際 Git 狀態。
+GitHub：https://github.com/weichinhiou/mind-miner-game。main 追蹤 origin/main；v0.2.21 發布後建立 annotated tag。重新開工請先確認實際 Git 狀態。
