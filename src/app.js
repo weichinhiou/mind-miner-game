@@ -79,10 +79,10 @@ function roundQuotes() {
 }
 function resultLoot() {
   const groups=[
-    {title:'正向收穫',tone:'positive',items:Object.entries(CONFIG.objects).filter(([,item])=>item.score>0)},
-    {title:'負向物件',tone:'negative',items:Object.entries(CONFIG.objects).filter(([,item])=>item.score<0)},
+    {title:'收入囊中的寶藏',tone:'positive',items:Object.entries(CONFIG.objects).filter(([,item])=>item.score>0)},
+    {title:'拖慢腳步的廢鐵',tone:'negative',items:Object.entries(CONFIG.objects).filter(([,item])=>item.score<0)},
   ];
-  return '<section class="loot-report" aria-label="本局正負向物件回收次數">'+groups.map(group=>{
+  return '<section class="loot-report" aria-label="本局淘金收穫與廢鐵">'+groups.map(group=>{
     const collected=group.items.filter(([type])=>lastResult.loot[type]);
     const total=collected.reduce((sum,[type])=>sum+lastResult.loot[type],0);
     return '<div class="loot-group '+group.tone+'"><div class="loot-heading"><h2>'+group.title+'</h2><span>共 '+total+' 次</span></div>'+(collected.length?'<ul>'+collected.map(([type,item])=>'<li><img src="assets/treasures/'+treasureAsset[type]+'" alt=""><span>'+escapeHtml(item.label)+'</span><b>'+lastResult.loot[type]+' 次</b></li>').join('')+'</ul>':'<p class="loot-empty">這一類還沒有回收物件</p>')+'</div>';
@@ -137,7 +137,7 @@ function loop(now){
 function finish(completed=true){lastResult={score:game.score,record:completed?store.finish(game.score):false,completed,finds:gameFinds.map(f=>({...f})),loot:{...gameLootCounts}};results();}
 function results(){
   game=null;
-  view(`<section class="result"><span class="eyebrow">本次礦坑探險</span><h1>帶回了哪些收穫？</h1><div class="result-score">${lastResult.score.toLocaleString()}</div><p class="result-note">${lastResult.record?'✦ 刷新本機最高分！':`本機最高分 ${store.data.bestScore.toLocaleString()}`}</p>${resultLoot()}${resultBooks()}${roundQuotes()}<div class="actions"><button class="primary" data-action="start">再挖一局 →</button><button data-action="collection">查看收藏冊</button><button data-action="home">回首頁</button></div>${portal()}<p class="note">遊戲成績代表操作與取捨，不代表學術能力。</p></section>`, 'results');
+  view(`<section class="result"><span class="eyebrow">本次礦坑探險</span><h1>這趟淘金，帶回了什麼？</h1><div class="result-score">${lastResult.score.toLocaleString()}</div><p class="result-note">${lastResult.record?'✦ 刷新本機最高分！':`本機最高分 ${store.data.bestScore.toLocaleString()}`}</p>${resultLoot()}${resultBooks()}${roundQuotes()}<div class="actions"><button class="primary" data-action="start">再挖一局 →</button><button data-action="collection">查看收藏冊</button><button data-action="home">回首頁</button></div>${portal()}<p class="note">遊戲成績代表操作與取捨，不代表學術能力。</p></section>`, 'results');
   if(!lastResult.completed) document.querySelector('.result-note').textContent=`提前結束，本局不更新最高分。已發現的收藏仍保留。`;
 }
 app.addEventListener('click',e=>{
