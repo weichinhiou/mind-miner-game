@@ -49,11 +49,11 @@ test('generation: 2000 boards plus exhausted randomness are bounded, separated, 
     const size=sceneSize(portrait),items=generateBoard(size,ids,seed===1000?()=>0:seedRandom(seed));assert.equal(items.length,15);assert.equal(items.filter(x=>x.collectible!==false).length,12);assert.equal(new Set(items.filter(x=>x.type==='book').map(x=>x.scholarId)).size,2);
     const origin=equipmentLayout(size).origin;
     for(const [i,p] of items.entries()){
-      assert.ok(p.x-p.radius>=0&&p.x+p.radius<=size.width&&p.y-p.radius>=200&&p.y+p.radius<=size.height,`bounds ${portrait} ${seed} ${i}`);
+      assert.ok(p.x-p.radius>=0&&p.x+p.radius<=size.width&&p.y-p.radius>=200&&p.y>=275&&p.y+p.radius<=size.height,`bounds ${portrait} ${seed} ${i}`);
       assert.ok(Math.abs(Math.atan2(p.x-origin.x,p.y-origin.y))<=CONFIG.swingAngle,`reach ${portrait} ${seed} ${i}`);
       for(const q of items.slice(i+1))assert.ok(Math.hypot(p.x-q.x,p.y-q.y)>p.radius+q.radius,`overlap ${portrait} ${seed} ${i} ${q.id}`);
     }
-    const book=items[0];assert.ok(book.y<350);assert.ok(!items.slice(1).some(q=>segmentHit(origin,book,q,q.radius+CONFIG.hookRadius)!==null),`book blocked ${portrait} ${seed}`);
+    const book=items[0];assert.ok(book.y>=275&&book.y<350);assert.ok(!items.slice(1).some(q=>segmentHit(origin,book,q,q.radius+CONFIG.hookRadius)!==null),`book blocked ${portrait} ${seed}`);
   }
 });
 test('pause overlay shows the live positive and negative item score legend with a resume action',()=>{const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8'),css=readFileSync(new URL('../styles.css',import.meta.url),'utf8');assert.match(app,/Object\.entries\(CONFIG\.objects\)/);assert.match(app,/寶物分數速查/);assert.match(app,/pauseTreasureLegend\(\)/);assert.match(app,/data-action="resume"/);assert.match(app,/data-action="leave"/);assert.match(css,/\.pause-legend-grid\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);assert.match(css,/\.overlay-card\.pause-card[^}]*max-height:calc\(100% - 20px\);overflow-y:auto/);assert.match(css,/@media\(max-width:380px\).*pause-legend-grid/);});

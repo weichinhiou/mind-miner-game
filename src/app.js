@@ -74,7 +74,27 @@ function scholarQuotes(s) {
   return '<h3>教學與研究短句 · '+unlocked.length+' / '+pool.length+' 句已發現</h3>'+unlocked.map(q=>quoteHtml(q)).join('')+(remaining?'<p class="quote-locked">▤ 還有 '+remaining+' 句待發現 · 再帶回一本藏書，遇見一句話。</p>':'');
 }
 function roundQuotes() {
-  return '<section class="round-quotes">'+lastResult.finds.flatMap(f=>(f.quotes||[]).map(({quote,isNewQuote})=>'<div class="round-quote"><h3>'+escapeHtml(scholarById(f.id).nameZh)+'</h3>'+quoteHtml(quote,isNewQuote)+'</div>')).join('')+'</section>';
+  const entries=lastResult.finds.flatMap(f=>(f.quotes||[]).map(({quote,isNewQuote})=>'<div class="round-quote"><h3>'+escapeHtml(scholarById(f.id).nameZh)+'</h3>'+quoteHtml(quote,isNewQuote)+'</div>')).join('');
+  return entries?'<section class="round-quotes"><div class="section-title"><h2>書頁裡的發現</h2><span>本局帶回的教學與研究觀點</span></div>'+entries+'</section>':'';
+}
+function resultLoot() {
+  const groups=[
+    {title:'正向收穫',tone:'positive',items:Object.entries(CONFIG.objects).filter(([,item])=>item.score>0)},
+    {title:'負向物件',tone:'negative',items:Object.entries(CONFIG.objects).filter(([,item])=>item.score<0)},
+  ];
+  return '<section class="loot-report" aria-label="本局正負向物件回收次數">'+groups.map(group=>{
+    const collected=group.items.filter(([type])=>lastResult.loot[type]);
+    const total=collected.reduce((sum,[type])=>sum+lastResult.loot[type],0);
+    return '<div class="loot-group '+group.tone+'"><div class="loot-heading"><h2>'+group.title+'</h2><span>共 '+total+' 次</span></div>'+(collected.length?'<ul>'+collected.map(([type,item])=>'<li><img src="assets/treasures/'+treasureAsset[type]+'" alt=""><span>'+escapeHtml(item.label)+'</span><b>'+lastResult.loot[type]+' 次</b></li>').join('')+'</ul>':'<p class="loot-empty">這一類還沒有回收物件</p>')+'</div>';
+  }).join('')+'</section>';
+}
+function resultBooks() {
+  const total=lastResult.finds.reduce((sum,find)=>sum+find.count,0);
+  const books=lastResult.finds.map(find=>{
+    const s=scholarById(find.id);
+    return '<li><button type="button" class="result-book" data-scholar="'+escapeHtml(find.id)+'">'+portrait(s,true)+'<span><strong>'+escapeHtml(s.nameZh)+'</strong><small>'+escapeHtml(s.field)+'</small></span><b>'+(find.count>1?'帶回 '+find.count+' 本':'帶回 1 本')+'</b></button></li>';
+  }).join('');
+  return '<section class="result-books"><div class="section-title"><h2>帶回的思想藏書</h2><span>共 '+total+' 本</span></div>'+(books?'<ul>'+books+'</ul>':'<p class="loot-empty">這次沒有帶回藏書，下次再來找找思想家的觀點。</p>')+'</section>';
 }
 function collectBook(item) {
   const s=scholarById(item.scholarId),pick=chooseQuote(quotes,s.id,store.data.collection[s.id]);
@@ -87,13 +107,14 @@ function collectBook(item) {
 }
 function start() {
   enableAudio();lastResult=null;toastText='';toastUntil=0;
-  game=new Game({portrait:window.matchMedia('(max-width:600px)').matches,scholars:scholars.map(s=>s.id),onCollect(item){sound(item.type);game.catMood=item.score<0?'sweaty':'happy';game.catMoodUntil=game.elapsed+1.4;if(item.scholarId){collectBook(item);}else if(item.score<0){toastText=`${item.label} ${item.score} 分`;toastUntil=game.elapsed+1.4;}},onFinish(){finish();}});
+  gameLootCounts={};
+  game=new Game({portrait:window.matchMedia('(max-width:600px)').matches,scholars:scholars.map(s=>s.id),onCollect(item){sound(item.type);gameLootCounts[item.type]=(gameLootCounts[item.type]||0)+1;game.catMood=item.score<0?'sweaty':'happy';game.catMoodUntil=game.elapsed+1.4;if(item.scholarId){collectBook(item);}else if(item.score<0){toastText=`${item.label} ${item.score} 分`;toastUntil=game.elapsed+1.4;}},onFinish(){finish();}});
   gameFinds=[];
   view(`<section class="game-board"><div class="game-top"><div class="hud"><div><label>本局分數</label><output id="score">0</output></div><div><label>回合</label><output id="round">1</output></div><div><label>剩餘時間</label><output id="time">60<span> 秒</span></output></div></div><div class="game-buttons"><button data-action="mute" id="mute">${store.data.mute?'音效：關':'音效：開'}</button><button data-action="pause">暫停 Ⅱ</button></div></div><div class="scene-frame"><canvas id="game-canvas" tabindex="0" aria-label="挖礦遊戲區，點擊或空白鍵出鉤"></canvas><div id="overlay" class="overlay"></div><div id="toast" class="toast" role="status" hidden></div></div><div class="discovery-note" id="discovery-note" role="status"><span class="eyebrow">每本藏書，帶回一句新發現。</span><p>重複遇見一位人物，也能發現不同的教學與研究觀點。</p></div><div class="game-help"><span>看準方向，點擊／空白鍵出鉤。<br>金銀礦依大小計分；廢鐵會扣分且很重。<br>藏書完整拉回後才會揭曉人物。</span><button class="fire-button" data-action="fire">出鉤 ↓</button></div></section>`, 'game');
   document.querySelector('#game-canvas').addEventListener('pointerdown',e=>{if(e.isPrimary&&e.button===0){e.preventDefault();fire();}});
   document.querySelector('#game-canvas').focus({preventScroll:true});loop(performance.now());
 }
-let gameFinds=[];
+let gameFinds=[], gameLootCounts={};
 function fire(){if(game?.fire())sound('fire');}
 function pause(){if(screen!=='game'||!game)return;game.pause();stopSounds();lastTime=null;updateHud();}
 function resume(){if(screen!=='game'||!game)return;enableAudio();game.resume();lastTime=null;updateHud();}
@@ -113,10 +134,10 @@ function loop(now){
   game.update(dt);if(screen!=='game')return;
   drawScene(document.querySelector('#game-canvas'),game);updateHud();raf=requestAnimationFrame(loop);
 }
-function finish(completed=true){lastResult={score:game.score,record:completed?store.finish(game.score):false,completed,finds:gameFinds.map(f=>({...f}))};results();}
+function finish(completed=true){lastResult={score:game.score,record:completed?store.finish(game.score):false,completed,finds:gameFinds.map(f=>({...f})),loot:{...gameLootCounts}};results();}
 function results(){
   game=null;
-  view(`<section class="result"><span class="eyebrow">EVERY DISCOVERY COUNTS</span><h1>今天，挖到一點新眼光。</h1><div class="result-score">${lastResult.score.toLocaleString()}</div><p class="result-note">${lastResult.record?'✦ 刷新本機最高分！':`本機最高分 ${store.data.bestScore.toLocaleString()}`}</p>${lastResult.finds.length?`<div class="section-title"><h2>這次遇見的思想家</h2><span>${lastResult.finds.length} 位人物</span></div><div class="collection-grid">${lastResult.finds.map(f=>card(scholarById(f.id),true)).join('')}</div>`:'<div class="empty-result">這次收穫了寶物，下次再找找思想藏書！</div>'}${roundQuotes()}<div class="actions"><button class="primary" data-action="start">再挖一局 →</button><button data-action="collection">查看收藏冊</button><button data-action="home">回首頁</button></div>${portal()}<p class="note">遊戲成績代表操作與取捨，不代表學術能力。</p></section>`, 'results');
+  view(`<section class="result"><span class="eyebrow">本次礦坑探險</span><h1>帶回了哪些收穫？</h1><div class="result-score">${lastResult.score.toLocaleString()}</div><p class="result-note">${lastResult.record?'✦ 刷新本機最高分！':`本機最高分 ${store.data.bestScore.toLocaleString()}`}</p>${resultLoot()}${resultBooks()}${roundQuotes()}<div class="actions"><button class="primary" data-action="start">再挖一局 →</button><button data-action="collection">查看收藏冊</button><button data-action="home">回首頁</button></div>${portal()}<p class="note">遊戲成績代表操作與取捨，不代表學術能力。</p></section>`, 'results');
   if(!lastResult.completed) document.querySelector('.result-note').textContent=`提前結束，本局不更新最高分。已發現的收藏仍保留。`;
 }
 app.addEventListener('click',e=>{

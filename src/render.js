@@ -152,7 +152,7 @@ export function drawScene(canvas, game, preview=false) {
   const tip = game.point();
   for (const item of game.items) drawItem(ctx, item);
   if (game.hook.caught) {
-    const cargo = game.hook.caught, offset = cargo.radius * .4;
+    const cargo = game.hook.caught, offset = cargo.radius * .9;
     drawItem(ctx, cargo, tip.x + Math.sin(game.hook.angle) * offset, tip.y + Math.cos(game.hook.angle) * offset);
   }
   // Keep the cable and claw visible over the platform, winch, and all targets.
