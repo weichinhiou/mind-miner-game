@@ -1,8 +1,10 @@
 # AI 交接：思想淘金記
 
-更新：2026-10-27。目前正式部署版本：v0.2.19，main 與 annotated tag 已推送；GitHub Pages Actions run #15 成功，正式站首頁、`src/render.js` 與 `assets/scene/miner-cat-expectant.png` 均回應 HTTP 200：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
+更新：2026-10-27。v0.2.20 程式已提交於 `750b8d7`，版本文件待整合；本機測試 30/30、語法檢查通過。正式網站：https://weichinhiou.github.io/mind-miner-game/。repository：https://github.com/weichinhiou/mind-miner-game。工作目錄：D:\Git\Game\mind-miner-game。
 
 v0.2.19 讓所有正分物件在回收期間、不論重量都顯示期待操作搖柄的表情；負分重物仍用吃力表情，交付後沿用原有汗水反應。程式提交 `8cf5325`、文件提交 `2047595`；annotated tag `v0.2.19` 可供回復。`npm test` 30 項、`npm run check` 通過；Pages Actions run #15 成功，正式站首頁、`src/render.js` 與新表情 PNG 均回應 HTTP 200。未手動進行瀏覽器遊玩驗收。
+
+v0.2.20 增加按物件分類的結算次數與本局藏書清單，並下移地下物件及夾爪載物位置。程式提交 `750b8d7`；文件整合後建立可回復的 annotated tag。正式部署狀態待確認。
 
 ## 開工入口
 
