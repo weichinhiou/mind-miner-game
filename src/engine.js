@@ -19,8 +19,8 @@ function boardTypes() {
     .filter(([type]) => type !== 'book')
     .flatMap(([type, spec]) => Array(spec.count).fill(type))];
 }
-const MIN_TARGET_Y = 275;
-const SHALLOW_TARGET_MAX_Y = 350;
+const MIN_TARGET_Y = 320;
+const SHALLOW_TARGET_MAX_Y = 420;
 export function generateBoard(size, scholars, random = Math.random) {
   const origin = equipmentLayout(size).origin;
   const ids = shuffle(scholars, random);
@@ -42,9 +42,10 @@ export function generateBoard(size, scholars, random = Math.random) {
   return items;
 }
 function fallbackBoard(size, ids) {
-  const slots = [.2,.52,.84].flatMap(y => [.17,.335,.5,.665,.83].map(x => [x,y]));
+  const rows = size.height > 600 ? [360,490,620] : [335,405,475];
+  const slots = rows.flatMap(y => [.17,.335,.5,.665,.83].map(x => [x,y]));
   const types = boardTypes();
-  return slots.map(([x,y], i) => ({ id:i, type:types[i], x: x * size.width, y: 260 + y * (size.height - 280), ...CONFIG.objects[types[i]], scholarId: i < 2 ? ids[i] : null }));
+  return slots.map(([x,y], i) => ({ id:i, type:types[i], x: x * size.width, y, ...CONFIG.objects[types[i]], scholarId: i < 2 ? ids[i] : null }));
 }
 export class Game {
   constructor({ portrait = false, scholars, random = Math.random, onCollect = () => {}, onFinish = () => {} }) {
